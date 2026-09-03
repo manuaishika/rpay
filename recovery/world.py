@@ -41,12 +41,14 @@ PROMISE_HORIZON_DAYS = 3          # ASSUMPTION: how far out promises are dated
 # agent cannot lean on it. Numbers below are unconditional (no pickup gate).
 PRIORS: dict[str, dict[str, float]] = {
     "insufficient_funds": {
+        # a call cannot conjure money -- immediate conversion is low; the value
+        # of voice here is capturing a DATED promise-to-pay (see option value).
         "silent_retry": 0.15, "sms_link": 0.08, "whatsapp_nudge": 0.12,
-        "voice_call": 0.25, "human_escalation": 0.22,
+        "voice_call": 0.12, "human_escalation": 0.14,
     },
     "bank_downtime": {
         "silent_retry": 0.48, "sms_link": 0.10, "whatsapp_nudge": 0.14,
-        "voice_call": 0.20, "human_escalation": 0.18,
+        "voice_call": 0.14, "human_escalation": 0.14,
     },
     "technical_decline": {
         "silent_retry": 0.36, "sms_link": 0.12, "whatsapp_nudge": 0.16,
@@ -58,7 +60,7 @@ PRIORS: dict[str, dict[str, float]] = {
     },
     "do_not_honour": {
         "silent_retry": 0.09, "sms_link": 0.06, "whatsapp_nudge": 0.09,
-        "voice_call": 0.18, "human_escalation": 0.28,
+        "voice_call": 0.14, "human_escalation": 0.28,
     },
     "mandate_expired": {
         # silent_retry against an expired mandate does nothing.

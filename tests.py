@@ -120,5 +120,40 @@ class EndToEnd(unittest.TestCase):
         self.assertGreater(top, 0.4)
 
 
+class Voice(unittest.TestCase):
+    """No network -- just the offline plumbing of the optional voice layer."""
+
+    def test_build_messages_is_reason_specific(self):
+        from recovery import voice
+        m = voice.build_messages(_acc(reason="mandate_revoked", amount=9000.0))
+        self.assertEqual(m[0]["role"], "system")
+        self.assertIn("mandate_revoked", m[1]["content"])
+        self.assertIn("Rs.9,000", m[1]["content"])
+
+    def test_fallback_script_mentions_amount_and_fix(self):
+        from recovery import voice
+        s = voice._fallback_script(_acc(reason="card_expired", amount=1234.0))
+        self.assertIn("1,234", s)
+        self.assertIn("card", s.lower())
+        self.assertLess(len(s), 800)
+
+    def test_decided_calls_are_a_subset_that_got_voice(self):
+        from recovery import voice
+        accs = voice.decided_calls("ladder", 20260903, 1.0, 1200.0, 25)
+        ids = {a.account_id for a in accs}
+        self.assertEqual(len(ids), len(accs))          # de-duplicated
+        self.assertTrue(ids)                            # ladder does call someone
+
+    def test_key_loading_prefers_env(self):
+        import os
+        from recovery import sarvam
+        os.environ["SARVAM_API_KEY"] = "sk_test_from_env"
+        try:
+            self.assertEqual(sarvam.load_key(), "sk_test_from_env")
+            self.assertTrue(sarvam.available())
+        finally:
+            del os.environ["SARVAM_API_KEY"]
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
