@@ -327,6 +327,13 @@ async function run(){
   let resp;
   try { resp = await fetch("/api/run", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(cfg)}); }
   catch(err){ $("#run").disabled = false; $("#run").textContent = "Run recovery"; alert("could not reach the server"); return; }
+  if (resp.status !== 200){
+    let msg = "server declined the run (" + resp.status + ")";
+    try { msg = (await resp.json()).error || msg; } catch(e){}
+    $("#run").disabled = false; $("#run").textContent = "Run recovery";
+    alert(msg);
+    return;
+  }
   const reader = resp.body.getReader(), dec = new TextDecoder();
   let buf = "";
   while (true){

@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: recovery-console
+    runtime: python
+    plan: free
+    branch: main
+    buildCommand: "true"   # stdlib only -- nothing to install
+    startCommand: "python -m recovery.serve --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: SARVAM_API_KEY
+        sync: false          # set this in the Render dashboard, not in git

@@ -1,0 +1,3 @@
+# intentionally empty -- recovery/ is stdlib only, no dependencies.
+# this file exists so hosting platforms that expect one (Render included)
+# detect the app as Python and don't fail an install step looking for it.

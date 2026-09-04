@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import concurrent.futures
 import json
+import os
 import queue
 import random
 import threading
@@ -36,6 +37,11 @@ from .ladder import run_policy_on
 WEB = Path(__file__).resolve().parent.parent / "web" / "console.html"
 BENCHMARKS = ["standard_playbook", "retry_only"]
 MAX_SAMPLE = 40
+
+# One /api/run at a time. This is a demo server behind a shared, metered
+# Sarvam key -- once it has a public URL, this is what stops a second
+# visitor's click (or a reload) from stacking concurrent LLM runs on it.
+_RUN_LOCK = threading.Lock()
 
 
 def pick_sample(ledger, n: int, seed: int):
@@ -147,6 +153,18 @@ class Handler(BaseHTTPRequestHandler):
 
     # -- /api/run ---------------------------------------------------
     def _run(self):
+        if not _RUN_LOCK.acquire(blocking=False):
+            self._send(429, json.dumps({
+                "error": "a recovery run is already in progress on this server; wait for it "
+                         "to finish (the console disables the button while running)."
+            }).encode("utf-8"))
+            return
+        try:
+            self._run_locked()
+        finally:
+            _RUN_LOCK.release()
+
+    def _run_locked(self):
         p = self._body()
         seed = int(p.get("seed", 20260903))
         stress = float(p.get("stress", 1.0))
@@ -269,8 +287,10 @@ class _ClientGone(Exception):
 def main(argv=None):
     import argparse
     ap = argparse.ArgumentParser(prog="python -m recovery.serve")
-    ap.add_argument("--port", type=int, default=8000)
-    ap.add_argument("--host", default="127.0.0.1")
+    # $PORT is how Render (and most PaaS hosts) tell the process which port
+    # the public router expects; --port always wins if you pass it explicitly.
+    ap.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8000)))
+    ap.add_argument("--host", default=os.environ.get("HOST", "127.0.0.1"))
     args = ap.parse_args(argv)
     srv = ThreadingHTTPServer((args.host, args.port), Handler)
     print(f"recovery console -> http://{args.host}:{args.port}")
