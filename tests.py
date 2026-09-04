@@ -1,4 +1,5 @@
 """Stdlib self-checks:  python tests.py   (or python -m unittest)."""
+import random
 import unittest
 from datetime import datetime, timedelta
 
@@ -152,6 +153,74 @@ class Analysis(unittest.TestCase):
         # cost override must not bleed out of the sweep
         from recovery import core
         self.assertEqual(core.INTERVENTION_COST["voice_call"], core.DEFAULT_VOICE_COST)
+
+
+class AgentAndConsole(unittest.TestCase):
+    def _sample(self):
+        from recovery.serve import pick_sample
+        led = core.build_ledger(20260903)
+        return led, pick_sample(led, 10, 20260903)
+
+    def test_sample_is_deterministic_and_spread(self):
+        led, s1 = self._sample()
+        _, s2 = self._sample()
+        self.assertEqual([a.account_id for a in s1], [a.account_id for a in s2])
+        self.assertEqual(len({a.account_id for a in s1}), len(s1))
+        self.assertTrue(any(a.segment == "B2B" for a in s1))
+
+    def test_agent_llm_choice_is_honoured_when_permitted(self):
+        from recovery import agent
+        from recovery.guardrails import Guardrails
+
+        class FakeClient:
+            def __init__(self, action): self.action = action
+            def chat(self, *a, **k):
+                return '{"action": "%s", "rationale": "test", "confidence": 0.9}' % self.action
+
+        led = core.build_ledger(20260903)
+        acc = next(a for a in led if a.reason == "insufficient_funds" and not a.dnc
+                   and a.has_phone and a.contacts_last_7d == 0)
+        guard = Guardrails([acc], voice_budget=1200.0)
+        ep, events = agent.run_agent_episode(
+            acc, guard, random.Random("x"), 1.0, FakeClient("sms_link"),
+            guard.now0.replace(hour=0))
+        acts = [e for e in events if e["event"] == "action"]
+        self.assertTrue(acts)
+        self.assertEqual(acts[0]["intervention"], "sms_link")
+        self.assertEqual(acts[0]["decided_by"], "llm")
+
+    def test_agent_falls_back_to_rule_on_bad_json(self):
+        from recovery import agent
+        from recovery.guardrails import Guardrails
+
+        class BrokenClient:
+            def chat(self, *a, **k): return "sorry no json here"
+
+        led = core.build_ledger(20260903)
+        acc = next(a for a in led if a.reason == "mandate_revoked")
+        guard = Guardrails([acc], voice_budget=1200.0)
+        ep, events = agent.run_agent_episode(
+            acc, guard, random.Random("x"), 1.0, BrokenClient(),
+            guard.now0.replace(hour=0))
+        decided = [e.get("decided_by") for e in events
+                   if e["event"] in ("action", "stop")]
+        self.assertTrue(all(d in ("rule", "rule_fallback") for d in decided))
+
+    def test_agent_cannot_pick_a_blocked_action(self):
+        from recovery import agent
+        from recovery.guardrails import Guardrails, audit_executed
+
+        class DncPusher:            # always tries to contact a DNC account
+            def chat(self, *a, **k):
+                return '{"action": "voice_call", "rationale": "x", "confidence": 1}'
+
+        led = core.build_ledger(20260903)
+        acc = next(a for a in led if a.dnc and a.has_phone)
+        guard = Guardrails([acc], voice_budget=1200.0)
+        ep, events = agent.run_agent_episode(
+            acc, guard, random.Random("x"), 1.0, DncPusher(),
+            guard.now0.replace(hour=0))
+        self.assertEqual(audit_executed(events, [acc], 1200.0), [])
 
 
 class Voice(unittest.TestCase):

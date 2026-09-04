@@ -13,6 +13,7 @@ ever disagree, the report stops saying "0".
 """
 from __future__ import annotations
 
+import threading
 from datetime import date, datetime, time, timedelta
 
 from .core import INTERVENTION_COST, CONTACTING
@@ -43,6 +44,7 @@ class Guardrails:
         self.voice_spent = 0.0
         self.human_cap = int(human_cap)
         self.human_used = 0
+        self.lock = threading.RLock()   # the console runs episodes concurrently
         self.now0 = now0 or NOW0
         self.history: dict[str, list[tuple[datetime, str]]] = {}
         self.ptp: dict[str, date] = {}
@@ -68,6 +70,10 @@ class Guardrails:
     # -- the gate -------------------------------------------------------
     def check(self, account, intervention: str, now: datetime) -> tuple[bool, str | None]:
         """Return (allowed, violation_code). violation_code is None iff allowed."""
+        with self.lock:
+            return self._check(account, intervention, now)
+
+    def _check(self, account, intervention: str, now: datetime) -> tuple[bool, str | None]:
         aid = account.account_id
         cost = INTERVENTION_COST[intervention]
         contacting = intervention in CONTACTING
@@ -93,14 +99,28 @@ class Guardrails:
 
     # -- state mutation (only after an action is actually played) --------
     def commit(self, account, intervention: str, now: datetime, cost: float) -> None:
-        self.history[account.account_id].append((now, intervention))
-        if intervention == "voice_call":
-            self.voice_spent += cost
-        elif intervention == "human_escalation":
-            self.human_used += 1
+        with self.lock:
+            self.history[account.account_id].append((now, intervention))
+            if intervention == "voice_call":
+                self.voice_spent += cost
+            elif intervention == "human_escalation":
+                self.human_used += 1
+
+    def commit_if_allowed(self, account, intervention: str, now: datetime, cost: float):
+        """Atomic re-check + commit, for the concurrent console. Returns (ok, code)."""
+        with self.lock:
+            ok, code = self._check(account, intervention, now)
+            if ok:
+                self.history[account.account_id].append((now, intervention))
+                if intervention == "voice_call":
+                    self.voice_spent += cost
+                elif intervention == "human_escalation":
+                    self.human_used += 1
+            return ok, code
 
     def register_ptp(self, account_id: str, due: date) -> None:
-        self.ptp[account_id] = due
+        with self.lock:
+            self.ptp[account_id] = due
 
 
 # --------------------------------------------------------------------------

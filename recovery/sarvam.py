@@ -104,17 +104,27 @@ class Sarvam:
 
     # -- chat --------------------------------------------------------
     def chat(self, messages: list[dict], model: str = CHAT_MODEL,
-             temperature: float = 0.3, max_tokens: int = 400) -> str:
-        data = self._post(CHAT_URL, {
+             temperature: float = 0.3, max_tokens: int = 500,
+             reasoning_effort: str | None = None) -> str:
+        payload = {
             "model": model,
             "messages": messages,
             "temperature": temperature,
             "max_tokens": max_tokens,
-        })
+        }
+        if reasoning_effort:
+            payload["reasoning_effort"] = reasoning_effort
+        data = self._post(CHAT_URL, payload)
         try:
-            return data["choices"][0]["message"]["content"].strip()
+            msg = data["choices"][0]["message"]
         except (KeyError, IndexError, TypeError) as e:
             raise SarvamError(f"unexpected chat response: {json.dumps(data)[:400]}") from e
+        # sarvam-105b is a reasoning model: the answer is in `content`, but a
+        # token-starved response can leave content null with text in reasoning.
+        text = msg.get("content") or msg.get("reasoning_content")
+        if not text:
+            raise SarvamError(f"empty chat content: {json.dumps(data)[:400]}")
+        return text.strip()
 
     # -- text to speech --------------------------------------------------
     def text_to_speech(self, text: str, language_code: str = "hi-IN",

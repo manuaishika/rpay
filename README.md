@@ -6,26 +6,40 @@
 > The hard part isn't dialing — it's deciding **who** to call and **when to stop**.
 
 `recovery/` is a stdlib-only Python package (no dependencies) that models a
-failed-payment book, runs a 5-stage sequential agent that spends real rupees
-only when the expected recovery clears the cost, and scores it against four
-fixed playbooks. Every outreach decision passes through a **hard guardrail
-gate**, and an **independent auditor** re-derives the rules from the emitted
-audit trail so a gate bug shows up as a counted violation instead of leaking.
+failed-payment book and puts an agent in the decision seat: for each failed
+payment it weighs the actions the guardrail gate currently permits and either
+spends or stops. Every decision passes through a **hard guardrail gate**, and
+an **independent auditor** re-derives the rules from the emitted audit trail
+so a gate bug shows up as a counted violation instead of leaking.
+
+## Run it — the console
 
 ```
-python -m recovery                 # the scorecard
+python -m recovery.serve      # then open http://127.0.0.1:8000
+```
+
+Set the voice budget and how many accounts to run live, hit **Run recovery**,
+and watch `sarvam-105b` work each failed payment — its pick, its reasoning,
+guardrail blocks, the budget draining, promises-to-pay logged — then a
+scorecard against the fixed playbooks (`agent` vs `standard_playbook` vs
+`retry_only`), with **guardrail violations: 0**. Click any account for its
+full trace; if it placed a call, hear the Hinglish (script + audio).
+
+No Sarvam key → the console falls back to the expected-value rule and still
+runs; every decision is tagged with who made it (`llm` / `rule`).
+
+## Run it — the batch analysis
+
+```
+python -m recovery                 # scorecard over the full 250-account book
 python -m recovery --cohorts       # + B2B/B2C and by-reason breakdown
 python -m recovery --stress 0.5    # halve the (assumed) voice lift and re-rank
 python -m recovery.sweep           # stress x voice-cost grid; where the ladder stops winning
-python tests.py                    # 21 stdlib self-checks
-
-python -m recovery.voice --dry-run # write the Hinglish call scripts (no key)
-python -m recovery.voice --limit 5 # + render them to .wav via Sarvam AI
-
-python -m recovery.dashboard && python build_dashboard.py   # regenerate dashboard.html
+python -m recovery.voice --limit 5 # render the Hinglish scripts + .wav via Sarvam
+python tests.py                    # 25 stdlib self-checks
 ```
 
-**Interactive scorecard:** <https://claude.ai/code/artifact/ad74a183-90ee-4c8e-8721-bcc97845d488>
+**Static interactive scorecard (no server):** <https://claude.ai/code/artifact/ad74a183-90ee-4c8e-8721-bcc97845d488>
 
 ## What's in the box
 
@@ -34,7 +48,9 @@ python -m recovery.dashboard && python build_dashboard.py   # regenerate dashboa
 | `core.py` | 9-way failure taxonomy split into `TRANSIENT` / `ACTION_REQUIRED`; five interventions with rupee costs (`silent_retry` ₹0.50 → `human_escalation` ₹85); a seeded synthetic ledger of 250 accounts — lognormal amounts, heavy right tail for B2B, plus tenure / prior failures / language / DNC / `contacts_last_7d` / open promise-to-pay |
 | `world.py` | **stated priors** `p(recover \| reason, intervention)` — loudly flagged as ASSUMPTIONS, not data. Retrying a revoked mandate is `0.0`. Voice is gated by a `0.62` pickup rate. `--stress` scales the voice lift *only*, for sensitivity runs |
 | `guardrails.py` | the **hard gate**: 09:00–19:00 contact window, permanent DNC, 3 contacts / 7 days, 2 voice attempts max, promise-to-pay suppression, a global voice-budget cap and a human-escalation capacity cap. `audit_executed()` re-derives every rule from scratch against the JSONL trail |
-| `ladder.py` | the **5-stage agent**. Each stage re-scores every *compliant* channel by expected net rupees given what already failed (channel fatigue `0.72` per repeat, evidence decay `0.88` per failed attempt). Voice carries extra **option value**: a connected call that doesn't convert can still capture a dated promise-to-pay that converts later at zero spend. Stops the moment nothing clears ₹0 in expectation. Plus baselines: `retry_only`, `nudge_ladder`, `call_first`, `standard_playbook` |
+| `ladder.py` | the **expected-value policy** + the fixed-playbook baselines. Each stage re-scores every *compliant* channel by expected net rupees given what already failed (channel fatigue `0.72` per repeat, evidence decay `0.88` per failed attempt). Voice carries extra **option value**: a connected call that doesn't convert can still capture a dated promise-to-pay that converts later at zero spend. Stops the moment nothing clears ₹0 in expectation. Baselines: `retry_only`, `nudge_ladder`, `call_first`, `standard_playbook` |
+| `agent.py` | **`sarvam-105b` in the decision seat.** Same environment, same gate, same 5-stage bound — but the model picks the next action (from the guardrail-permitted menu only) and says *why*, given the account, what already failed, the costs, the believed odds, and the budget left. Falls back to the expected-value rule if there's no key or the call fails; every decision is tagged with its source |
+| `serve.py` + `web/console.html` | the **operator console** — stdlib `http.server`, streams the agent working the book live over NDJSON, then the playbook benchmark, then the scorecard |
 | `__main__.py` | runs all five policies over the ledger, writes `audit/<policy>.jsonl`, prints recovered / spend / net / rate / calls / PTPs / cost-per-₹100 and **guardrail violations (must be 0)** |
 | `analysis.py` | shared scoring + cohort slicing (B2B/B2C, by reason); used by the CLI, the sweep, and the dashboard |
 | `sweep.py` | runs the whole `stress × voice-cost` grid, all policies per cell, and reports the crossover where the ladder stops beating the best fixed playbook |

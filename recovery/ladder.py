@@ -263,13 +263,13 @@ POLICIES = {
 }
 
 
-def run_policy(name: str, ledger, seed: int, stress: float, voice_budget: float,
-               human_cap: int):
-    """Run one named policy over the whole ledger. Returns (episodes, events)."""
+def run_policy_on(name: str, accounts, seed: int, stress: float, voice_budget: float,
+                  human_cap: int):
+    """Run one named policy over an explicit list of accounts."""
     fn = POLICIES[name]
-    guard = Guardrails(ledger, voice_budget=voice_budget, human_cap=human_cap)
+    guard = Guardrails(accounts, voice_budget=voice_budget, human_cap=human_cap)
     episodes, events = [], []
-    for account in ledger:
+    for account in accounts:
         # per-account RNG shared across policies -> common random numbers,
         # so policy deltas are less about luck and more about decisions.
         rng = random.Random(f"{seed}:{account.account_id}")
@@ -277,3 +277,9 @@ def run_policy(name: str, ledger, seed: int, stress: float, voice_budget: float,
         episodes.append(ep)
         events.extend(evs)
     return episodes, events
+
+
+def run_policy(name: str, ledger, seed: int, stress: float, voice_budget: float,
+               human_cap: int):
+    """Run one named policy over the whole ledger. Returns (episodes, events)."""
+    return run_policy_on(name, ledger, seed, stress, voice_budget, human_cap)
