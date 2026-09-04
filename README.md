@@ -14,13 +14,18 @@ audit trail so a gate bug shows up as a counted violation instead of leaking.
 
 ```
 python -m recovery                 # the scorecard
+python -m recovery --cohorts       # + B2B/B2C and by-reason breakdown
 python -m recovery --stress 0.5    # halve the (assumed) voice lift and re-rank
-python -m recovery --json          # machine-readable
-python tests.py                    # 18 stdlib self-checks
+python -m recovery.sweep           # stress x voice-cost grid; where the ladder stops winning
+python tests.py                    # 21 stdlib self-checks
 
 python -m recovery.voice --dry-run # write the Hinglish call scripts (no key)
 python -m recovery.voice --limit 5 # + render them to .wav via Sarvam AI
+
+python -m recovery.dashboard && python build_dashboard.py   # regenerate dashboard.html
 ```
+
+**Interactive scorecard:** <https://claude.ai/code/artifact/ad74a183-90ee-4c8e-8721-bcc97845d488>
 
 ## What's in the box
 
@@ -31,7 +36,10 @@ python -m recovery.voice --limit 5 # + render them to .wav via Sarvam AI
 | `guardrails.py` | the **hard gate**: 09:00–19:00 contact window, permanent DNC, 3 contacts / 7 days, 2 voice attempts max, promise-to-pay suppression, a global voice-budget cap and a human-escalation capacity cap. `audit_executed()` re-derives every rule from scratch against the JSONL trail |
 | `ladder.py` | the **5-stage agent**. Each stage re-scores every *compliant* channel by expected net rupees given what already failed (channel fatigue `0.72` per repeat, evidence decay `0.88` per failed attempt). Voice carries extra **option value**: a connected call that doesn't convert can still capture a dated promise-to-pay that converts later at zero spend. Stops the moment nothing clears ₹0 in expectation. Plus baselines: `retry_only`, `nudge_ladder`, `call_first`, `standard_playbook` |
 | `__main__.py` | runs all five policies over the ledger, writes `audit/<policy>.jsonl`, prints recovered / spend / net / rate / calls / PTPs / cost-per-₹100 and **guardrail violations (must be 0)** |
+| `analysis.py` | shared scoring + cohort slicing (B2B/B2C, by reason); used by the CLI, the sweep, and the dashboard |
+| `sweep.py` | runs the whole `stress × voice-cost` grid, all policies per cell, and reports the crossover where the ladder stops beating the best fixed playbook |
 | `sarvam.py` · `voice.py` | *optional.* Take the calls the `ladder` actually decided to make, generate a reason-specific Hinglish script (`sarvam-105b`), render it to a `.wav` (`bulbul` TTS). Degrades to script-only with no API key. Never places a real call |
+| `dashboard.py` · `build_dashboard.py` | assemble `audit/dashboard.json` from a real run and bake it into a standalone `dashboard.html` (the interactive scorecard linked above) |
 
 ## The assumptions (read this)
 

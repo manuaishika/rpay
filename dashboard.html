@@ -1,0 +1,619 @@
+<title>The &#8377;12 Question</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Libre+Franklin:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root {
+  --bg: #FBFAF7;
+  --surface: #F2F1EB;
+  --surface-2: #EAE9E1;
+  --border: #DAD9D0;
+  --text: #1A1D1E;
+  --text-dim: #63675F;
+  --accent: #0E7C5A;
+  --accent-weak: #E1EEE8;
+  --pos: #0E7C5A;
+  --neg: #A63A2B;
+  --warn: #9A6B15;
+  --shadow: 0 1px 2px rgba(20,25,20,.06), 0 8px 24px -12px rgba(20,25,20,.14);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14161A;
+    --surface: #1C1F24;
+    --surface-2: #23272D;
+    --border: #2E333A;
+    --text: #E9E7DF;
+    --text-dim: #9AA0A0;
+    --accent: #38B189;
+    --accent-weak: #16342A;
+    --pos: #38B189;
+    --neg: #E07A64;
+    --warn: #D0A04A;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px -14px rgba(0,0,0,.55);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14161A;
+  --surface: #1C1F24;
+  --surface-2: #23272D;
+  --border: #2E333A;
+  --text: #E9E7DF;
+  --text-dim: #9AA0A0;
+  --accent: #38B189;
+  --accent-weak: #16342A;
+  --pos: #38B189;
+  --neg: #E07A64;
+  --warn: #D0A04A;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px -14px rgba(0,0,0,.55);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Libre Franklin", system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; text-wrap: balance; line-height: 1.15; margin: 0; }
+h2 { font-size: 1.65rem; letter-spacing: -.01em; }
+h3 { font-size: 1.12rem; font-weight: 600; }
+p { margin: 0; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+.mono { font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace; font-variant-numeric: tabular-nums; }
+.eyebrow {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--text-dim);
+}
+.rule { height: 1px; background: var(--border); border: 0; margin: 0; }
+
+/* ---- masthead ---- */
+header.mast { padding: 52px 0 40px; border-bottom: 1px solid var(--border); }
+.mast .eyebrow { display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; }
+.mast h1 {
+  font-size: clamp(2.6rem, 6vw, 4.1rem);
+  font-weight: 900;
+  font-optical-sizing: auto;
+  letter-spacing: -.025em;
+  margin: 18px 0 0;
+}
+.mast .lede {
+  margin-top: 20px; max-width: 40ch; font-size: 1.16rem; color: var(--text-dim);
+}
+.mast .lede strong { color: var(--text); font-weight: 600; }
+
+.theme-btn {
+  position: fixed; top: 14px; right: 14px; z-index: 20;
+  font-family: "IBM Plex Mono", monospace; font-size: .74rem;
+  background: var(--surface); color: var(--text-dim);
+  border: 1px solid var(--border); border-radius: 999px;
+  padding: 6px 12px; cursor: pointer;
+}
+.theme-btn:hover { color: var(--text); }
+
+/* ---- section scaffolding ---- */
+section { padding: 46px 0; border-bottom: 1px solid var(--border); }
+.sec-head { display: flex; gap: 16px; align-items: baseline; margin-bottom: 8px; }
+.sec-head .num {
+  font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--accent);
+  padding-top: .4rem;
+}
+.sec-intro { max-width: 62ch; color: var(--text-dim); margin: 10px 0 26px; }
+.sec-intro strong { color: var(--text); font-weight: 600; }
+
+/* ---- pivots ---- */
+.pivots { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-top: 26px; }
+.pivot { background: var(--surface); padding: 18px 20px; }
+.pivot .v { font-family: "Fraunces", serif; font-size: 1.9rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.pivot .k { font-size: .82rem; color: var(--text-dim); margin-top: 2px; }
+
+.assume {
+  margin-top: 22px; padding: 14px 16px 14px 18px;
+  border-left: 3px solid var(--warn); background: var(--surface);
+  font-size: .92rem; color: var(--text-dim); border-radius: 0 8px 8px 0;
+}
+.assume b { color: var(--warn); }
+
+/* ---- scorecard table ---- */
+.tbl-scroll { overflow-x: auto; margin-top: 8px; }
+table.score { width: 100%; border-collapse: collapse; font-size: .92rem; min-width: 640px; }
+table.score th, table.score td { padding: 11px 12px; text-align: right; white-space: nowrap; }
+table.score th {
+  font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: .72rem;
+  letter-spacing: .04em; text-transform: uppercase; color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+}
+table.score td { border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums; }
+table.score td:first-child, table.score th:first-child { text-align: left; }
+table.score tr[data-hero="1"] td { background: var(--accent-weak); }
+table.score .pol { font-weight: 600; font-family: "IBM Plex Mono", monospace; font-size: .86rem; }
+.netcell { display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
+.netbar { height: 8px; border-radius: 2px; background: var(--accent); opacity: .5; }
+tr[data-hero="1"] .netbar { opacity: 1; }
+.pill {
+  display: inline-block; min-width: 1.5rem; padding: 1px 7px; border-radius: 999px;
+  font-family: "IBM Plex Mono", monospace; font-size: .8rem; font-weight: 600;
+}
+.pill.ok { background: var(--accent-weak); color: var(--accent); }
+.pill.bad { background: color-mix(in srgb, var(--neg) 18%, transparent); color: var(--neg); }
+.caption { font-size: .85rem; color: var(--text-dim); margin-top: 14px; max-width: 62ch; }
+
+/* ---- cohort split ---- */
+.cohorts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 8px; }
+@media (max-width: 720px) { .cohorts { grid-template-columns: 1fr; } }
+.cohort { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+.cohort h3 { display: flex; justify-content: space-between; align-items: baseline; }
+.cohort h3 .sub { font-family: "IBM Plex Mono", monospace; font-size: .74rem; color: var(--text-dim); font-weight: 400; }
+.cbar-row { display: grid; grid-template-columns: 128px 1fr; gap: 10px; align-items: center; margin-top: 12px; font-size: .84rem; }
+.cbar-row .lbl { font-family: "IBM Plex Mono", monospace; font-size: .78rem; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; }
+.cbar-track { position: relative; height: 22px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+.cbar-fill { position: absolute; inset: 0 auto 0 0; background: var(--accent); opacity: .82; }
+.cbar-val { position: absolute; right: 7px; top: 0; line-height: 22px; font-size: .76rem; font-variant-numeric: tabular-nums; color: var(--text); }
+
+/* ---- doomed retries ---- */
+.doomed { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 10px; }
+.doomed .chip {
+  border: 1px solid var(--border); background: var(--surface); border-radius: 8px;
+  padding: 10px 13px; font-size: .84rem;
+}
+.doomed .chip .r { font-family: "IBM Plex Mono", monospace; font-size: .8rem; }
+.doomed .chip .n { font-variant-numeric: tabular-nums; font-weight: 600; }
+.doomed .chip .n.neg { color: var(--neg); }
+.doomed .chip .n.pos { color: var(--pos); }
+
+/* ---- sensitivity grid ---- */
+.sweep-layout { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 28px; margin-top: 8px; }
+@media (max-width: 860px) { .sweep-layout { grid-template-columns: 1fr; } }
+.heat { --cell: 1fr; }
+.heat-grid {
+  display: grid;
+  grid-template-columns: 46px repeat(7, 1fr);
+  gap: 3px;
+}
+.heat-grid .ch, .heat-grid .rh {
+  font-family: "IBM Plex Mono", monospace; font-size: .72rem; color: var(--text-dim);
+  display: flex; align-items: center; justify-content: center;
+}
+.heat-grid .rh { justify-content: flex-end; padding-right: 6px; }
+.heat-cell {
+  aspect-ratio: 1 / 1; border-radius: 3px; cursor: pointer; position: relative;
+  border: 1.5px solid transparent;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "IBM Plex Mono", monospace; font-size: .68rem; font-weight: 500;
+  transition: transform .08s ease;
+}
+.heat-cell:hover { transform: scale(1.06); z-index: 2; }
+.heat-cell[aria-selected="true"] { border-color: var(--text); }
+.heat-grid .ch.realistic { color: var(--text); border-bottom: 2px solid var(--accent); }
+.heat-band-note { font-size: .78rem; color: var(--text-dim); margin-top: 10px; display: flex; gap: 16px; flex-wrap: wrap; }
+.heat-band-note b { color: var(--text); }
+.heat-legend { display: flex; align-items: center; gap: 8px; font-family: "IBM Plex Mono", monospace; font-size: .7rem; color: var(--text-dim); margin-top: 12px; }
+.heat-legend .grad { height: 10px; width: 160px; border-radius: 2px; background: linear-gradient(90deg, var(--neg), var(--surface-2), var(--pos)); }
+.axis-cap { font-family: "IBM Plex Mono", monospace; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); }
+.axis-cap.x { text-align: center; margin-top: 8px; }
+
+.readout { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+.readout .rtitle { font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--text-dim); }
+.readout .rtitle b { color: var(--text); }
+.readout .verdict { font-family: "Fraunces", serif; font-size: 1.15rem; margin: 6px 0 14px; }
+.readout .verdict.win { color: var(--pos); }
+.readout .verdict.lose { color: var(--neg); }
+.rrow { display: grid; grid-template-columns: 118px 1fr 68px; gap: 9px; align-items: center; font-size: .8rem; margin-top: 7px; }
+.rrow .rl { font-family: "IBM Plex Mono", monospace; font-size: .75rem; color: var(--text-dim); }
+.rrow .rt { height: 16px; background: var(--surface-2); border-radius: 2px; overflow: hidden; position: relative; }
+.rrow .rf { position: absolute; inset: 0 auto 0 0; background: var(--text-dim); opacity: .5; }
+.rrow.is-ladder .rf { background: var(--accent); opacity: 1; }
+.rrow.is-base .rf { background: var(--text-dim); opacity: .8; }
+.rrow .rv { text-align: right; font-variant-numeric: tabular-nums; font-size: .76rem; }
+.chart-wrap { margin-top: 16px; }
+svg.linechart { width: 100%; height: auto; display: block; }
+svg.linechart text { font-family: "IBM Plex Mono", monospace; font-size: 9px; fill: var(--text-dim); }
+
+/* ---- guardrails ---- */
+.gate-top { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+.gate-badge {
+  font-family: "Fraunces", serif; font-weight: 900; font-size: 2.4rem;
+  color: var(--accent); line-height: 1;
+}
+.gate-badge span { font-family: "Libre Franklin", sans-serif; font-weight: 500; font-size: .9rem; color: var(--text-dim); display: block; }
+.rules { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-top: 20px; }
+.rules .r { background: var(--surface); padding: 13px 15px; font-size: .86rem; }
+.rules .r .rn { font-family: "IBM Plex Mono", monospace; font-size: .74rem; color: var(--accent); }
+.rules .r .rd { color: var(--text-dim); margin-top: 2px; }
+
+/* ---- traces ---- */
+.trace { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); margin-top: 16px; overflow: hidden; }
+.trace .thead { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; align-items: baseline; }
+.trace .thead .tl { font-weight: 600; }
+.trace .thead .tm { font-family: "IBM Plex Mono", monospace; font-size: .76rem; color: var(--text-dim); }
+.trace ol { margin: 0; padding: 8px 16px 14px; list-style: none; }
+.trace li { display: grid; grid-template-columns: 26px 1fr; gap: 12px; padding: 5px 0; font-size: .84rem; align-items: baseline; }
+.trace li .st { font-family: "IBM Plex Mono", monospace; font-size: .72rem; color: var(--text-dim); }
+.trace li .ev { }
+.trace li .ev .k { font-family: "IBM Plex Mono", monospace; font-size: .78rem; }
+.trace li.k-action .k { color: var(--accent); }
+.trace li.k-blocked .k { color: var(--warn); }
+.trace li.k-stop .k { color: var(--neg); }
+.trace li.k-ptp_created .k, .trace li.k-ptp_resolved .k { color: var(--text); }
+.trace li .meta { color: var(--text-dim); }
+
+/* ---- call scripts ---- */
+.calls { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 8px; }
+.call { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.call .ch { display: flex; justify-content: space-between; font-family: "IBM Plex Mono", monospace; font-size: .76rem; color: var(--text-dim); }
+.call .amt { color: var(--text); font-weight: 600; }
+.call .script { font-size: .9rem; line-height: 1.62; }
+.call .reason-tag { align-self: flex-start; font-family: "IBM Plex Mono", monospace; font-size: .72rem; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--text-dim); }
+
+/* ---- footer ---- */
+footer { padding: 40px 0 64px; color: var(--text-dim); font-size: .86rem; }
+footer .run { font-family: "IBM Plex Mono", monospace; font-size: .8rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; margin-top: 14px; white-space: pre-wrap; overflow-x: auto; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<button class="theme-btn" id="themeBtn" type="button">theme</button>
+
+<div class="wrap">
+  <header class="mast">
+    <div class="eyebrow">
+      <span>Razorpay Buildathon</span><span>Track 03</span><span>synthetic ledger &middot; seed 20260903</span>
+    </div>
+    <h1>The &#8377;12 Question</h1>
+    <p class="lede">A Hinglish voice call costs <strong>~&#8377;12</strong>. Most failed payments aren&rsquo;t worth &#8377;12. The agent&rsquo;s real job is deciding <strong>who</strong> to call &mdash; and <strong>when to stop</strong>.</p>
+  </header>
+
+  <section id="thesis">
+    <div class="sec-head"><span class="num">01</span><h2>The wager</h2></div>
+    <p class="sec-intro">Five recovery policies run over the same 250-account book of failed payments. Every one passes through the same hard guardrail gate. The sequential <strong>ladder</strong> scores each still-allowed channel by expected net rupees and acts only when that number clears zero; the four fixed playbooks just run their script.</p>
+    <div class="pivots" id="pivots"></div>
+    <div class="assume"><b>These are assumptions, not data.</b> Every recovery probability lives in <span class="mono">world.py</span> and was invented to be plausible, not fitted to a real ledger. The pickup rate, the promise-to-pay conversion, the voice lift &mdash; all guessed. Section 04 sweeps them.</div>
+  </section>
+
+  <section id="scorecard">
+    <div class="sec-head"><span class="num">02</span><h2>Scorecard</h2></div>
+    <p class="sec-intro">Net is recovered rupees minus spend. <span class="mono">&#8377;/&#8377;100</span> is what each policy spends to recover &#8377;100. <strong>Guardrail violations must be 0</strong> &mdash; checked by an auditor that re-derives every rule from the emitted trail.</p>
+    <div class="tbl-scroll">
+      <table class="score" id="scoreTable"></table>
+    </div>
+    <p class="caption" id="scoreCaption"></p>
+  </section>
+
+  <section id="cohorts">
+    <div class="sec-head"><span class="num">03</span><h2>Where the edge comes from</h2></div>
+    <p class="sec-intro" id="cohortIntro"></p>
+    <div class="cohorts" id="cohortCards"></div>
+    <h3 style="margin-top:30px">Retrying the doomed has a price</h3>
+    <p class="sec-intro" style="margin-bottom:14px">A silent retry costs &#8377;0.50 and cannot fix an expired card or a revoked mandate. <span class="mono">retry_only</span> goes <em>negative</em> on exactly those reasons; the ladder scores them at zero and stops.</p>
+    <div class="doomed" id="doomed"></div>
+  </section>
+
+  <section id="sweep">
+    <div class="sec-head"><span class="num">04</span><h2>How wrong can the assumptions be?</h2></div>
+    <p class="sec-intro">The whole case pivots on two guessed numbers: the voice <strong>lift</strong> (how much a call really helps) and the voice <strong>cost</strong>. Each cell runs all five policies. Colour is the ladder&rsquo;s net minus the best fixed playbook&rsquo;s (<span class="mono" id="baseName"></span>). Pick a cell.</p>
+    <div class="sweep-layout">
+      <div class="heat">
+        <div class="axis-cap">stress &times; voice cost &rarr;</div>
+        <div class="heat-grid" id="heatGrid"></div>
+        <div class="axis-cap x">voice call cost (&#8377;)</div>
+        <div class="heat-legend"><span>ladder behind</span><span class="grad"></span><span>ladder ahead</span></div>
+        <div class="heat-band-note" id="crossover"></div>
+      </div>
+      <div class="readout" id="readout"></div>
+    </div>
+  </section>
+
+  <section id="gate">
+    <div class="sec-head"><span class="num">05</span><h2>The hard gate</h2></div>
+    <p class="sec-intro">Not a prompt instruction &mdash; a gate. Every candidate action is checked before it can be played, and dropped from the choice set if it fails. A second, independent function re-derives all of it from the audit trail, so a gate bug surfaces as a counted violation instead of leaking.</p>
+    <div class="gate-top">
+      <div class="gate-badge" id="violTotal">0<span>guardrail violations, all 5 policies</span></div>
+    </div>
+    <div class="rules" id="rules"></div>
+  </section>
+
+  <section id="traces">
+    <div class="sec-head"><span class="num">06</span><h2>Decision traces</h2></div>
+    <p class="sec-intro">Straight from <span class="mono">audit/ladder.jsonl</span> &mdash; the ladder&rsquo;s own reasoning, one failed payment at a time.</p>
+    <div id="traceList"></div>
+  </section>
+
+  <section id="calls">
+    <div class="sec-head"><span class="num">07</span><h2>The &#8377;12 call, rendered</h2></div>
+    <p class="sec-intro">For the calls the ladder actually chose, <span class="mono">recovery/voice.py</span> writes a reason-specific Hinglish script with <span class="mono">sarvam-105b</span> and renders it to a <span class="mono">.wav</span> with Sarvam&rsquo;s Bulbul TTS. Scripts are model output, so they vary run to run; the economic model does not. No real number is ever dialled.</p>
+    <div class="calls" id="callList"></div>
+  </section>
+
+  <footer class="wrap" style="padding-left:0;padding-right:0">
+    <p><strong>recovery/</strong> &mdash; stdlib only, no dependencies, deterministic from a seed. All figures on this page are synthetic and generated by <span class="mono">python -m recovery.dashboard</span>.</p>
+    <div class="run" id="runline"></div>
+  </footer>
+</div>
+
+<script id="data" type="application/json">{"meta":{"seed":20260903,"stress":1.0,"voice_budget":1200.0,"human_cap":25,"voice_cost":12.0,"voice_pickup_rate":0.62,"generated_note":"all figures synthetic; priors are assumptions (see world.py)"},"rules":{"contact_window":["09:00","19:00"],"contact_cap_7d":3,"voice_attempts_max":2,"codes":["dnc","contact_window","contact_cap_7d","ptp_suppression","no_phone","voice_attempts_max","voice_budget","human_capacity"]},"interventions":{"silent_retry":0.5,"sms_link":0.2,"whatsapp_nudge":0.35,"voice_call":12.0,"human_escalation":85.0},"taxonomy":{"transient":["bank_downtime","do_not_honour","insufficient_funds","limit_exceeded","technical_decline"],"action_required":["card_expired","invoice_overdue","mandate_expired","mandate_revoked"]},"ledger":{"accounts":250,"at_risk_rupees":4587848.18,"b2b_accounts":67,"b2b_share_of_rupees":0.941,"dnc_accounts":18,"with_open_ptp":15,"by_reason":{"insufficient_funds":71,"bank_downtime":31,"technical_decline":23,"mandate_expired":11,"mandate_revoked":11,"card_expired":26,"limit_exceeded":10,"do_not_honour":25,"invoice_overdue":42}},"policies":[{"policy":"ladder","accounts":250,"recovered":2459020.07,"spend":3612.05,"net":2455408.02,"rate":0.412,"n_recovered":103,"cost_per_100":0.147,"calls":100,"ptps":18,"ptps_paid":10,"stops":28,"violations":0,"violation_breakdown":{},"by_segment":{"B2C":{"accounts":183,"recovered":117432.57,"spend":2172.7,"net":115259.87,"rate":0.4208,"n_recovered":77,"cost_per_100":1.85},"B2B":{"accounts":67,"recovered":2341587.5,"spend":1439.35,"net":2340148.15,"rate":0.3881,"n_recovered":26,"cost_per_100":0.061}},"by_reason":{"insufficient_funds":{"accounts":71,"recovered":181018.75,"spend":807.2,"net":180211.55,"rate":0.2817,"n_recovered":20,"cost_per_100":0.446},"bank_downtime":{"accounts":31,"recovered":1322667.79,"spend":172.65,"net":1322495.14,"rate":0.5806,"n_recovered":18,"cost_per_100":0.013},"technical_decline":{"accounts":23,"recovered":95505.9,"spend":76.05,"net":95429.85,"rate":0.6087,"n_recovered":14,"cost_per_100":0.08},"mandate_expired":{"accounts":11,"recovered":2626.57,"spend":3.75,"net":2622.82,"rate":0.1818,"n_recovered":2,"cost_per_100":0.143},"mandate_revoked":{"accounts":11,"recovered":259062.27,"spend":146.8,"net":258915.47,"rate":0.4545,"n_recovered":5,"cost_per_100":0.057},"card_expired":{"accounts":26,"recovered":215100.45,"spend":457.6,"net":214642.85,"rate":0.4231,"n_recovered":11,"cost_per_100":0.213},"limit_exceeded":{"accounts":10,"recovered":10528.39,"spend":145.3,"net":10383.09,"rate":0.5,"n_recovered":5,"cost_per_100":1.38},"do_not_honour":{"accounts":25,"recovered":52854.92,"spend":591.65,"net":52263.27,"rate":0.28,"n_recovered":7,"cost_per_100":1.119},"invoice_overdue":{"accounts":42,"recovered":319655.03,"spend":1211.05,"net":318443.98,"rate":0.5,"n_recovered":21,"cost_per_100":0.379}}},{"policy":"retry_only","accounts":250,"recovered":1442604.72,"spend":329.0,"net":1442275.72,"rate":0.232,"n_recovered":58,"cost_per_100":0.023,"calls":0,"ptps":0,"ptps_paid":0,"stops":0,"violations":0,"violation_breakdown":{},"by_segment":{"B2C":{"accounts":183,"recovered":77780.27,"spend":237.0,"net":77543.27,"rate":0.2568,"n_recovered":47,"cost_per_100":0.305},"B2B":{"accounts":67,"recovered":1364824.45,"spend":92.0,"net":1364732.45,"rate":0.1642,"n_recovered":11,"cost_per_100":0.007}},"by_reason":{"insufficient_funds":{"accounts":71,"recovered":81494.86,"spend":96.5,"net":81398.36,"rate":0.2113,"n_recovered":15,"cost_per_100":0.118},"bank_downtime":{"accounts":31,"recovered":1247809.22,"spend":32.5,"net":1247776.72,"rate":0.5484,"n_recovered":17,"cost_per_100":0.003},"technical_decline":{"accounts":23,"recovered":95450.33,"spend":21.5,"net":95428.83,"rate":0.6087,"n_recovered":14,"cost_per_100":0.023},"mandate_expired":{"accounts":11,"recovered":0.0,"spend":16.5,"net":-16.5,"rate":0.0,"n_recovered":0,"cost_per_100":null},"mandate_revoked":{"accounts":11,"recovered":0.0,"spend":16.5,"net":-16.5,"rate":0.0,"n_recovered":0,"cost_per_100":null},"card_expired":{"accounts":26,"recovered":0.0,"spend":39.0,"net":-39.0,"rate":0.0,"n_recovered":0,"cost_per_100":null},"limit_exceeded":{"accounts":10,"recovered":9110.42,"spend":12.0,"net":9098.42,"rate":0.4,"n_recovered":4,"cost_per_100":0.132},"do_not_honour":{"accounts":25,"recovered":4466.7,"spend":33.5,"net":4433.2,"rate":0.16,"n_recovered":4,"cost_per_100":0.75},"invoice_overdue":{"accounts":42,"recovered":4273.19,"spend":61.0,"net":4212.19,"rate":0.0952,"n_recovered":4,"cost_per_100":1.428}}},{"policy":"nudge_ladder","accounts":250,"recovered":379615.25,"spend":116.15,"net":379499.1,"rate":0.164,"n_recovered":41,"cost_per_100":0.031,"calls":0,"ptps":0,"ptps_paid":0,"stops":0,"violations":0,"violation_breakdown":{},"by_segment":{"B2C":{"accounts":183,"recovered":41326.57,"spend":81.15,"net":41245.42,"rate":0.1639,"n_recovered":30,"cost_per_100":0.196},"B2B":{"accounts":67,"recovered":338288.68,"spend":35.0,"net":338253.68,"rate":0.1642,"n_recovered":11,"cost_per_100":0.01}},"by_reason":{"insufficient_funds":{"accounts":71,"recovered":76173.42,"spend":34.75,"net":76138.67,"rate":0.169,"n_recovered":12,"cost_per_100":0.046},"bank_downtime":{"accounts":31,"recovered":40959.15,"spend":16.65,"net":40942.5,"rate":0.1935,"n_recovered":6,"cost_per_100":0.041},"technical_decline":{"accounts":23,"recovered":4896.49,"spend":9.35,"net":4887.14,"rate":0.1304,"n_recovered":3,"cost_per_100":0.191},"mandate_expired":{"accounts":11,"recovered":2626.57,"spend":3.0,"net":2623.57,"rate":0.1818,"n_recovered":2,"cost_per_100":0.114},"mandate_revoked":{"accounts":11,"recovered":583.33,"spend":4.3,"net":579.03,"rate":0.0909,"n_recovered":1,"cost_per_100":0.737},"card_expired":{"accounts":26,"recovered":159517.32,"spend":13.45,"net":159503.87,"rate":0.3077,"n_recovered":8,"cost_per_100":0.008},"limit_exceeded":{"accounts":10,"recovered":3094.29,"spend":4.3,"net":3089.99,"rate":0.2,"n_recovered":2,"cost_per_100":0.139},"do_not_honour":{"accounts":25,"recovered":2677.34,"spend":10.85,"net":2666.49,"rate":0.08,"n_recovered":2,"cost_per_100":0.405},"invoice_overdue":{"accounts":42,"recovered":89087.34,"spend":19.5,"net":89067.84,"rate":0.119,"n_recovered":5,"cost_per_100":0.022}}},{"policy":"call_first","accounts":250,"recovered":605924.68,"spend":1253.55,"net":604671.13,"rate":0.16,"n_recovered":40,"cost_per_100":0.207,"calls":100,"ptps":15,"ptps_paid":10,"stops":0,"violations":0,"violation_breakdown":{},"by_segment":{"B2C":{"accounts":183,"recovered":34271.2,"spend":794.85,"net":33476.35,"rate":0.1421,"n_recovered":26,"cost_per_100":2.319},"B2B":{"accounts":67,"recovered":571653.48,"spend":458.7,"net":571194.78,"rate":0.209,"n_recovered":14,"cost_per_100":0.08}},"by_reason":{"insufficient_funds":{"accounts":71,"recovered":146743.11,"spend":388.1,"net":146355.01,"rate":0.1268,"n_recovered":9,"cost_per_100":0.264},"bank_downtime":{"accounts":31,"recovered":125209.28,"spend":211.7,"net":124997.58,"rate":0.1613,"n_recovered":5,"cost_per_100":0.169},"technical_decline":{"accounts":23,"recovered":52121.23,"spend":88.2,"net":52033.03,"rate":0.2174,"n_recovered":5,"cost_per_100":0.169},"mandate_expired":{"accounts":11,"recovered":1120.57,"spend":1.75,"net":1118.82,"rate":0.0909,"n_recovered":1,"cost_per_100":0.156},"mandate_revoked":{"accounts":11,"recovered":3543.1,"spend":37.75,"net":3505.35,"rate":0.1818,"n_recovered":2,"cost_per_100":1.065},"card_expired":{"accounts":26,"recovered":181044.56,"spend":89.95,"net":180954.61,"rate":0.3462,"n_recovered":9,"cost_per_100":0.05},"limit_exceeded":{"accounts":10,"recovered":1800.72,"spend":50.1,"net":1750.62,"rate":0.2,"n_recovered":2,"cost_per_100":2.782},"do_not_honour":{"accounts":25,"recovered":333.01,"spend":137.25,"net":195.76,"rate":0.04,"n_recovered":1,"cost_per_100":41.215},"invoice_overdue":{"accounts":42,"recovered":94009.1,"spend":248.75,"net":93760.35,"rate":0.1429,"n_recovered":6,"cost_per_100":0.265}}},{"policy":"standard_playbook","accounts":250,"recovered":2095536.33,"spend":1781.1,"net":2093755.23,"rate":0.364,"n_recovered":91,"cost_per_100":0.085,"calls":96,"ptps":18,"ptps_paid":16,"stops":0,"violations":0,"violation_breakdown":{},"by_segment":{"B2C":{"accounts":183,"recovered":108634.67,"spend":1158.15,"net":107476.52,"rate":0.3825,"n_recovered":70,"cost_per_100":1.066},"B2B":{"accounts":67,"recovered":1986901.66,"spend":622.95,"net":1986278.71,"rate":0.3134,"n_recovered":21,"cost_per_100":0.031}},"by_reason":{"insufficient_funds":{"accounts":71,"recovered":91635.85,"spend":591.5,"net":91044.35,"rate":0.2817,"n_recovered":20,"cost_per_100":0.645},"bank_downtime":{"accounts":31,"recovered":1307179.77,"spend":216.95,"net":1306962.82,"rate":0.5161,"n_recovered":16,"cost_per_100":0.017},"technical_decline":{"accounts":23,"recovered":95450.33,"spend":50.1,"net":95400.23,"rate":0.6087,"n_recovered":14,"cost_per_100":0.052},"mandate_expired":{"accounts":11,"recovered":32861.53,"spend":43.9,"net":32817.63,"rate":0.2727,"n_recovered":3,"cost_per_100":0.134},"mandate_revoked":{"accounts":11,"recovered":253542.49,"spend":56.8,"net":253485.69,"rate":0.1818,"n_recovered":2,"cost_per_100":0.022},"card_expired":{"accounts":26,"recovered":152841.14,"spend":240.0,"net":152601.14,"rate":0.3077,"n_recovered":8,"cost_per_100":0.157},"limit_exceeded":{"accounts":10,"recovered":10888.32,"spend":43.6,"net":10844.72,"rate":0.6,"n_recovered":6,"cost_per_100":0.4},"do_not_honour":{"accounts":25,"recovered":22124.67,"spend":225.75,"net":21898.92,"rate":0.36,"n_recovered":9,"cost_per_100":1.02},"invoice_overdue":{"accounts":42,"recovered":129012.23,"spend":312.5,"net":128699.73,"rate":0.3095,"n_recovered":13,"cost_per_100":0.242}}}],"total_violations":0,"sweep":{"seed":20260903,"voice_budget":1200.0,"human_cap":25,"baseline":"standard_playbook","stress_grid":[0.4,0.6,0.8,1.0,1.2,1.4,1.6],"cost_grid":[6.0,8.0,10.0,12.0,16.0,20.0,24.0],"cells":[{"stress":0.4,"voice_cost":6.0,"ladder_net":2297089.97,"baseline_net":2016808.84,"ladder_minus_baseline":280281.13,"ladder_calls":200,"ladder_cost_per_100":0.156,"ladder_wins":true,"violations":0,"nets":{"ladder":2297089.97,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1007879.64,"standard_playbook":2016808.84}},{"stress":0.4,"voice_cost":8.0,"ladder_net":2266974.89,"baseline_net":2016616.84,"ladder_minus_baseline":250358.05,"ladder_calls":150,"ladder_cost_per_100":0.158,"ladder_wins":true,"violations":0,"nets":{"ladder":2266974.89,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1010762.62,"standard_playbook":2016616.84}},{"stress":0.4,"voice_cost":10.0,"ladder_net":2274869.29,"baseline_net":2016424.84,"ladder_minus_baseline":258444.45,"ladder_calls":120,"ladder_cost_per_100":0.158,"ladder_wins":true,"violations":0,"nets":{"ladder":2274869.29,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":749393.31,"standard_playbook":2016424.84}},{"stress":0.4,"voice_cost":12.0,"ladder_net":2262931.26,"baseline_net":2016232.84,"ladder_minus_baseline":246698.42,"ladder_calls":100,"ladder_cost_per_100":0.16,"ladder_wins":true,"violations":0,"nets":{"ladder":2262931.26,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":569645.51,"standard_playbook":2016232.84}},{"stress":0.4,"voice_cost":16.0,"ladder_net":1979949.56,"baseline_net":2014987.41,"ladder_minus_baseline":-35037.85,"ladder_calls":75,"ladder_cost_per_100":0.183,"ladder_wins":false,"violations":0,"nets":{"ladder":1979949.56,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":569312.2,"standard_playbook":2014987.41}},{"stress":0.4,"voice_cost":20.0,"ladder_net":1829188.15,"baseline_net":1994781.4,"ladder_minus_baseline":-165593.25,"ladder_calls":60,"ladder_cost_per_100":0.198,"ladder_wins":false,"violations":0,"nets":{"ladder":1829188.15,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":577929.04,"standard_playbook":1994781.4}},{"stress":0.4,"voice_cost":24.0,"ladder_net":1830908.61,"baseline_net":1994872.91,"ladder_minus_baseline":-163964.3,"ladder_calls":50,"ladder_cost_per_100":0.198,"ladder_wins":false,"violations":0,"nets":{"ladder":1830908.61,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":441818.44,"standard_playbook":1994872.91}},{"stress":0.6,"voice_cost":6.0,"ladder_net":2384461.69,"baseline_net":2016808.84,"ladder_minus_baseline":367652.85,"ladder_calls":200,"ladder_cost_per_100":0.15,"ladder_wins":true,"violations":0,"nets":{"ladder":2384461.69,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1055044.26,"standard_playbook":2016808.84}},{"stress":0.6,"voice_cost":8.0,"ladder_net":2354347.06,"baseline_net":2016616.84,"ladder_minus_baseline":337730.22,"ladder_calls":150,"ladder_cost_per_100":0.152,"ladder_wins":true,"violations":0,"nets":{"ladder":2354347.06,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1047764.92,"standard_playbook":2016616.84}},{"stress":0.6,"voice_cost":10.0,"ladder_net":2349747.46,"baseline_net":2016424.84,"ladder_minus_baseline":333322.62,"ladder_calls":120,"ladder_cost_per_100":0.153,"ladder_wins":true,"violations":0,"nets":{"ladder":2349747.46,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":786395.26,"standard_playbook":2016424.84}},{"stress":0.6,"voice_cost":12.0,"ladder_net":2344462.22,"baseline_net":2016232.84,"ladder_minus_baseline":328229.38,"ladder_calls":100,"ladder_cost_per_100":0.154,"ladder_wins":true,"violations":0,"nets":{"ladder":2344462.22,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":604670.78,"standard_playbook":2016232.84}},{"stress":0.6,"voice_cost":16.0,"ladder_net":1912832.35,"baseline_net":2014987.41,"ladder_minus_baseline":-102155.06,"ladder_calls":75,"ladder_cost_per_100":0.189,"ladder_wins":false,"violations":0,"nets":{"ladder":1912832.35,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":604337.47,"standard_playbook":2014987.41}},{"stress":0.6,"voice_cost":20.0,"ladder_net":1862508.52,"baseline_net":1994781.4,"ladder_minus_baseline":-132272.88,"ladder_calls":60,"ladder_cost_per_100":0.195,"ladder_wins":false,"violations":0,"nets":{"ladder":1862508.52,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":577929.04,"standard_playbook":1994781.4}},{"stress":0.6,"voice_cost":24.0,"ladder_net":1862439.56,"baseline_net":1994872.91,"ladder_minus_baseline":-132433.35,"ladder_calls":50,"ladder_cost_per_100":0.195,"ladder_wins":false,"violations":0,"nets":{"ladder":1862439.56,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":441818.44,"standard_playbook":1994872.91}},{"stress":0.8,"voice_cost":6.0,"ladder_net":2408726.33,"baseline_net":2019020.26,"ladder_minus_baseline":389706.07,"ladder_calls":200,"ladder_cost_per_100":0.148,"ladder_wins":true,"violations":0,"nets":{"ladder":2408726.33,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1056636.36,"standard_playbook":2019020.26}},{"stress":0.8,"voice_cost":8.0,"ladder_net":2378125.67,"baseline_net":2018828.26,"ladder_minus_baseline":359297.41,"ladder_calls":150,"ladder_cost_per_100":0.151,"ladder_wins":true,"violations":0,"nets":{"ladder":2378125.67,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1058502.78,"standard_playbook":2018828.26}},{"stress":0.8,"voice_cost":10.0,"ladder_net":2373526.07,"baseline_net":2018636.26,"ladder_minus_baseline":354889.81,"ladder_calls":120,"ladder_cost_per_100":0.152,"ladder_wins":true,"violations":0,"nets":{"ladder":2373526.07,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":789148.31,"standard_playbook":2018636.26}},{"stress":0.8,"voice_cost":12.0,"ladder_net":2365270.18,"baseline_net":2018444.26,"ladder_minus_baseline":346825.92,"ladder_calls":100,"ladder_cost_per_100":0.153,"ladder_wins":true,"violations":0,"nets":{"ladder":2365270.18,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":604671.13,"standard_playbook":2018444.26}},{"stress":0.8,"voice_cost":16.0,"ladder_net":1930707.04,"baseline_net":2017198.83,"ladder_minus_baseline":-86491.79,"ladder_calls":75,"ladder_cost_per_100":0.188,"ladder_wins":false,"violations":0,"nets":{"ladder":1930707.04,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":604337.47,"standard_playbook":2017198.83}},{"stress":0.8,"voice_cost":20.0,"ladder_net":1881720.59,"baseline_net":1995970.0,"ladder_minus_baseline":-114249.41,"ladder_calls":60,"ladder_cost_per_100":0.193,"ladder_wins":false,"violations":0,"nets":{"ladder":1881720.59,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":577929.04,"standard_playbook":1995970.0}},{"stress":0.8,"voice_cost":24.0,"ladder_net":1883256.51,"baseline_net":1994872.91,"ladder_minus_baseline":-111616.4,"ladder_calls":50,"ladder_cost_per_100":0.193,"ladder_wins":false,"violations":0,"nets":{"ladder":1883256.51,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":487529.23,"standard_playbook":1994872.91}},{"stress":1.0,"voice_cost":6.0,"ladder_net":2496183.99,"baseline_net":2094331.23,"ladder_minus_baseline":401852.76,"ladder_calls":200,"ladder_cost_per_100":0.143,"ladder_wins":true,"violations":0,"nets":{"ladder":2496183.99,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1169251.25,"standard_playbook":2094331.23}},{"stress":1.0,"voice_cost":8.0,"ladder_net":2465188.94,"baseline_net":2094139.23,"ladder_minus_baseline":371049.71,"ladder_calls":150,"ladder_cost_per_100":0.145,"ladder_wins":true,"violations":0,"nets":{"ladder":2465188.94,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1171117.32,"standard_playbook":2094139.23}},{"stress":1.0,"voice_cost":10.0,"ladder_net":2466983.24,"baseline_net":2093947.23,"ladder_minus_baseline":373036.01,"ladder_calls":120,"ladder_cost_per_100":0.146,"ladder_wins":true,"violations":0,"nets":{"ladder":2466983.24,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":863472.98,"standard_playbook":2093947.23}},{"stress":1.0,"voice_cost":12.0,"ladder_net":2455408.02,"baseline_net":2093755.23,"ladder_minus_baseline":361652.79,"ladder_calls":100,"ladder_cost_per_100":0.147,"ladder_wins":true,"violations":0,"nets":{"ladder":2455408.02,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":604671.13,"standard_playbook":2093755.23}},{"stress":1.0,"voice_cost":16.0,"ladder_net":2130805.04,"baseline_net":2092509.8,"ladder_minus_baseline":38295.24,"ladder_calls":75,"ladder_cost_per_100":0.17,"ladder_wins":true,"violations":0,"nets":{"ladder":2130805.04,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":604337.47,"standard_playbook":2092509.8}},{"stress":1.0,"voice_cost":20.0,"ladder_net":1934077.74,"baseline_net":2071280.97,"ladder_minus_baseline":-137203.23,"ladder_calls":60,"ladder_cost_per_100":0.188,"ladder_wins":false,"violations":0,"nets":{"ladder":1934077.74,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":578686.34,"standard_playbook":2071280.97}},{"stress":1.0,"voice_cost":24.0,"ladder_net":1935613.01,"baseline_net":2070183.88,"ladder_minus_baseline":-134570.87,"ladder_calls":50,"ladder_cost_per_100":0.188,"ladder_wins":false,"violations":0,"nets":{"ladder":1935613.01,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":487529.23,"standard_playbook":2070183.88}},{"stress":1.2,"voice_cost":6.0,"ladder_net":2556185.67,"baseline_net":2164471.77,"ladder_minus_baseline":391713.9,"ladder_calls":200,"ladder_cost_per_100":0.139,"ladder_wins":true,"violations":0,"nets":{"ladder":2556185.67,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1174081.51,"standard_playbook":2164471.77}},{"stress":1.2,"voice_cost":8.0,"ladder_net":2519225.71,"baseline_net":2164279.77,"ladder_minus_baseline":354945.94,"ladder_calls":150,"ladder_cost_per_100":0.142,"ladder_wins":true,"violations":0,"nets":{"ladder":2519225.71,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1173913.37,"standard_playbook":2164279.77}},{"stress":1.2,"voice_cost":10.0,"ladder_net":2522179.23,"baseline_net":2164087.77,"ladder_minus_baseline":358091.46,"ladder_calls":120,"ladder_cost_per_100":0.143,"ladder_wins":true,"violations":0,"nets":{"ladder":2522179.23,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1156531.06,"standard_playbook":2164087.77}},{"stress":1.2,"voice_cost":12.0,"ladder_net":2511800.25,"baseline_net":2163895.77,"ladder_minus_baseline":347904.48,"ladder_calls":100,"ladder_cost_per_100":0.144,"ladder_wins":true,"violations":0,"nets":{"ladder":2511800.25,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":681791.5,"standard_playbook":2163895.77}},{"stress":1.2,"voice_cost":16.0,"ladder_net":2150148.27,"baseline_net":2162650.34,"ladder_minus_baseline":-12502.07,"ladder_calls":75,"ladder_cost_per_100":0.168,"ladder_wins":false,"violations":0,"nets":{"ladder":2150148.27,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":607133.17,"standard_playbook":2162650.34}},{"stress":1.2,"voice_cost":20.0,"ladder_net":1983532.66,"baseline_net":2141421.51,"ladder_minus_baseline":-157888.85,"ladder_calls":60,"ladder_cost_per_100":0.183,"ladder_wins":false,"violations":0,"nets":{"ladder":1983532.66,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":567912.75,"standard_playbook":2141421.51}},{"stress":1.2,"voice_cost":24.0,"ladder_net":1935612.51,"baseline_net":2140324.42,"ladder_minus_baseline":-204711.91,"ladder_calls":50,"ladder_cost_per_100":0.188,"ladder_wins":false,"violations":0,"nets":{"ladder":1935612.51,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":493134.34,"standard_playbook":2140324.42}},{"stress":1.4,"voice_cost":6.0,"ladder_net":2554598.02,"baseline_net":2164471.77,"ladder_minus_baseline":390126.25,"ladder_calls":200,"ladder_cost_per_100":0.139,"ladder_wins":true,"violations":0,"nets":{"ladder":2554598.02,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1193429.85,"standard_playbook":2164471.77}},{"stress":1.4,"voice_cost":8.0,"ladder_net":2514873.05,"baseline_net":2164279.77,"ladder_minus_baseline":350593.28,"ladder_calls":150,"ladder_cost_per_100":0.142,"ladder_wins":true,"violations":0,"nets":{"ladder":2514873.05,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1193732.69,"standard_playbook":2164279.77}},{"stress":1.4,"voice_cost":10.0,"ladder_net":2518833.53,"baseline_net":2164087.77,"ladder_minus_baseline":354745.76,"ladder_calls":120,"ladder_cost_per_100":0.143,"ladder_wins":true,"violations":0,"nets":{"ladder":2518833.53,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1175879.4,"standard_playbook":2164087.77}},{"stress":1.4,"voice_cost":12.0,"ladder_net":2468912.89,"baseline_net":2163895.77,"ladder_minus_baseline":305017.12,"ladder_calls":100,"ladder_cost_per_100":0.146,"ladder_wins":true,"violations":0,"nets":{"ladder":2468912.89,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":702406.59,"standard_playbook":2163895.77}},{"stress":1.4,"voice_cost":16.0,"ladder_net":2125600.78,"baseline_net":2162650.34,"ladder_minus_baseline":-37049.56,"ladder_calls":75,"ladder_cost_per_100":0.17,"ladder_wins":false,"violations":0,"nets":{"ladder":2125600.78,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":625397.72,"standard_playbook":2162650.34}},{"stress":1.4,"voice_cost":20.0,"ladder_net":1956592.3,"baseline_net":2141421.51,"ladder_minus_baseline":-184829.21,"ladder_calls":60,"ladder_cost_per_100":0.186,"ladder_wins":false,"violations":0,"nets":{"ladder":1956592.3,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":586177.3,"standard_playbook":2141421.51}},{"stress":1.4,"voice_cost":24.0,"ladder_net":1924635.41,"baseline_net":2140324.42,"ladder_minus_baseline":-215689.01,"ladder_calls":50,"ladder_cost_per_100":0.189,"ladder_wins":false,"violations":0,"nets":{"ladder":1924635.41,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":493134.34,"standard_playbook":2140324.42}},{"stress":1.6,"voice_cost":6.0,"ladder_net":2543678.62,"baseline_net":2165293.08,"ladder_minus_baseline":378385.54,"ladder_calls":200,"ladder_cost_per_100":0.14,"ladder_wins":true,"violations":0,"nets":{"ladder":2543678.62,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1213650.93,"standard_playbook":2165293.08}},{"stress":1.6,"voice_cost":8.0,"ladder_net":2493706.72,"baseline_net":2165101.08,"ladder_minus_baseline":328605.64,"ladder_calls":150,"ladder_cost_per_100":0.144,"ladder_wins":true,"violations":0,"nets":{"ladder":2493706.72,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1196163.52,"standard_playbook":2165101.08}},{"stress":1.6,"voice_cost":10.0,"ladder_net":2483503.79,"baseline_net":2164909.08,"ladder_minus_baseline":318594.71,"ladder_calls":120,"ladder_cost_per_100":0.145,"ladder_wins":true,"violations":0,"nets":{"ladder":2483503.79,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":1177605.96,"standard_playbook":2164909.08}},{"stress":1.6,"voice_cost":12.0,"ladder_net":2470884.67,"baseline_net":2164717.08,"ladder_minus_baseline":306167.59,"ladder_calls":100,"ladder_cost_per_100":0.146,"ladder_wins":true,"violations":0,"nets":{"ladder":2470884.67,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":851872.45,"standard_playbook":2164717.08}},{"stress":1.6,"voice_cost":16.0,"ladder_net":2126852.51,"baseline_net":2162650.34,"ladder_minus_baseline":-35797.83,"ladder_calls":75,"ladder_cost_per_100":0.17,"ladder_wins":false,"violations":0,"nets":{"ladder":2126852.51,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":625397.72,"standard_playbook":2162650.34}},{"stress":1.6,"voice_cost":20.0,"ladder_net":1957844.03,"baseline_net":2141421.51,"ladder_minus_baseline":-183577.48,"ladder_calls":60,"ladder_cost_per_100":0.186,"ladder_wins":false,"violations":0,"nets":{"ladder":1957844.03,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":586177.3,"standard_playbook":2141421.51}},{"stress":1.6,"voice_cost":24.0,"ladder_net":1924635.41,"baseline_net":2140324.42,"ladder_minus_baseline":-215689.01,"ladder_calls":50,"ladder_cost_per_100":0.189,"ladder_wins":false,"violations":0,"nets":{"ladder":1924635.41,"retry_only":1442275.72,"nudge_ladder":379499.1,"call_first":493134.34,"standard_playbook":2140324.42}}],"crossover":{"min_stress_ladder_wins_at_cost_12":0.4,"max_cost_ladder_wins_at_stress_1":16.0,"ladder_wins_everywhere":false}},"traces":[{"label":"big B2B recovered by a call","account_id":"acc_0001","segment":"B2B","reason":"card_expired","amount":52356.3,"prior_failures":0,"language":"hindi","events":[{"event":"episode_start"},{"event":"action","stage":1,"intervention":"human_escalation","cost":85.0,"outcome":"failed","expected_net":19810.39,"p_now":0.38},{"event":"action","stage":2,"intervention":"voice_call","cost":12.0,"outcome":"recovered","expected_net":16999.07,"p_now":0.2292,"p_ptp":0.1368},{"event":"episode_end","recovered":true,"recovered_via":"voice_call","spend":97.0}]},{"label":"promise-to-pay captured on a connected call","account_id":"acc_0005","segment":"B2C","reason":"insufficient_funds","amount":323.3,"prior_failures":1,"language":"marathi","events":[{"event":"episode_start"},{"event":"action","stage":1,"intervention":"voice_call","cost":12.0,"outcome":"ptp","expected_net":55.27,"p_now":0.0744,"p_ptp":0.191},{"event":"ptp_created","stage":1,"due":"2026-09-06"},{"event":"ptp_resolved","result":"paid","due":"2026-09-06"},{"event":"episode_end","recovered":true,"recovered_via":"promise_to_pay","spend":12.0}]},{"label":"small B2C the agent declined to chase","account_id":"acc_0034","segment":"B2C","reason":"card_expired","amount":259.28,"prior_failures":3,"language":"hindi","events":[{"event":"episode_start"},{"event":"blocked","stage":1,"rule":"no_phone","channels":"voice_call"},{"event":"action","stage":1,"intervention":"whatsapp_nudge","cost":0.35,"outcome":"failed","expected_net":40.03,"p_now":0.1557},{"event":"blocked","stage":2,"rule":"contact_cap_7d","channels":"sms_link, whatsapp_nudge, voice_call, human_escalation"},{"event":"stop","stage":2,"cause":"expected_net\u003c=0","best_net":-0.5},{"event":"episode_end","recovered":false,"recovered_via":null,"spend":0.35}]},{"label":"revoked mandate -- retry scores 0.0","account_id":"acc_0018","segment":"B2B","reason":"mandate_revoked","amount":10867.43,"prior_failures":0,"language":"hinglish","events":[{"event":"episode_start"},{"event":"blocked","stage":1,"rule":"contact_window","channels":"sms_link, whatsapp_nudge, voice_call, human_escalation"},{"event":"stop","stage":1,"cause":"expected_net\u003c=0","best_net":-0.5},{"event":"episode_end","recovered":false,"recovered_via":null,"spend":0.0}]},{"label":"blocked by a guardrail mid-ladder","account_id":"acc_0000","segment":"B2C","reason":"insufficient_funds","amount":2386.87,"prior_failures":1,"language":"hindi","events":[{"event":"episode_start"},{"event":"blocked","stage":1,"rule":"contact_window","channels":"sms_link, whatsapp_nudge, voice_call, human_escalation"},{"event":"action","stage":1,"intervention":"silent_retry","cost":0.5,"outcome":"failed","expected_net":328.89,"p_now":0.138},{"event":"blocked","stage":2,"rule":"contact_window","channels":"sms_link, whatsapp_nudge, voice_call, human_escalation"},{"event":"action","stage":2,"intervention":"silent_retry","cost":0.5,"outcome":"failed","expected_net":208.2,"p_now":0.0874},{"event":"blocked","stage":3,"rule":"contact_window","channels":"sms_link, whatsapp_nudge, voice_call, human_escalation"},{"event":"action","stage":3,"intervention":"silent_retry","cost":0.5,"outcome":"failed","expected_net":131.73,"p_now":0.0554},{"event":"blocked","stage":4,"rule":"contact_window","channels":"sms_link, whatsapp_nudge, voice_call, human_escalation"},{"event":"action","stage":4,"intervention":"silent_retry","cost":0.5,"outcome":"failed","expected_net":83.28,"p_now":0.0351},{"event":"blocked","stage":5,"rule":"contact_window","channels":"sms_link, whatsapp_nudge, voice_call, human_escalation"},{"event":"action","stage":5,"intervention":"silent_retry","cost":0.5,"outcome":"failed","expected_net":52.58,"p_now":0.0222},{"event":"episode_end","recovered":false,"recovered_via":null,"spend":2.5}]},{"label":"recovered by a cheap nudge, no call needed","account_id":"acc_0048","segment":"B2C","reason":"insufficient_funds","amount":1707.75,"prior_failures":1,"language":"hindi","events":[{"event":"episode_start"},{"event":"blocked","stage":1,"rule":"no_phone","channels":"voice_call"},{"event":"action","stage":1,"intervention":"silent_retry","cost":0.5,"outcome":"failed","expected_net":235.17,"p_now":0.138},{"event":"blocked","stage":2,"rule":"no_phone","channels":"voice_call"},{"event":"action","stage":2,"intervention":"whatsapp_nudge","cost":0.35,"outcome":"failed","expected_net":165.56,"p_now":0.0972},{"event":"blocked","stage":3,"rule":"no_phone","channels":"voice_call"},{"event":"action","stage":3,"intervention":"silent_retry","cost":0.5,"outcome":"failed","expected_net":130.9,"p_now":0.0769},{"event":"blocked","stage":4,"rule":"no_phone","channels":"voice_call"},{"event":"action","stage":4,"intervention":"whatsapp_nudge","cost":0.35,"outcome":"recovered","expected_net":92.16,"p_now":0.0542},{"event":"episode_end","recovered":true,"recovered_via":"whatsapp_nudge","spend":1.7}]}],"sample_calls":[{"account_id":"acc_0001","segment":"B2B","reason":"card_expired","amount":52356.3,"language":"hi-IN","speaker":"priya","script":"Hello, main Razorpay se baat kar raha hoon. Aapka 52,356 rupees ka payment fail ho gaya hai kyunki aapke card ki validity khatam ho gayi hai. Isko fix karne ke liye main aapko naya card add karne ka link bhej raha hoon. Aap mujhe bata dijiye ki aap kis date tak payment kar denge, main wahi note kar leta hoon. Thank you, aapka din achha rahe."},{"account_id":"acc_0002","segment":"B2B","reason":"insufficient_funds","amount":11132.52,"language":"hi-IN","speaker":"priya","script":"Hello, main Razorpay se baat kar raha hoon. Aapka 11,133 rupees ka payment insufficient funds ki wajah se fail ho gaya hai. Jaise hi aapke account mein balance aa jaye, hum dobara try kar lenge, ya aap bas mujhe ek date bata dijiye jab aap payment clear kar payenge. Mujhe note karwa dijiye, hum uss din ke liye wait kar lenge. Dhanyawad."},{"account_id":"acc_0004","segment":"B2B","reason":"invoice_overdue","amount":80377.82,"language":"hi-IN","speaker":"priya","script":"Hello, main Razorpay se Rasiya bol rahi hoon. Aapka 80,378 rupees ka payment fail ho gaya hai kyunki aapka invoice overdue ho chuka hai. Isko fix karne ke liye, hum aapko ek naya payment link bhej rahe hain, toh please ise aaj hi complete kar dijiyega. Agar aap chahein toh aap mujhe ek date bata sakte hain jab aap payment kar denge, main note kar lungi. Thank you, aapka din achha rahe."}]}</script>
+<script>
+"use strict";
+const DATA = JSON.parse(document.getElementById("data").textContent);
+// Build all non-ASCII glyphs from code points so the page's charset can never
+// mangle them (rupee sign, en/em dash, minus, middle dot).
+const _chr = String.fromCharCode;
+const RS = _chr(0x20B9), NDASH = _chr(0x2013), MDASH = _chr(0x2014), MINUS = _chr(0x2212), MIDDOT = _chr(0x00B7);
+const INR = n => RS + Math.round(n).toLocaleString("en-IN");
+const INRk = n => {
+  const s = n < 0 ? MINUS : "+";
+  return s + RS + Math.abs(Math.round(n / 1000)).toLocaleString("en-IN") + "k";
+};
+const el = (t, cls, html) => { const e = document.createElement(t); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+
+/* ---- theme toggle ---- */
+const root = document.documentElement;
+const tb = document.getElementById("themeBtn");
+function applyTheme(t) { if (t) root.setAttribute("data-theme", t); else root.removeAttribute("data-theme"); }
+let saved = null; try { saved = localStorage.getItem("rp_theme"); } catch (e) {}
+if (saved) applyTheme(saved);
+tb.addEventListener("click", () => {
+  const cur = root.getAttribute("data-theme");
+  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+  const next = cur ? (cur === "dark" ? "light" : "dark") : (dark ? "light" : "dark");
+  applyTheme(next);
+  try { localStorage.setItem("rp_theme", next); } catch (e) {}
+});
+
+/* ---- pivots ---- */
+const L = DATA.policies.find(p => p.policy === "ladder");
+const B = DATA.policies.find(p => p.policy === DATA.sweep.baseline);
+const pivotData = [
+  [INR(DATA.meta.voice_cost), "assumed cost of one voice call"],
+  [DATA.meta.voice_pickup_rate.toFixed(2), "assumed voice pickup rate"],
+  [DATA.ledger.accounts, "accounts in the synthetic book"],
+  [INR(DATA.ledger.at_risk_rupees), "rupees at risk"],
+  [(DATA.ledger.b2b_share_of_rupees * 100).toFixed(0) + "%", "of those rupees are B2B"],
+];
+const pv = document.getElementById("pivots");
+pivotData.forEach(([v, k]) => {
+  const d = el("div", "pivot");
+  d.append(el("div", "v mono", v), el("div", "k", k));
+  pv.append(d);
+});
+
+/* ---- scorecard ---- */
+const cols = [
+  ["policy", r => `<span class="pol">${r.policy}</span>`],
+  ["recovered", r => INR(r.recovered)],
+  ["spend", r => INR(r.spend)],
+  ["net", r => `<span class="netcell"><span class="netbar" style="width:${Math.max(2, r.net / L.net * 120)}px"></span>${INR(r.net)}</span>`],
+  ["rate", r => (r.rate * 100).toFixed(1) + "%"],
+  ["calls", r => r.calls],
+  ["PTP", r => r.ptps],
+  [RS + "/" + RS + "100", r => r.cost_per_100 == null ? MDASH : r.cost_per_100.toFixed(2)],
+  ["viol", r => `<span class="pill ${r.violations ? "bad" : "ok"}">${r.violations}</span>`],
+];
+const st = document.getElementById("scoreTable");
+const theadEl = el("thead");
+const htr = el("tr");
+cols.forEach(c => htr.append(el("th", null, c[0])));
+theadEl.append(htr);
+st.append(theadEl);
+const tbody = el("tbody");
+DATA.policies.slice().sort((a, b) => b.net - a.net).forEach(r => {
+  const tr = el("tr");
+  if (r.policy === "ladder") tr.dataset.hero = "1";
+  cols.forEach(c => tr.append(el("td", null, String(c[1](r)))));
+  tbody.append(tr);
+});
+st.append(tbody);
+document.getElementById("scoreCaption").innerHTML =
+  `The ladder nets <b>${INR(L.net)}</b> at <b>${RS}${L.cost_per_100.toFixed(2)}</b> per ${RS}100 recovered &mdash; `
+  + `${INR(L.net - B.net)} ahead of <span class="mono">${B.policy}</span>, which spends nearly as much on blind outreach. `
+  + `<span class="mono">call_first</span> burns the voice budget on everyone and recovers a third as much.`;
+
+/* ---- cohorts ---- */
+document.getElementById("cohortIntro").innerHTML =
+  `${DATA.ledger.b2b_accounts} of ${DATA.ledger.accounts} accounts are B2B, and they hold `
+  + `<strong>${(DATA.ledger.b2b_share_of_rupees * 100).toFixed(0)}%</strong> of the rupees at risk. `
+  + `That heavy tail is where the ladder pulls away; on the B2C long tail the policies are close.`;
+const cc = document.getElementById("cohortCards");
+["B2C", "B2B"].forEach(seg => {
+  const card = el("div", "cohort");
+  const accts = DATA.policies[0].by_segment[seg].accounts;
+  card.append(el("h3", null, `${seg} <span class="sub">${accts} accounts</span>`));
+  const max = Math.max(...DATA.policies.map(p => p.by_segment[seg].net));
+  DATA.policies.slice().sort((a, b) => b.by_segment[seg].net - a.by_segment[seg].net).forEach(p => {
+    const s = p.by_segment[seg];
+    const row = el("div", "cbar-row");
+    row.append(el("div", "lbl", p.policy));
+    const track = el("div", "cbar-track");
+    const fill = el("div", "cbar-fill");
+    fill.style.width = Math.max(1, s.net / max * 100) + "%";
+    if (p.policy !== "ladder") fill.style.opacity = ".42";
+    track.append(fill, el("div", "cbar-val", INR(s.net)));
+    row.append(track);
+    card.append(row);
+  });
+  cc.append(card);
+});
+
+/* ---- doomed retries ---- */
+const dm = document.getElementById("doomed");
+const retry = DATA.policies.find(p => p.policy === "retry_only");
+["card_expired", "mandate_expired", "mandate_revoked", "invoice_overdue"].forEach(reason => {
+  const rr = retry.by_reason[reason], lr = L.by_reason[reason];
+  const chip = el("div", "chip");
+  chip.innerHTML = `<div class="r">${reason}</div>`
+    + `<div style="margin-top:4px">retry_only <span class="n ${rr.net < 0 ? "neg" : "pos"}">${INR(rr.net)}</span></div>`
+    + `<div>ladder <span class="n pos">${INR(lr.net)}</span></div>`;
+  dm.append(chip);
+});
+
+/* ---- sensitivity grid ---- */
+document.getElementById("baseName").textContent = DATA.sweep.baseline;
+const SG = DATA.sweep.stress_grid, CG = DATA.sweep.cost_grid;
+const cellByKey = {};
+DATA.sweep.cells.forEach(c => { cellByKey[c.stress + "|" + c.voice_cost] = c; });
+const maxAbs = Math.max(...DATA.sweep.cells.map(c => Math.abs(c.ladder_minus_baseline)));
+function heatColor(v) {
+  const t = Math.max(-1, Math.min(1, v / maxAbs));
+  // diverging: neg -> --neg, 0 -> surface-2, pos -> --pos ; blend via rgba over surface
+  const c = t >= 0 ? "14,124,90" : "166,58,43";
+  const a = Math.abs(t) * 0.82 + 0.06;
+  return `rgba(${c},${a.toFixed(3)})`;
+}
+const hg = document.getElementById("heatGrid");
+hg.append(el("div", "ch", ""));
+CG.forEach(c => hg.append(el("div", "ch" + (c <= DATA.meta.voice_cost ? " realistic" : ""), RS + c)));
+SG.slice().reverse().forEach(s => {
+  hg.append(el("div", "rh", s.toFixed(1)));
+  CG.forEach(cst => {
+    const c = cellByKey[s + "|" + cst];
+    const cell = el("button", "heat-cell" + (cst <= DATA.meta.voice_cost ? " realistic" : ""));
+    cell.type = "button";
+    cell.style.background = heatColor(c.ladder_minus_baseline);
+    cell.dataset.k = s + "|" + cst;
+    cell.textContent = Math.abs(c.ladder_minus_baseline) > maxAbs * 0.18 ? INRk(c.ladder_minus_baseline).replace(RS, "") : "";
+    cell.setAttribute("aria-label", `stress ${s}, cost ${RS}${cst}: ladder ${c.ladder_wins ? "wins" : "loses"} by ${INRk(c.ladder_minus_baseline)}`);
+    cell.addEventListener("click", () => select(s + "|" + cst));
+    cell.addEventListener("mouseenter", () => select(s + "|" + cst));
+    hg.append(cell);
+  });
+});
+const x = DATA.sweep.crossover;
+document.getElementById("crossover").innerHTML =
+  `<span>ladder ahead in <b>${DATA.sweep.cells.filter(c => c.ladder_wins).length}/${DATA.sweep.cells.length}</b> cells</span>`
+  + `<span>at &#8377;12: wins for every stress &ge; <b>${x.min_stress_ladder_wins_at_cost_12}</b></span>`
+  + `<span>at stress 1.0: wins up to voice cost <b>&#8377;${x.max_cost_ladder_wins_at_stress_1}</b></span>`;
+
+const readout = document.getElementById("readout");
+function select(key) {
+  document.querySelectorAll(".heat-cell").forEach(n => n.setAttribute("aria-selected", n.dataset.k === key ? "true" : "false"));
+  const c = cellByKey[key];
+  const polys = ["ladder", "standard_playbook", "retry_only", "call_first", "nudge_ladder"].filter(p => c.nets[p] != null);
+  const maxNet = Math.max(...polys.map(p => c.nets[p]));
+  let h = `<div class="rtitle">stress <b>${c.stress.toFixed(1)}</b> &nbsp; voice cost <b>&#8377;${c.voice_cost}</b></div>`;
+  h += `<div class="verdict ${c.ladder_wins ? "win" : "lose"}">ladder ${c.ladder_wins ? "beats" : "trails"} ${DATA.sweep.baseline} by ${INRk(c.ladder_minus_baseline)}</div>`;
+  polys.forEach(p => {
+    const v = c.nets[p];
+    const klass = p === "ladder" ? "is-ladder" : (p === DATA.sweep.baseline ? "is-base" : "");
+    h += `<div class="rrow ${klass}"><span class="rl">${p}</span>`
+      + `<span class="rt"><span class="rf" style="width:${Math.max(1, v / maxNet * 100)}%"></span></span>`
+      + `<span class="rv">${INR(v)}</span></div>`;
+  });
+  h += `<div class="rrow"><span class="rl">ladder calls</span><span class="rt"></span><span class="rv">${c.ladder_calls}</span></div>`;
+  h += `<div class="chart-wrap">${lineChart(c.voice_cost)}</div>`;
+  h += `<div style="font-size:.72rem;color:var(--text-dim);margin-top:6px">net vs stress at &#8377;${c.voice_cost} &mdash; ladder in accent</div>`;
+  readout.innerHTML = h;
+}
+
+function lineChart(cost) {
+  const W = 384, H = 156, pad = { t: 10, r: 58, b: 18, l: 34 };
+  const series = ["ladder", "standard_playbook", "retry_only", "call_first", "nudge_ladder"];
+  const rows = SG.map(s => cellByKey[s + "|" + cost]);
+  const all = [];
+  series.forEach(p => rows.forEach(r => { if (r.nets[p] != null) all.push(r.nets[p]); }));
+  const lo = Math.min(...all), hi = Math.max(...all);
+  const xf = i => pad.l + i / (SG.length - 1) * (W - pad.l - pad.r);
+  const yf = v => pad.t + (1 - (v - lo) / (hi - lo || 1)) * (H - pad.t - pad.b);
+  const color = p => p === "ladder" ? "var(--accent)" : (p === "standard_playbook" ? "var(--text)" : "var(--text-dim)");
+  const label = { ladder: "ladder", standard_playbook: "playbook" };
+  let s = `<svg class="linechart" viewBox="0 0 ${W} ${H}" role="img" aria-label="net rupees versus voice lift stress at cost ${cost}">`;
+  // y gridlines + value labels at lo / hi
+  [[hi, yf(hi)], [lo, yf(lo)]].forEach(([v, y]) => {
+    s += `<line x1="${pad.l}" y1="${y.toFixed(1)}" x2="${W - pad.r}" y2="${y.toFixed(1)}" stroke="var(--border)" stroke-width="1"/>`;
+    s += `<text x="${pad.l - 4}" y="${(y + 3).toFixed(1)}" text-anchor="end">${RS}${(v / 1e6).toFixed(1)}M</text>`;
+  });
+  series.forEach(p => {
+    const pts = SG.map((st, i) => `${xf(i).toFixed(1)},${yf(rows[i].nets[p]).toFixed(1)}`).join(" ");
+    const emph = p === "ladder" || p === "standard_playbook";
+    s += `<polyline points="${pts}" fill="none" stroke="${color(p)}" stroke-width="${p === "ladder" ? 2.4 : emph ? 1.4 : 0.8}" opacity="${emph ? 1 : 0.5}"/>`;
+    if (emph) {
+      const ly = yf(rows[SG.length - 1].nets[p]);
+      s += `<text x="${W - pad.r + 4}" y="${(ly + 3).toFixed(1)}" fill="${color(p)}">${label[p]}</text>`;
+    }
+  });
+  SG.forEach((st, i) => { s += `<text x="${xf(i).toFixed(1)}" y="${H - 5}" text-anchor="middle">${st}</text>`; });
+  s += `</svg>`;
+  return s;
+}
+
+/* ---- guardrails ---- */
+document.getElementById("violTotal").firstChild.textContent = DATA.total_violations;
+const ruleText = {
+  contact_window: ["09:00" + NDASH + "19:00 only", `no contact outside ${DATA.rules.contact_window[0]}${NDASH}${DATA.rules.contact_window[1]}`],
+  dnc: ["permanent DNC", "opt-outs are never contacted, on any channel"],
+  contact_cap_7d: [`${DATA.rules.contact_cap_7d} contacts / 7 days`, "rolling frequency cap per account"],
+  voice_attempts_max: [`${DATA.rules.voice_attempts_max} voice attempts`, "hard ceiling on dials per account"],
+  ptp_suppression: ["promise-to-pay", "a dated promise suppresses all contact until it is due"],
+  voice_budget: ["voice budget", `${RS}${DATA.meta.voice_budget.toLocaleString("en-IN")} of voice spend across the whole run`],
+  human_capacity: ["human capacity", `${DATA.meta.human_cap} manual escalations a team can absorb`],
+  no_phone: ["no phone on file", "voice is not attempted without a number"],
+};
+const rc = document.getElementById("rules");
+DATA.rules.codes.forEach(code => {
+  const t = ruleText[code] || [code, ""];
+  const r = el("div", "r");
+  r.innerHTML = `<div class="rn">${t[0]}</div><div class="rd">${t[1]}</div>`;
+  rc.append(r);
+});
+
+/* ---- traces ---- */
+const tl = document.getElementById("traceList");
+DATA.traces.forEach(t => {
+  const box = el("div", "trace");
+  const head = el("div", "thead");
+  head.innerHTML = `<span class="tl">${t.label}</span>`
+    + `<span class="tm">${t.account_id} &middot; ${t.segment} &middot; ${t.reason} &middot; ${INR(t.amount)} &middot; ${t.prior_failures} prior fails</span>`;
+  box.append(head);
+  const ol = el("ol");
+  t.events.forEach(e => {
+    const li = el("li", "k-" + e.event);
+    let m = "";
+    if (e.event === "action") m = `${e.intervention} &rarr; <b>${e.outcome}</b>${e.expected_net != null ? ` &middot; E[net] ${INR(e.expected_net)}` : ""}`;
+    else if (e.event === "blocked") m = `${e.channels || e.intervention} &mdash; blocked by <b>${e.rule}</b>`;
+    else if (e.event === "stop") m = `stop &mdash; ${e.cause}${e.best_net != null ? ` &middot; best E[net] ${INR(e.best_net)}` : ""}`;
+    else if (e.event === "ptp_created") m = `promise-to-pay captured, due ${e.due || "soon"}`;
+    else if (e.event === "ptp_resolved") m = `promise-to-pay <b>${e.result}</b>`;
+    else if (e.event === "episode_end") m = e.recovered ? `recovered${e.recovered_via ? " via " + e.recovered_via : ""} &middot; spend ${INR(e.spend || 0)}` : `not recovered &middot; spend ${INR(e.spend || 0)}`;
+    else m = e.event.replace(/_/g, " ");
+    li.innerHTML = `<span class="st">${e.stage != null ? "s" + e.stage : MIDDOT}</span>`
+      + `<span class="ev"><span class="k">${e.event}</span> <span class="meta">${m}</span></span>`;
+    ol.append(li);
+  });
+  box.append(ol);
+  tl.append(box);
+});
+
+/* ---- calls ---- */
+const clist = document.getElementById("callList");
+if (!DATA.sample_calls.length) {
+  clist.innerHTML = `<p class="caption">Run <span class="mono">python -m recovery.voice</span> with a Sarvam key to render these.</p>`;
+}
+DATA.sample_calls.forEach(c => {
+  const card = el("div", "call");
+  card.innerHTML = `<div class="ch"><span>${c.account_id} &middot; ${c.segment}</span><span class="amt">${INR(c.amount)}</span></div>`
+    + `<span class="reason-tag">${c.reason}</span>`
+    + `<p class="script">&ldquo;${c.script}&rdquo;</p>`
+    + `<div class="ch" style="margin-top:auto"><span>${c.language} &middot; ${c.speaker}</span><span>sarvam-105b + bulbul</span></div>`;
+  clist.append(card);
+});
+
+/* ---- footer runline ---- */
+document.getElementById("runline").textContent =
+  `$ python -m recovery --cohorts\n`
+  + `$ python -m recovery.sweep\n`
+  + `$ python -m recovery.voice --limit 5\n`
+  + `seed=${DATA.meta.seed}  voice_budget=${INR(DATA.meta.voice_budget)}  human_cap=${DATA.meta.human_cap}  pickup=${DATA.meta.voice_pickup_rate}`;
+
+/* default selection: realistic centre */
+select("1|12");
+</script>

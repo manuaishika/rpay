@@ -1,0 +1,619 @@
+<title>The &#8377;12 Question</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Libre+Franklin:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root {
+  --bg: #FBFAF7;
+  --surface: #F2F1EB;
+  --surface-2: #EAE9E1;
+  --border: #DAD9D0;
+  --text: #1A1D1E;
+  --text-dim: #63675F;
+  --accent: #0E7C5A;
+  --accent-weak: #E1EEE8;
+  --pos: #0E7C5A;
+  --neg: #A63A2B;
+  --warn: #9A6B15;
+  --shadow: 0 1px 2px rgba(20,25,20,.06), 0 8px 24px -12px rgba(20,25,20,.14);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14161A;
+    --surface: #1C1F24;
+    --surface-2: #23272D;
+    --border: #2E333A;
+    --text: #E9E7DF;
+    --text-dim: #9AA0A0;
+    --accent: #38B189;
+    --accent-weak: #16342A;
+    --pos: #38B189;
+    --neg: #E07A64;
+    --warn: #D0A04A;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px -14px rgba(0,0,0,.55);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14161A;
+  --surface: #1C1F24;
+  --surface-2: #23272D;
+  --border: #2E333A;
+  --text: #E9E7DF;
+  --text-dim: #9AA0A0;
+  --accent: #38B189;
+  --accent-weak: #16342A;
+  --pos: #38B189;
+  --neg: #E07A64;
+  --warn: #D0A04A;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px -14px rgba(0,0,0,.55);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Libre Franklin", system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; text-wrap: balance; line-height: 1.15; margin: 0; }
+h2 { font-size: 1.65rem; letter-spacing: -.01em; }
+h3 { font-size: 1.12rem; font-weight: 600; }
+p { margin: 0; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+.mono { font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace; font-variant-numeric: tabular-nums; }
+.eyebrow {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--text-dim);
+}
+.rule { height: 1px; background: var(--border); border: 0; margin: 0; }
+
+/* ---- masthead ---- */
+header.mast { padding: 52px 0 40px; border-bottom: 1px solid var(--border); }
+.mast .eyebrow { display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; }
+.mast h1 {
+  font-size: clamp(2.6rem, 6vw, 4.1rem);
+  font-weight: 900;
+  font-optical-sizing: auto;
+  letter-spacing: -.025em;
+  margin: 18px 0 0;
+}
+.mast .lede {
+  margin-top: 20px; max-width: 40ch; font-size: 1.16rem; color: var(--text-dim);
+}
+.mast .lede strong { color: var(--text); font-weight: 600; }
+
+.theme-btn {
+  position: fixed; top: 14px; right: 14px; z-index: 20;
+  font-family: "IBM Plex Mono", monospace; font-size: .74rem;
+  background: var(--surface); color: var(--text-dim);
+  border: 1px solid var(--border); border-radius: 999px;
+  padding: 6px 12px; cursor: pointer;
+}
+.theme-btn:hover { color: var(--text); }
+
+/* ---- section scaffolding ---- */
+section { padding: 46px 0; border-bottom: 1px solid var(--border); }
+.sec-head { display: flex; gap: 16px; align-items: baseline; margin-bottom: 8px; }
+.sec-head .num {
+  font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--accent);
+  padding-top: .4rem;
+}
+.sec-intro { max-width: 62ch; color: var(--text-dim); margin: 10px 0 26px; }
+.sec-intro strong { color: var(--text); font-weight: 600; }
+
+/* ---- pivots ---- */
+.pivots { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-top: 26px; }
+.pivot { background: var(--surface); padding: 18px 20px; }
+.pivot .v { font-family: "Fraunces", serif; font-size: 1.9rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.pivot .k { font-size: .82rem; color: var(--text-dim); margin-top: 2px; }
+
+.assume {
+  margin-top: 22px; padding: 14px 16px 14px 18px;
+  border-left: 3px solid var(--warn); background: var(--surface);
+  font-size: .92rem; color: var(--text-dim); border-radius: 0 8px 8px 0;
+}
+.assume b { color: var(--warn); }
+
+/* ---- scorecard table ---- */
+.tbl-scroll { overflow-x: auto; margin-top: 8px; }
+table.score { width: 100%; border-collapse: collapse; font-size: .92rem; min-width: 640px; }
+table.score th, table.score td { padding: 11px 12px; text-align: right; white-space: nowrap; }
+table.score th {
+  font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: .72rem;
+  letter-spacing: .04em; text-transform: uppercase; color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+}
+table.score td { border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums; }
+table.score td:first-child, table.score th:first-child { text-align: left; }
+table.score tr[data-hero="1"] td { background: var(--accent-weak); }
+table.score .pol { font-weight: 600; font-family: "IBM Plex Mono", monospace; font-size: .86rem; }
+.netcell { display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
+.netbar { height: 8px; border-radius: 2px; background: var(--accent); opacity: .5; }
+tr[data-hero="1"] .netbar { opacity: 1; }
+.pill {
+  display: inline-block; min-width: 1.5rem; padding: 1px 7px; border-radius: 999px;
+  font-family: "IBM Plex Mono", monospace; font-size: .8rem; font-weight: 600;
+}
+.pill.ok { background: var(--accent-weak); color: var(--accent); }
+.pill.bad { background: color-mix(in srgb, var(--neg) 18%, transparent); color: var(--neg); }
+.caption { font-size: .85rem; color: var(--text-dim); margin-top: 14px; max-width: 62ch; }
+
+/* ---- cohort split ---- */
+.cohorts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 8px; }
+@media (max-width: 720px) { .cohorts { grid-template-columns: 1fr; } }
+.cohort { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+.cohort h3 { display: flex; justify-content: space-between; align-items: baseline; }
+.cohort h3 .sub { font-family: "IBM Plex Mono", monospace; font-size: .74rem; color: var(--text-dim); font-weight: 400; }
+.cbar-row { display: grid; grid-template-columns: 128px 1fr; gap: 10px; align-items: center; margin-top: 12px; font-size: .84rem; }
+.cbar-row .lbl { font-family: "IBM Plex Mono", monospace; font-size: .78rem; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; }
+.cbar-track { position: relative; height: 22px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+.cbar-fill { position: absolute; inset: 0 auto 0 0; background: var(--accent); opacity: .82; }
+.cbar-val { position: absolute; right: 7px; top: 0; line-height: 22px; font-size: .76rem; font-variant-numeric: tabular-nums; color: var(--text); }
+
+/* ---- doomed retries ---- */
+.doomed { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 10px; }
+.doomed .chip {
+  border: 1px solid var(--border); background: var(--surface); border-radius: 8px;
+  padding: 10px 13px; font-size: .84rem;
+}
+.doomed .chip .r { font-family: "IBM Plex Mono", monospace; font-size: .8rem; }
+.doomed .chip .n { font-variant-numeric: tabular-nums; font-weight: 600; }
+.doomed .chip .n.neg { color: var(--neg); }
+.doomed .chip .n.pos { color: var(--pos); }
+
+/* ---- sensitivity grid ---- */
+.sweep-layout { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 28px; margin-top: 8px; }
+@media (max-width: 860px) { .sweep-layout { grid-template-columns: 1fr; } }
+.heat { --cell: 1fr; }
+.heat-grid {
+  display: grid;
+  grid-template-columns: 46px repeat(7, 1fr);
+  gap: 3px;
+}
+.heat-grid .ch, .heat-grid .rh {
+  font-family: "IBM Plex Mono", monospace; font-size: .72rem; color: var(--text-dim);
+  display: flex; align-items: center; justify-content: center;
+}
+.heat-grid .rh { justify-content: flex-end; padding-right: 6px; }
+.heat-cell {
+  aspect-ratio: 1 / 1; border-radius: 3px; cursor: pointer; position: relative;
+  border: 1.5px solid transparent;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "IBM Plex Mono", monospace; font-size: .68rem; font-weight: 500;
+  transition: transform .08s ease;
+}
+.heat-cell:hover { transform: scale(1.06); z-index: 2; }
+.heat-cell[aria-selected="true"] { border-color: var(--text); }
+.heat-grid .ch.realistic { color: var(--text); border-bottom: 2px solid var(--accent); }
+.heat-band-note { font-size: .78rem; color: var(--text-dim); margin-top: 10px; display: flex; gap: 16px; flex-wrap: wrap; }
+.heat-band-note b { color: var(--text); }
+.heat-legend { display: flex; align-items: center; gap: 8px; font-family: "IBM Plex Mono", monospace; font-size: .7rem; color: var(--text-dim); margin-top: 12px; }
+.heat-legend .grad { height: 10px; width: 160px; border-radius: 2px; background: linear-gradient(90deg, var(--neg), var(--surface-2), var(--pos)); }
+.axis-cap { font-family: "IBM Plex Mono", monospace; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); }
+.axis-cap.x { text-align: center; margin-top: 8px; }
+
+.readout { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+.readout .rtitle { font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--text-dim); }
+.readout .rtitle b { color: var(--text); }
+.readout .verdict { font-family: "Fraunces", serif; font-size: 1.15rem; margin: 6px 0 14px; }
+.readout .verdict.win { color: var(--pos); }
+.readout .verdict.lose { color: var(--neg); }
+.rrow { display: grid; grid-template-columns: 118px 1fr 68px; gap: 9px; align-items: center; font-size: .8rem; margin-top: 7px; }
+.rrow .rl { font-family: "IBM Plex Mono", monospace; font-size: .75rem; color: var(--text-dim); }
+.rrow .rt { height: 16px; background: var(--surface-2); border-radius: 2px; overflow: hidden; position: relative; }
+.rrow .rf { position: absolute; inset: 0 auto 0 0; background: var(--text-dim); opacity: .5; }
+.rrow.is-ladder .rf { background: var(--accent); opacity: 1; }
+.rrow.is-base .rf { background: var(--text-dim); opacity: .8; }
+.rrow .rv { text-align: right; font-variant-numeric: tabular-nums; font-size: .76rem; }
+.chart-wrap { margin-top: 16px; }
+svg.linechart { width: 100%; height: auto; display: block; }
+svg.linechart text { font-family: "IBM Plex Mono", monospace; font-size: 9px; fill: var(--text-dim); }
+
+/* ---- guardrails ---- */
+.gate-top { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+.gate-badge {
+  font-family: "Fraunces", serif; font-weight: 900; font-size: 2.4rem;
+  color: var(--accent); line-height: 1;
+}
+.gate-badge span { font-family: "Libre Franklin", sans-serif; font-weight: 500; font-size: .9rem; color: var(--text-dim); display: block; }
+.rules { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-top: 20px; }
+.rules .r { background: var(--surface); padding: 13px 15px; font-size: .86rem; }
+.rules .r .rn { font-family: "IBM Plex Mono", monospace; font-size: .74rem; color: var(--accent); }
+.rules .r .rd { color: var(--text-dim); margin-top: 2px; }
+
+/* ---- traces ---- */
+.trace { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); margin-top: 16px; overflow: hidden; }
+.trace .thead { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; align-items: baseline; }
+.trace .thead .tl { font-weight: 600; }
+.trace .thead .tm { font-family: "IBM Plex Mono", monospace; font-size: .76rem; color: var(--text-dim); }
+.trace ol { margin: 0; padding: 8px 16px 14px; list-style: none; }
+.trace li { display: grid; grid-template-columns: 26px 1fr; gap: 12px; padding: 5px 0; font-size: .84rem; align-items: baseline; }
+.trace li .st { font-family: "IBM Plex Mono", monospace; font-size: .72rem; color: var(--text-dim); }
+.trace li .ev { }
+.trace li .ev .k { font-family: "IBM Plex Mono", monospace; font-size: .78rem; }
+.trace li.k-action .k { color: var(--accent); }
+.trace li.k-blocked .k { color: var(--warn); }
+.trace li.k-stop .k { color: var(--neg); }
+.trace li.k-ptp_created .k, .trace li.k-ptp_resolved .k { color: var(--text); }
+.trace li .meta { color: var(--text-dim); }
+
+/* ---- call scripts ---- */
+.calls { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 8px; }
+.call { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.call .ch { display: flex; justify-content: space-between; font-family: "IBM Plex Mono", monospace; font-size: .76rem; color: var(--text-dim); }
+.call .amt { color: var(--text); font-weight: 600; }
+.call .script { font-size: .9rem; line-height: 1.62; }
+.call .reason-tag { align-self: flex-start; font-family: "IBM Plex Mono", monospace; font-size: .72rem; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--text-dim); }
+
+/* ---- footer ---- */
+footer { padding: 40px 0 64px; color: var(--text-dim); font-size: .86rem; }
+footer .run { font-family: "IBM Plex Mono", monospace; font-size: .8rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; margin-top: 14px; white-space: pre-wrap; overflow-x: auto; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<button class="theme-btn" id="themeBtn" type="button">theme</button>
+
+<div class="wrap">
+  <header class="mast">
+    <div class="eyebrow">
+      <span>Razorpay Buildathon</span><span>Track 03</span><span>synthetic ledger &middot; seed 20260903</span>
+    </div>
+    <h1>The &#8377;12 Question</h1>
+    <p class="lede">A Hinglish voice call costs <strong>~&#8377;12</strong>. Most failed payments aren&rsquo;t worth &#8377;12. The agent&rsquo;s real job is deciding <strong>who</strong> to call &mdash; and <strong>when to stop</strong>.</p>
+  </header>
+
+  <section id="thesis">
+    <div class="sec-head"><span class="num">01</span><h2>The wager</h2></div>
+    <p class="sec-intro">Five recovery policies run over the same 250-account book of failed payments. Every one passes through the same hard guardrail gate. The sequential <strong>ladder</strong> scores each still-allowed channel by expected net rupees and acts only when that number clears zero; the four fixed playbooks just run their script.</p>
+    <div class="pivots" id="pivots"></div>
+    <div class="assume"><b>These are assumptions, not data.</b> Every recovery probability lives in <span class="mono">world.py</span> and was invented to be plausible, not fitted to a real ledger. The pickup rate, the promise-to-pay conversion, the voice lift &mdash; all guessed. Section 04 sweeps them.</div>
+  </section>
+
+  <section id="scorecard">
+    <div class="sec-head"><span class="num">02</span><h2>Scorecard</h2></div>
+    <p class="sec-intro">Net is recovered rupees minus spend. <span class="mono">&#8377;/&#8377;100</span> is what each policy spends to recover &#8377;100. <strong>Guardrail violations must be 0</strong> &mdash; checked by an auditor that re-derives every rule from the emitted trail.</p>
+    <div class="tbl-scroll">
+      <table class="score" id="scoreTable"></table>
+    </div>
+    <p class="caption" id="scoreCaption"></p>
+  </section>
+
+  <section id="cohorts">
+    <div class="sec-head"><span class="num">03</span><h2>Where the edge comes from</h2></div>
+    <p class="sec-intro" id="cohortIntro"></p>
+    <div class="cohorts" id="cohortCards"></div>
+    <h3 style="margin-top:30px">Retrying the doomed has a price</h3>
+    <p class="sec-intro" style="margin-bottom:14px">A silent retry costs &#8377;0.50 and cannot fix an expired card or a revoked mandate. <span class="mono">retry_only</span> goes <em>negative</em> on exactly those reasons; the ladder scores them at zero and stops.</p>
+    <div class="doomed" id="doomed"></div>
+  </section>
+
+  <section id="sweep">
+    <div class="sec-head"><span class="num">04</span><h2>How wrong can the assumptions be?</h2></div>
+    <p class="sec-intro">The whole case pivots on two guessed numbers: the voice <strong>lift</strong> (how much a call really helps) and the voice <strong>cost</strong>. Each cell runs all five policies. Colour is the ladder&rsquo;s net minus the best fixed playbook&rsquo;s (<span class="mono" id="baseName"></span>). Pick a cell.</p>
+    <div class="sweep-layout">
+      <div class="heat">
+        <div class="axis-cap">stress &times; voice cost &rarr;</div>
+        <div class="heat-grid" id="heatGrid"></div>
+        <div class="axis-cap x">voice call cost (&#8377;)</div>
+        <div class="heat-legend"><span>ladder behind</span><span class="grad"></span><span>ladder ahead</span></div>
+        <div class="heat-band-note" id="crossover"></div>
+      </div>
+      <div class="readout" id="readout"></div>
+    </div>
+  </section>
+
+  <section id="gate">
+    <div class="sec-head"><span class="num">05</span><h2>The hard gate</h2></div>
+    <p class="sec-intro">Not a prompt instruction &mdash; a gate. Every candidate action is checked before it can be played, and dropped from the choice set if it fails. A second, independent function re-derives all of it from the audit trail, so a gate bug surfaces as a counted violation instead of leaking.</p>
+    <div class="gate-top">
+      <div class="gate-badge" id="violTotal">0<span>guardrail violations, all 5 policies</span></div>
+    </div>
+    <div class="rules" id="rules"></div>
+  </section>
+
+  <section id="traces">
+    <div class="sec-head"><span class="num">06</span><h2>Decision traces</h2></div>
+    <p class="sec-intro">Straight from <span class="mono">audit/ladder.jsonl</span> &mdash; the ladder&rsquo;s own reasoning, one failed payment at a time.</p>
+    <div id="traceList"></div>
+  </section>
+
+  <section id="calls">
+    <div class="sec-head"><span class="num">07</span><h2>The &#8377;12 call, rendered</h2></div>
+    <p class="sec-intro">For the calls the ladder actually chose, <span class="mono">recovery/voice.py</span> writes a reason-specific Hinglish script with <span class="mono">sarvam-105b</span> and renders it to a <span class="mono">.wav</span> with Sarvam&rsquo;s Bulbul TTS. Scripts are model output, so they vary run to run; the economic model does not. No real number is ever dialled.</p>
+    <div class="calls" id="callList"></div>
+  </section>
+
+  <footer class="wrap" style="padding-left:0;padding-right:0">
+    <p><strong>recovery/</strong> &mdash; stdlib only, no dependencies, deterministic from a seed. All figures on this page are synthetic and generated by <span class="mono">python -m recovery.dashboard</span>.</p>
+    <div class="run" id="runline"></div>
+  </footer>
+</div>
+
+<script id="data" type="application/json">/*DATA*/</script>
+<script>
+"use strict";
+const DATA = JSON.parse(document.getElementById("data").textContent);
+// Build all non-ASCII glyphs from code points so the page's charset can never
+// mangle them (rupee sign, en/em dash, minus, middle dot).
+const _chr = String.fromCharCode;
+const RS = _chr(0x20B9), NDASH = _chr(0x2013), MDASH = _chr(0x2014), MINUS = _chr(0x2212), MIDDOT = _chr(0x00B7);
+const INR = n => RS + Math.round(n).toLocaleString("en-IN");
+const INRk = n => {
+  const s = n < 0 ? MINUS : "+";
+  return s + RS + Math.abs(Math.round(n / 1000)).toLocaleString("en-IN") + "k";
+};
+const el = (t, cls, html) => { const e = document.createElement(t); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+
+/* ---- theme toggle ---- */
+const root = document.documentElement;
+const tb = document.getElementById("themeBtn");
+function applyTheme(t) { if (t) root.setAttribute("data-theme", t); else root.removeAttribute("data-theme"); }
+let saved = null; try { saved = localStorage.getItem("rp_theme"); } catch (e) {}
+if (saved) applyTheme(saved);
+tb.addEventListener("click", () => {
+  const cur = root.getAttribute("data-theme");
+  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+  const next = cur ? (cur === "dark" ? "light" : "dark") : (dark ? "light" : "dark");
+  applyTheme(next);
+  try { localStorage.setItem("rp_theme", next); } catch (e) {}
+});
+
+/* ---- pivots ---- */
+const L = DATA.policies.find(p => p.policy === "ladder");
+const B = DATA.policies.find(p => p.policy === DATA.sweep.baseline);
+const pivotData = [
+  [INR(DATA.meta.voice_cost), "assumed cost of one voice call"],
+  [DATA.meta.voice_pickup_rate.toFixed(2), "assumed voice pickup rate"],
+  [DATA.ledger.accounts, "accounts in the synthetic book"],
+  [INR(DATA.ledger.at_risk_rupees), "rupees at risk"],
+  [(DATA.ledger.b2b_share_of_rupees * 100).toFixed(0) + "%", "of those rupees are B2B"],
+];
+const pv = document.getElementById("pivots");
+pivotData.forEach(([v, k]) => {
+  const d = el("div", "pivot");
+  d.append(el("div", "v mono", v), el("div", "k", k));
+  pv.append(d);
+});
+
+/* ---- scorecard ---- */
+const cols = [
+  ["policy", r => `<span class="pol">${r.policy}</span>`],
+  ["recovered", r => INR(r.recovered)],
+  ["spend", r => INR(r.spend)],
+  ["net", r => `<span class="netcell"><span class="netbar" style="width:${Math.max(2, r.net / L.net * 120)}px"></span>${INR(r.net)}</span>`],
+  ["rate", r => (r.rate * 100).toFixed(1) + "%"],
+  ["calls", r => r.calls],
+  ["PTP", r => r.ptps],
+  [RS + "/" + RS + "100", r => r.cost_per_100 == null ? MDASH : r.cost_per_100.toFixed(2)],
+  ["viol", r => `<span class="pill ${r.violations ? "bad" : "ok"}">${r.violations}</span>`],
+];
+const st = document.getElementById("scoreTable");
+const theadEl = el("thead");
+const htr = el("tr");
+cols.forEach(c => htr.append(el("th", null, c[0])));
+theadEl.append(htr);
+st.append(theadEl);
+const tbody = el("tbody");
+DATA.policies.slice().sort((a, b) => b.net - a.net).forEach(r => {
+  const tr = el("tr");
+  if (r.policy === "ladder") tr.dataset.hero = "1";
+  cols.forEach(c => tr.append(el("td", null, String(c[1](r)))));
+  tbody.append(tr);
+});
+st.append(tbody);
+document.getElementById("scoreCaption").innerHTML =
+  `The ladder nets <b>${INR(L.net)}</b> at <b>${RS}${L.cost_per_100.toFixed(2)}</b> per ${RS}100 recovered &mdash; `
+  + `${INR(L.net - B.net)} ahead of <span class="mono">${B.policy}</span>, which spends nearly as much on blind outreach. `
+  + `<span class="mono">call_first</span> burns the voice budget on everyone and recovers a third as much.`;
+
+/* ---- cohorts ---- */
+document.getElementById("cohortIntro").innerHTML =
+  `${DATA.ledger.b2b_accounts} of ${DATA.ledger.accounts} accounts are B2B, and they hold `
+  + `<strong>${(DATA.ledger.b2b_share_of_rupees * 100).toFixed(0)}%</strong> of the rupees at risk. `
+  + `That heavy tail is where the ladder pulls away; on the B2C long tail the policies are close.`;
+const cc = document.getElementById("cohortCards");
+["B2C", "B2B"].forEach(seg => {
+  const card = el("div", "cohort");
+  const accts = DATA.policies[0].by_segment[seg].accounts;
+  card.append(el("h3", null, `${seg} <span class="sub">${accts} accounts</span>`));
+  const max = Math.max(...DATA.policies.map(p => p.by_segment[seg].net));
+  DATA.policies.slice().sort((a, b) => b.by_segment[seg].net - a.by_segment[seg].net).forEach(p => {
+    const s = p.by_segment[seg];
+    const row = el("div", "cbar-row");
+    row.append(el("div", "lbl", p.policy));
+    const track = el("div", "cbar-track");
+    const fill = el("div", "cbar-fill");
+    fill.style.width = Math.max(1, s.net / max * 100) + "%";
+    if (p.policy !== "ladder") fill.style.opacity = ".42";
+    track.append(fill, el("div", "cbar-val", INR(s.net)));
+    row.append(track);
+    card.append(row);
+  });
+  cc.append(card);
+});
+
+/* ---- doomed retries ---- */
+const dm = document.getElementById("doomed");
+const retry = DATA.policies.find(p => p.policy === "retry_only");
+["card_expired", "mandate_expired", "mandate_revoked", "invoice_overdue"].forEach(reason => {
+  const rr = retry.by_reason[reason], lr = L.by_reason[reason];
+  const chip = el("div", "chip");
+  chip.innerHTML = `<div class="r">${reason}</div>`
+    + `<div style="margin-top:4px">retry_only <span class="n ${rr.net < 0 ? "neg" : "pos"}">${INR(rr.net)}</span></div>`
+    + `<div>ladder <span class="n pos">${INR(lr.net)}</span></div>`;
+  dm.append(chip);
+});
+
+/* ---- sensitivity grid ---- */
+document.getElementById("baseName").textContent = DATA.sweep.baseline;
+const SG = DATA.sweep.stress_grid, CG = DATA.sweep.cost_grid;
+const cellByKey = {};
+DATA.sweep.cells.forEach(c => { cellByKey[c.stress + "|" + c.voice_cost] = c; });
+const maxAbs = Math.max(...DATA.sweep.cells.map(c => Math.abs(c.ladder_minus_baseline)));
+function heatColor(v) {
+  const t = Math.max(-1, Math.min(1, v / maxAbs));
+  // diverging: neg -> --neg, 0 -> surface-2, pos -> --pos ; blend via rgba over surface
+  const c = t >= 0 ? "14,124,90" : "166,58,43";
+  const a = Math.abs(t) * 0.82 + 0.06;
+  return `rgba(${c},${a.toFixed(3)})`;
+}
+const hg = document.getElementById("heatGrid");
+hg.append(el("div", "ch", ""));
+CG.forEach(c => hg.append(el("div", "ch" + (c <= DATA.meta.voice_cost ? " realistic" : ""), RS + c)));
+SG.slice().reverse().forEach(s => {
+  hg.append(el("div", "rh", s.toFixed(1)));
+  CG.forEach(cst => {
+    const c = cellByKey[s + "|" + cst];
+    const cell = el("button", "heat-cell" + (cst <= DATA.meta.voice_cost ? " realistic" : ""));
+    cell.type = "button";
+    cell.style.background = heatColor(c.ladder_minus_baseline);
+    cell.dataset.k = s + "|" + cst;
+    cell.textContent = Math.abs(c.ladder_minus_baseline) > maxAbs * 0.18 ? INRk(c.ladder_minus_baseline).replace(RS, "") : "";
+    cell.setAttribute("aria-label", `stress ${s}, cost ${RS}${cst}: ladder ${c.ladder_wins ? "wins" : "loses"} by ${INRk(c.ladder_minus_baseline)}`);
+    cell.addEventListener("click", () => select(s + "|" + cst));
+    cell.addEventListener("mouseenter", () => select(s + "|" + cst));
+    hg.append(cell);
+  });
+});
+const x = DATA.sweep.crossover;
+document.getElementById("crossover").innerHTML =
+  `<span>ladder ahead in <b>${DATA.sweep.cells.filter(c => c.ladder_wins).length}/${DATA.sweep.cells.length}</b> cells</span>`
+  + `<span>at &#8377;12: wins for every stress &ge; <b>${x.min_stress_ladder_wins_at_cost_12}</b></span>`
+  + `<span>at stress 1.0: wins up to voice cost <b>&#8377;${x.max_cost_ladder_wins_at_stress_1}</b></span>`;
+
+const readout = document.getElementById("readout");
+function select(key) {
+  document.querySelectorAll(".heat-cell").forEach(n => n.setAttribute("aria-selected", n.dataset.k === key ? "true" : "false"));
+  const c = cellByKey[key];
+  const polys = ["ladder", "standard_playbook", "retry_only", "call_first", "nudge_ladder"].filter(p => c.nets[p] != null);
+  const maxNet = Math.max(...polys.map(p => c.nets[p]));
+  let h = `<div class="rtitle">stress <b>${c.stress.toFixed(1)}</b> &nbsp; voice cost <b>&#8377;${c.voice_cost}</b></div>`;
+  h += `<div class="verdict ${c.ladder_wins ? "win" : "lose"}">ladder ${c.ladder_wins ? "beats" : "trails"} ${DATA.sweep.baseline} by ${INRk(c.ladder_minus_baseline)}</div>`;
+  polys.forEach(p => {
+    const v = c.nets[p];
+    const klass = p === "ladder" ? "is-ladder" : (p === DATA.sweep.baseline ? "is-base" : "");
+    h += `<div class="rrow ${klass}"><span class="rl">${p}</span>`
+      + `<span class="rt"><span class="rf" style="width:${Math.max(1, v / maxNet * 100)}%"></span></span>`
+      + `<span class="rv">${INR(v)}</span></div>`;
+  });
+  h += `<div class="rrow"><span class="rl">ladder calls</span><span class="rt"></span><span class="rv">${c.ladder_calls}</span></div>`;
+  h += `<div class="chart-wrap">${lineChart(c.voice_cost)}</div>`;
+  h += `<div style="font-size:.72rem;color:var(--text-dim);margin-top:6px">net vs stress at &#8377;${c.voice_cost} &mdash; ladder in accent</div>`;
+  readout.innerHTML = h;
+}
+
+function lineChart(cost) {
+  const W = 384, H = 156, pad = { t: 10, r: 58, b: 18, l: 34 };
+  const series = ["ladder", "standard_playbook", "retry_only", "call_first", "nudge_ladder"];
+  const rows = SG.map(s => cellByKey[s + "|" + cost]);
+  const all = [];
+  series.forEach(p => rows.forEach(r => { if (r.nets[p] != null) all.push(r.nets[p]); }));
+  const lo = Math.min(...all), hi = Math.max(...all);
+  const xf = i => pad.l + i / (SG.length - 1) * (W - pad.l - pad.r);
+  const yf = v => pad.t + (1 - (v - lo) / (hi - lo || 1)) * (H - pad.t - pad.b);
+  const color = p => p === "ladder" ? "var(--accent)" : (p === "standard_playbook" ? "var(--text)" : "var(--text-dim)");
+  const label = { ladder: "ladder", standard_playbook: "playbook" };
+  let s = `<svg class="linechart" viewBox="0 0 ${W} ${H}" role="img" aria-label="net rupees versus voice lift stress at cost ${cost}">`;
+  // y gridlines + value labels at lo / hi
+  [[hi, yf(hi)], [lo, yf(lo)]].forEach(([v, y]) => {
+    s += `<line x1="${pad.l}" y1="${y.toFixed(1)}" x2="${W - pad.r}" y2="${y.toFixed(1)}" stroke="var(--border)" stroke-width="1"/>`;
+    s += `<text x="${pad.l - 4}" y="${(y + 3).toFixed(1)}" text-anchor="end">${RS}${(v / 1e6).toFixed(1)}M</text>`;
+  });
+  series.forEach(p => {
+    const pts = SG.map((st, i) => `${xf(i).toFixed(1)},${yf(rows[i].nets[p]).toFixed(1)}`).join(" ");
+    const emph = p === "ladder" || p === "standard_playbook";
+    s += `<polyline points="${pts}" fill="none" stroke="${color(p)}" stroke-width="${p === "ladder" ? 2.4 : emph ? 1.4 : 0.8}" opacity="${emph ? 1 : 0.5}"/>`;
+    if (emph) {
+      const ly = yf(rows[SG.length - 1].nets[p]);
+      s += `<text x="${W - pad.r + 4}" y="${(ly + 3).toFixed(1)}" fill="${color(p)}">${label[p]}</text>`;
+    }
+  });
+  SG.forEach((st, i) => { s += `<text x="${xf(i).toFixed(1)}" y="${H - 5}" text-anchor="middle">${st}</text>`; });
+  s += `</svg>`;
+  return s;
+}
+
+/* ---- guardrails ---- */
+document.getElementById("violTotal").firstChild.textContent = DATA.total_violations;
+const ruleText = {
+  contact_window: ["09:00" + NDASH + "19:00 only", `no contact outside ${DATA.rules.contact_window[0]}${NDASH}${DATA.rules.contact_window[1]}`],
+  dnc: ["permanent DNC", "opt-outs are never contacted, on any channel"],
+  contact_cap_7d: [`${DATA.rules.contact_cap_7d} contacts / 7 days`, "rolling frequency cap per account"],
+  voice_attempts_max: [`${DATA.rules.voice_attempts_max} voice attempts`, "hard ceiling on dials per account"],
+  ptp_suppression: ["promise-to-pay", "a dated promise suppresses all contact until it is due"],
+  voice_budget: ["voice budget", `${RS}${DATA.meta.voice_budget.toLocaleString("en-IN")} of voice spend across the whole run`],
+  human_capacity: ["human capacity", `${DATA.meta.human_cap} manual escalations a team can absorb`],
+  no_phone: ["no phone on file", "voice is not attempted without a number"],
+};
+const rc = document.getElementById("rules");
+DATA.rules.codes.forEach(code => {
+  const t = ruleText[code] || [code, ""];
+  const r = el("div", "r");
+  r.innerHTML = `<div class="rn">${t[0]}</div><div class="rd">${t[1]}</div>`;
+  rc.append(r);
+});
+
+/* ---- traces ---- */
+const tl = document.getElementById("traceList");
+DATA.traces.forEach(t => {
+  const box = el("div", "trace");
+  const head = el("div", "thead");
+  head.innerHTML = `<span class="tl">${t.label}</span>`
+    + `<span class="tm">${t.account_id} &middot; ${t.segment} &middot; ${t.reason} &middot; ${INR(t.amount)} &middot; ${t.prior_failures} prior fails</span>`;
+  box.append(head);
+  const ol = el("ol");
+  t.events.forEach(e => {
+    const li = el("li", "k-" + e.event);
+    let m = "";
+    if (e.event === "action") m = `${e.intervention} &rarr; <b>${e.outcome}</b>${e.expected_net != null ? ` &middot; E[net] ${INR(e.expected_net)}` : ""}`;
+    else if (e.event === "blocked") m = `${e.channels || e.intervention} &mdash; blocked by <b>${e.rule}</b>`;
+    else if (e.event === "stop") m = `stop &mdash; ${e.cause}${e.best_net != null ? ` &middot; best E[net] ${INR(e.best_net)}` : ""}`;
+    else if (e.event === "ptp_created") m = `promise-to-pay captured, due ${e.due || "soon"}`;
+    else if (e.event === "ptp_resolved") m = `promise-to-pay <b>${e.result}</b>`;
+    else if (e.event === "episode_end") m = e.recovered ? `recovered${e.recovered_via ? " via " + e.recovered_via : ""} &middot; spend ${INR(e.spend || 0)}` : `not recovered &middot; spend ${INR(e.spend || 0)}`;
+    else m = e.event.replace(/_/g, " ");
+    li.innerHTML = `<span class="st">${e.stage != null ? "s" + e.stage : MIDDOT}</span>`
+      + `<span class="ev"><span class="k">${e.event}</span> <span class="meta">${m}</span></span>`;
+    ol.append(li);
+  });
+  box.append(ol);
+  tl.append(box);
+});
+
+/* ---- calls ---- */
+const clist = document.getElementById("callList");
+if (!DATA.sample_calls.length) {
+  clist.innerHTML = `<p class="caption">Run <span class="mono">python -m recovery.voice</span> with a Sarvam key to render these.</p>`;
+}
+DATA.sample_calls.forEach(c => {
+  const card = el("div", "call");
+  card.innerHTML = `<div class="ch"><span>${c.account_id} &middot; ${c.segment}</span><span class="amt">${INR(c.amount)}</span></div>`
+    + `<span class="reason-tag">${c.reason}</span>`
+    + `<p class="script">&ldquo;${c.script}&rdquo;</p>`
+    + `<div class="ch" style="margin-top:auto"><span>${c.language} &middot; ${c.speaker}</span><span>sarvam-105b + bulbul</span></div>`;
+  clist.append(card);
+});
+
+/* ---- footer runline ---- */
+document.getElementById("runline").textContent =
+  `$ python -m recovery --cohorts\n`
+  + `$ python -m recovery.sweep\n`
+  + `$ python -m recovery.voice --limit 5\n`
+  + `seed=${DATA.meta.seed}  voice_budget=${INR(DATA.meta.voice_budget)}  human_cap=${DATA.meta.human_cap}  pickup=${DATA.meta.voice_pickup_rate}`;
+
+/* default selection: realistic centre */
+select("1|12");
+</script>

@@ -120,6 +120,40 @@ class EndToEnd(unittest.TestCase):
         self.assertGreater(top, 0.4)
 
 
+class Analysis(unittest.TestCase):
+    def test_run_all_shape_and_cohort_conservation(self):
+        from recovery.analysis import run_all
+        res = run_all(20260903, 1.0, 1200.0, 25)
+        self.assertEqual(len(res["policies"]), 5)
+        self.assertEqual(res["total_violations"], 0)
+        for p in res["policies"]:
+            seg = p["by_segment"]
+            self.assertEqual(seg["B2C"]["accounts"] + seg["B2B"]["accounts"],
+                             p["accounts"])
+            self.assertEqual(sum(r["accounts"] for r in p["by_reason"].values()),
+                             p["accounts"])
+            self.assertAlmostEqual(
+                round(seg["B2C"]["recovered"] + seg["B2B"]["recovered"], 2),
+                p["recovered"], places=2)
+
+    def test_voice_cost_override_restores(self):
+        from recovery import core
+        base = core.INTERVENTION_COST["voice_call"]
+        with core.voice_cost(99.0):
+            self.assertEqual(core.INTERVENTION_COST["voice_call"], 99.0)
+        self.assertEqual(core.INTERVENTION_COST["voice_call"], base)
+
+    def test_sweep_small_grid(self):
+        from recovery.sweep import run_sweep
+        s = run_sweep(7, stress_grid=[0.6, 1.2], cost_grid=[8.0, 20.0])
+        self.assertEqual(len(s["cells"]), 4)
+        self.assertEqual(sum(c["violations"] for c in s["cells"]), 0)
+        self.assertIn("min_stress_ladder_wins_at_cost_12", s["crossover"])
+        # cost override must not bleed out of the sweep
+        from recovery import core
+        self.assertEqual(core.INTERVENTION_COST["voice_call"], core.DEFAULT_VOICE_COST)
+
+
 class Voice(unittest.TestCase):
     """No network -- just the offline plumbing of the optional voice layer."""
 

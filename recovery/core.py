@@ -7,6 +7,7 @@ this package. Recovery probabilities live in world.py and are also invented.
 from __future__ import annotations
 
 import random
+from contextlib import contextmanager
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timedelta
 
@@ -60,6 +61,24 @@ INTERVENTION_COST = {
 # A "contacting" intervention touches the customer and is subject to the
 # contact-window / DNC / frequency guardrails. silent_retry does not.
 CONTACTING = frozenset({"sms_link", "whatsapp_nudge", "voice_call", "human_escalation"})
+
+DEFAULT_VOICE_COST = INTERVENTION_COST["voice_call"]
+
+
+@contextmanager
+def voice_cost(rupees: float):
+    """Temporarily override the voice-call cost (for sensitivity sweeps).
+
+    The whole thesis pivots on this number, so the sweep needs to move it.
+    Single-threaded, sequential use only -- it mutates the module dict and
+    restores it on exit.
+    """
+    old = INTERVENTION_COST["voice_call"]
+    INTERVENTION_COST["voice_call"] = float(rupees)
+    try:
+        yield
+    finally:
+        INTERVENTION_COST["voice_call"] = old
 
 # --------------------------------------------------------------------------
 # Synthetic ledger

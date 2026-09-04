@@ -10,41 +10,8 @@ import os
 import sys
 
 from . import core, world
-from .guardrails import DEFAULT_HUMAN_CAP, DEFAULT_VOICE_BUDGET, audit_executed
-from .ladder import POLICIES, run_policy
-
-
-def _metrics(name, episodes, events, violations):
-    n = len(episodes)
-    recovered = sum(e.recovered_amount for e in episodes)
-    spend = sum(e.spend for e in episodes)
-    n_recovered = sum(1 for e in episodes if e.recovered)
-    calls = sum(1 for ev in events
-                if ev.get("event") == "action" and ev.get("intervention") == "voice_call")
-    ptps = sum(1 for ev in events if ev.get("event") == "ptp_created")
-    ptps_paid = sum(1 for e in episodes if e.ptp_paid)
-    cpr = (spend / recovered * 100.0) if recovered > 0 else None
-    return {
-        "policy": name,
-        "recovered": round(recovered, 2),
-        "spend": round(spend, 2),
-        "net": round(recovered - spend, 2),
-        "rate": round(n_recovered / n, 4),
-        "n_recovered": n_recovered,
-        "calls": calls,
-        "ptps": ptps,
-        "ptps_paid": ptps_paid,
-        "cost_per_100": round(cpr, 3) if cpr is not None else None,
-        "violations": len(violations),
-        "violation_breakdown": _count(violations),
-    }
-
-
-def _count(violations):
-    out = {}
-    for v in violations:
-        out[v["rule"]] = out.get(v["rule"], 0) + 1
-    return out
+from .analysis import run_all
+from .guardrails import DEFAULT_HUMAN_CAP, DEFAULT_VOICE_BUDGET
 
 
 def _print_table(rows):
@@ -69,6 +36,21 @@ def _print_table(rows):
           "'viol' MUST be 0")
 
 
+def _print_cohorts(rows):
+    for r in rows:
+        print(f"\n{r['policy']}")
+        for seg in ("B2C", "B2B"):
+            s = r["by_segment"][seg]
+            cpr = "-" if s["cost_per_100"] is None else f"Rs.{s['cost_per_100']:.2f}/100"
+            print(f"  {seg:<4} {s['accounts']:>3} acc  "
+                  f"net Rs.{s['net']:>12,.0f}  rate {s['rate'] * 100:>4.1f}%  {cpr}")
+        worst = sorted(r["by_reason"].items(),
+                       key=lambda kv: kv[1]["net"])[:3]
+        tail = ", ".join(f"{k} (net Rs.{v['net']:,.0f})" for k, v in worst if v["accounts"])
+        if tail:
+            print(f"  weakest reasons: {tail}")
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="python -m recovery")
     ap.add_argument("--seed", type=int, default=20260903)
@@ -80,55 +62,55 @@ def main(argv=None):
                     help="manual human escalations allowed across the whole run")
     ap.add_argument("--audit-dir", default="audit",
                     help="directory for per-policy JSONL trails")
+    ap.add_argument("--cohorts", action="store_true",
+                    help="also print the B2B/B2C and by-reason breakdown")
     ap.add_argument("--json", action="store_true",
-                    help="emit the scorecard as JSON instead of a table")
+                    help="emit the full scorecard (incl. cohorts) as JSON")
     args = ap.parse_args(argv)
 
     if not args.json:
         print(world.ASSUMPTION_BANNER)
         print()
 
-    ledger = core.build_ledger(args.seed)
-    lsum = core.ledger_summary(ledger)
-    if not args.json:
-        print(f"ledger: {lsum['accounts']} accounts, "
-              f"Rs.{lsum['at_risk_rupees']:,.0f} at risk, "
-              f"{lsum['b2b_accounts']} B2B ({lsum['b2b_share_of_rupees'] * 100:.0f}% of rupees), "
-              f"{lsum['dnc_accounts']} on DNC, "
-              f"{lsum['with_open_ptp']} with an open promise-to-pay")
-        print(f"run: seed={args.seed}  stress={args.stress}  "
-              f"voice_budget=Rs.{args.voice_budget:,.0f}")
-        print()
+    result = run_all(args.seed, args.stress, args.voice_budget, args.human_cap,
+                     keep_events=True)
+    lsum = result["ledger"]
+    rows = result["policies"]
 
+    # write the JSONL audit trails
+    ledger = core.build_ledger(args.seed)
     os.makedirs(args.audit_dir, exist_ok=True)
-    rows = []
-    total_violations = 0
-    for name in POLICIES:
-        episodes, events = run_policy(name, ledger, args.seed, args.stress,
-                                     args.voice_budget, args.human_cap)
-        path = os.path.join(args.audit_dir, f"{name}.jsonl")
-        with open(path, "w", encoding="utf-8") as fh:
+    for name, events in result["events"].items():
+        with open(os.path.join(args.audit_dir, f"{name}.jsonl"), "w", encoding="utf-8") as fh:
             for ev in events:
                 fh.write(json.dumps(ev, ensure_ascii=False) + "\n")
-        violations = audit_executed(events, ledger, args.voice_budget, args.human_cap)
-        total_violations += len(violations)
-        rows.append(_metrics(name, episodes, events, violations))
 
     if args.json:
-        json.dump({"ledger": lsum, "run": vars(args), "policies": rows},
-                  sys.stdout, indent=2)
+        payload = {"ledger": lsum, "run": vars(args), "policies": rows,
+                   "total_violations": result["total_violations"]}
+        json.dump(payload, sys.stdout, indent=2)
         sys.stdout.write("\n")
-    else:
-        _print_table(rows)
-        print()
-        best = max(rows, key=lambda r: r["net"])
-        print(f"best net: {best['policy']}  (Rs.{best['net']:,.0f})")
-        print(f"audit trails written to {os.path.abspath(args.audit_dir)}/<policy>.jsonl")
-        for r in rows:
-            if r["violation_breakdown"]:
-                print(f"  !! {r['policy']} violations: {r['violation_breakdown']}")
+        return 1 if result["total_violations"] else 0
 
-    return 1 if total_violations else 0
+    print(f"ledger: {lsum['accounts']} accounts, "
+          f"Rs.{lsum['at_risk_rupees']:,.0f} at risk, "
+          f"{lsum['b2b_accounts']} B2B ({lsum['b2b_share_of_rupees'] * 100:.0f}% of rupees), "
+          f"{lsum['dnc_accounts']} on DNC, "
+          f"{lsum['with_open_ptp']} with an open promise-to-pay")
+    print(f"run: seed={args.seed}  stress={args.stress}  "
+          f"voice_budget=Rs.{args.voice_budget:,.0f}  human_cap={args.human_cap}")
+    print()
+    _print_table(rows)
+    if args.cohorts:
+        _print_cohorts(rows)
+    print()
+    best = max(rows, key=lambda r: r["net"])
+    print(f"best net: {best['policy']}  (Rs.{best['net']:,.0f})")
+    print(f"audit trails written to {os.path.abspath(args.audit_dir)}/<policy>.jsonl")
+    for r in rows:
+        if r["violation_breakdown"]:
+            print(f"  !! {r['policy']} violations: {r['violation_breakdown']}")
+    return 1 if result["total_violations"] else 0
 
 
 if __name__ == "__main__":
