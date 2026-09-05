@@ -448,7 +448,7 @@ const cc = document.getElementById("cohortCards");
 /* ---- doomed retries ---- */
 const dm = document.getElementById("doomed");
 const retry = DATA.policies.find(p => p.policy === "retry_only");
-["card_expired", "mandate_expired", "mandate_revoked", "invoice_overdue"].forEach(reason => {
+["card_expired", "mandate_expired", "mandate_revoked", "checkout_abandoned"].forEach(reason => {
   const rr = retry.by_reason[reason], lr = L.by_reason[reason];
   const chip = el("div", "chip");
   chip.innerHTML = `<div class="r">${reason}</div>`

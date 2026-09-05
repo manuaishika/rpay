@@ -43,6 +43,7 @@
     ],
     "action_required": [
       "card_expired",
+      "checkout_abandoned",
       "invoice_overdue",
       "mandate_expired",
       "mandate_revoked"
@@ -56,146 +57,161 @@
     "dnc_accounts": 18,
     "with_open_ptp": 15,
     "by_reason": {
-      "insufficient_funds": 71,
-      "bank_downtime": 31,
-      "technical_decline": 23,
-      "mandate_expired": 11,
-      "mandate_revoked": 11,
-      "card_expired": 26,
-      "limit_exceeded": 10,
-      "do_not_honour": 25,
-      "invoice_overdue": 42
+      "insufficient_funds": 58,
+      "bank_downtime": 23,
+      "technical_decline": 31,
+      "mandate_expired": 9,
+      "mandate_revoked": 7,
+      "card_expired": 14,
+      "limit_exceeded": 9,
+      "do_not_honour": 23,
+      "invoice_overdue": 25,
+      "checkout_abandoned": 51
+    },
+    "by_stage": {
+      "checkout": 51,
+      "payment": 174,
+      "receivable": 25
     }
   },
   "policies": [
     {
       "policy": "ladder",
       "accounts": 250,
-      "recovered": 2459020.07,
-      "spend": 3612.05,
-      "net": 2455408.02,
-      "rate": 0.412,
-      "n_recovered": 103,
-      "cost_per_100": 0.147,
+      "recovered": 2379460.85,
+      "spend": 3583.95,
+      "net": 2375876.9,
+      "rate": 0.388,
+      "n_recovered": 97,
+      "cost_per_100": 0.151,
       "calls": 100,
-      "ptps": 18,
-      "ptps_paid": 10,
-      "stops": 28,
+      "ptps": 21,
+      "ptps_paid": 14,
+      "stops": 55,
       "violations": 0,
       "violation_breakdown": {},
       "by_segment": {
         "B2C": {
           "accounts": 183,
-          "recovered": 117432.57,
-          "spend": 2172.7,
-          "net": 115259.87,
-          "rate": 0.4208,
-          "n_recovered": 77,
-          "cost_per_100": 1.85
+          "recovered": 102875.35,
+          "spend": 2129.55,
+          "net": 100745.8,
+          "rate": 0.3989,
+          "n_recovered": 73,
+          "cost_per_100": 2.07
         },
         "B2B": {
           "accounts": 67,
-          "recovered": 2341587.5,
-          "spend": 1439.35,
-          "net": 2340148.15,
-          "rate": 0.3881,
-          "n_recovered": 26,
-          "cost_per_100": 0.061
+          "recovered": 2276585.5,
+          "spend": 1454.4,
+          "net": 2275131.1,
+          "rate": 0.3582,
+          "n_recovered": 24,
+          "cost_per_100": 0.064
         }
       },
       "by_reason": {
         "insufficient_funds": {
-          "accounts": 71,
-          "recovered": 181018.75,
-          "spend": 807.2,
-          "net": 180211.55,
-          "rate": 0.2817,
-          "n_recovered": 20,
-          "cost_per_100": 0.446
+          "accounts": 58,
+          "recovered": 163472.72,
+          "spend": 703.95,
+          "net": 162768.77,
+          "rate": 0.2759,
+          "n_recovered": 16,
+          "cost_per_100": 0.431
         },
         "bank_downtime": {
-          "accounts": 31,
-          "recovered": 1322667.79,
-          "spend": 172.65,
-          "net": 1322495.14,
-          "rate": 0.5806,
-          "n_recovered": 18,
-          "cost_per_100": 0.013
+          "accounts": 23,
+          "recovered": 67869.95,
+          "spend": 74.9,
+          "net": 67795.05,
+          "rate": 0.7391,
+          "n_recovered": 17,
+          "cost_per_100": 0.11
         },
         "technical_decline": {
-          "accounts": 23,
-          "recovered": 95505.9,
-          "spend": 76.05,
-          "net": 95429.85,
-          "rate": 0.6087,
-          "n_recovered": 14,
-          "cost_per_100": 0.08
+          "accounts": 31,
+          "recovered": 1247502.82,
+          "spend": 526.5,
+          "net": 1246976.32,
+          "rate": 0.5161,
+          "n_recovered": 16,
+          "cost_per_100": 0.042
         },
         "mandate_expired": {
-          "accounts": 11,
-          "recovered": 2626.57,
-          "spend": 3.75,
-          "net": 2622.82,
-          "rate": 0.1818,
-          "n_recovered": 2,
-          "cost_per_100": 0.143
+          "accounts": 9,
+          "recovered": 5519.78,
+          "spend": 135.7,
+          "net": 5384.08,
+          "rate": 0.3333,
+          "n_recovered": 3,
+          "cost_per_100": 2.458
         },
         "mandate_revoked": {
-          "accounts": 11,
-          "recovered": 259062.27,
-          "spend": 146.8,
-          "net": 258915.47,
-          "rate": 0.4545,
-          "n_recovered": 5,
-          "cost_per_100": 0.057
+          "accounts": 7,
+          "recovered": 253542.49,
+          "spend": 85.9,
+          "net": 253456.59,
+          "rate": 0.2857,
+          "n_recovered": 2,
+          "cost_per_100": 0.034
         },
         "card_expired": {
-          "accounts": 26,
-          "recovered": 215100.45,
-          "spend": 457.6,
-          "net": 214642.85,
-          "rate": 0.4231,
-          "n_recovered": 11,
-          "cost_per_100": 0.213
+          "accounts": 14,
+          "recovered": 48954.88,
+          "spend": 221.35,
+          "net": 48733.53,
+          "rate": 0.2857,
+          "n_recovered": 4,
+          "cost_per_100": 0.452
         },
         "limit_exceeded": {
-          "accounts": 10,
-          "recovered": 10528.39,
-          "spend": 145.3,
-          "net": 10383.09,
-          "rate": 0.5,
-          "n_recovered": 5,
-          "cost_per_100": 1.38
+          "accounts": 9,
+          "recovered": 262891.48,
+          "spend": 31.8,
+          "net": 262859.68,
+          "rate": 0.7778,
+          "n_recovered": 7,
+          "cost_per_100": 0.012
         },
         "do_not_honour": {
-          "accounts": 25,
-          "recovered": 52854.92,
-          "spend": 591.65,
-          "net": 52263.27,
-          "rate": 0.28,
-          "n_recovered": 7,
-          "cost_per_100": 1.119
+          "accounts": 23,
+          "recovered": 116308.7,
+          "spend": 706.0,
+          "net": 115602.7,
+          "rate": 0.3913,
+          "n_recovered": 9,
+          "cost_per_100": 0.607
         },
         "invoice_overdue": {
-          "accounts": 42,
-          "recovered": 319655.03,
-          "spend": 1211.05,
-          "net": 318443.98,
-          "rate": 0.5,
-          "n_recovered": 21,
-          "cost_per_100": 0.379
+          "accounts": 25,
+          "recovered": 84797.98,
+          "spend": 766.9,
+          "net": 84031.08,
+          "rate": 0.32,
+          "n_recovered": 8,
+          "cost_per_100": 0.904
+        },
+        "checkout_abandoned": {
+          "accounts": 51,
+          "recovered": 128600.05,
+          "spend": 330.95,
+          "net": 128269.1,
+          "rate": 0.2941,
+          "n_recovered": 15,
+          "cost_per_100": 0.257
         }
       }
     },
     {
       "policy": "retry_only",
       "accounts": 250,
-      "recovered": 1442604.72,
-      "spend": 329.0,
-      "net": 1442275.72,
-      "rate": 0.232,
-      "n_recovered": 58,
-      "cost_per_100": 0.023,
+      "recovered": 509785.97,
+      "spend": 342.5,
+      "net": 509443.47,
+      "rate": 0.2,
+      "n_recovered": 50,
+      "cost_per_100": 0.067,
       "calls": 0,
       "ptps": 0,
       "ptps_paid": 0,
@@ -205,116 +221,125 @@
       "by_segment": {
         "B2C": {
           "accounts": 183,
-          "recovered": 77780.27,
-          "spend": 237.0,
-          "net": 77543.27,
-          "rate": 0.2568,
-          "n_recovered": 47,
-          "cost_per_100": 0.305
+          "recovered": 61073.95,
+          "spend": 249.0,
+          "net": 60824.95,
+          "rate": 0.2186,
+          "n_recovered": 40,
+          "cost_per_100": 0.408
         },
         "B2B": {
           "accounts": 67,
-          "recovered": 1364824.45,
-          "spend": 92.0,
-          "net": 1364732.45,
-          "rate": 0.1642,
-          "n_recovered": 11,
-          "cost_per_100": 0.007
+          "recovered": 448712.02,
+          "spend": 93.5,
+          "net": 448618.52,
+          "rate": 0.1493,
+          "n_recovered": 10,
+          "cost_per_100": 0.021
         }
       },
       "by_reason": {
         "insufficient_funds": {
-          "accounts": 71,
-          "recovered": 81494.86,
-          "spend": 96.5,
-          "net": 81398.36,
-          "rate": 0.2113,
-          "n_recovered": 15,
-          "cost_per_100": 0.118
+          "accounts": 58,
+          "recovered": 72941.47,
+          "spend": 81.5,
+          "net": 72859.97,
+          "rate": 0.1724,
+          "n_recovered": 10,
+          "cost_per_100": 0.112
         },
         "bank_downtime": {
-          "accounts": 31,
-          "recovered": 1247809.22,
-          "spend": 32.5,
-          "net": 1247776.72,
-          "rate": 0.5484,
-          "n_recovered": 17,
-          "cost_per_100": 0.003
+          "accounts": 23,
+          "recovered": 66415.75,
+          "spend": 22.5,
+          "net": 66393.25,
+          "rate": 0.6522,
+          "n_recovered": 15,
+          "cost_per_100": 0.034
         },
         "technical_decline": {
-          "accounts": 23,
-          "recovered": 95450.33,
-          "spend": 21.5,
-          "net": 95428.83,
-          "rate": 0.6087,
-          "n_recovered": 14,
-          "cost_per_100": 0.023
+          "accounts": 31,
+          "recovered": 64095.86,
+          "spend": 39.0,
+          "net": 64056.86,
+          "rate": 0.4194,
+          "n_recovered": 13,
+          "cost_per_100": 0.061
         },
         "mandate_expired": {
-          "accounts": 11,
+          "accounts": 9,
           "recovered": 0.0,
-          "spend": 16.5,
-          "net": -16.5,
+          "spend": 13.5,
+          "net": -13.5,
           "rate": 0.0,
           "n_recovered": 0,
           "cost_per_100": null
         },
         "mandate_revoked": {
-          "accounts": 11,
+          "accounts": 7,
           "recovered": 0.0,
-          "spend": 16.5,
-          "net": -16.5,
+          "spend": 10.5,
+          "net": -10.5,
           "rate": 0.0,
           "n_recovered": 0,
           "cost_per_100": null
         },
         "card_expired": {
-          "accounts": 26,
+          "accounts": 14,
           "recovered": 0.0,
-          "spend": 39.0,
-          "net": -39.0,
+          "spend": 21.0,
+          "net": -21.0,
           "rate": 0.0,
           "n_recovered": 0,
           "cost_per_100": null
         },
         "limit_exceeded": {
-          "accounts": 10,
-          "recovered": 9110.42,
-          "spend": 12.0,
-          "net": 9098.42,
-          "rate": 0.4,
-          "n_recovered": 4,
-          "cost_per_100": 0.132
+          "accounts": 9,
+          "recovered": 261473.51,
+          "spend": 9.0,
+          "net": 261464.51,
+          "rate": 0.6667,
+          "n_recovered": 6,
+          "cost_per_100": 0.003
         },
         "do_not_honour": {
-          "accounts": 25,
-          "recovered": 4466.7,
-          "spend": 33.5,
-          "net": 4433.2,
-          "rate": 0.16,
-          "n_recovered": 4,
-          "cost_per_100": 0.75
+          "accounts": 23,
+          "recovered": 43962.2,
+          "spend": 31.5,
+          "net": 43930.7,
+          "rate": 0.2174,
+          "n_recovered": 5,
+          "cost_per_100": 0.072
         },
         "invoice_overdue": {
-          "accounts": 42,
-          "recovered": 4273.19,
-          "spend": 61.0,
-          "net": 4212.19,
-          "rate": 0.0952,
-          "n_recovered": 4,
-          "cost_per_100": 1.428
+          "accounts": 25,
+          "recovered": 897.18,
+          "spend": 37.5,
+          "net": 859.68,
+          "rate": 0.04,
+          "n_recovered": 1,
+          "cost_per_100": 4.18
+        },
+        "checkout_abandoned": {
+          "accounts": 51,
+          "recovered": 0.0,
+          "spend": 76.5,
+          "net": -76.5,
+          "rate": 0.0,
+          "n_recovered": 0,
+          "cost_per_100": null
         }
       }
     },
     {
       "policy": "nudge_ladder",
       "accounts": 250,
-      "recovered": 379615.25,
+      "recovered": 302075.19,
       "spend": 116.15,
-      "net": 379499.1,
-      "rate": 0.164,
-      "n_recovered": 41,
-      "cost_per_100": 0.031,
+      "net": 301959.04,
+      "rate": 0.168,
+      "n_recovered": 42,
+      "cost_per_100": 0.038,
       "calls": 0,
       "ptps": 0,
       "ptps_paid": 0,
@@ -324,342 +349,369 @@
       "by_segment": {
         "B2C": {
           "accounts": 183,
-          "recovered": 41326.57,
-          "spend": 81.15,
-          "net": 41245.42,
-          "rate": 0.1639,
-          "n_recovered": 30,
-          "cost_per_100": 0.196
+          "recovered": 46596.25,
+          "spend": 80.75,
+          "net": 46515.5,
+          "rate": 0.1803,
+          "n_recovered": 33,
+          "cost_per_100": 0.173
         },
         "B2B": {
           "accounts": 67,
-          "recovered": 338288.68,
-          "spend": 35.0,
-          "net": 338253.68,
-          "rate": 0.1642,
-          "n_recovered": 11,
-          "cost_per_100": 0.01
+          "recovered": 255478.94,
+          "spend": 35.4,
+          "net": 255443.54,
+          "rate": 0.1343,
+          "n_recovered": 9,
+          "cost_per_100": 0.014
         }
       },
       "by_reason": {
         "insufficient_funds": {
-          "accounts": 71,
-          "recovered": 76173.42,
-          "spend": 34.75,
-          "net": 76138.67,
-          "rate": 0.169,
-          "n_recovered": 12,
-          "cost_per_100": 0.046
+          "accounts": 58,
+          "recovered": 69191.15,
+          "spend": 29.3,
+          "net": 69161.85,
+          "rate": 0.1379,
+          "n_recovered": 8,
+          "cost_per_100": 0.042
         },
         "bank_downtime": {
-          "accounts": 31,
-          "recovered": 40959.15,
-          "spend": 16.65,
-          "net": 40942.5,
-          "rate": 0.1935,
-          "n_recovered": 6,
-          "cost_per_100": 0.041
+          "accounts": 23,
+          "recovered": 4712.78,
+          "spend": 9.15,
+          "net": 4703.63,
+          "rate": 0.1739,
+          "n_recovered": 4,
+          "cost_per_100": 0.194
         },
         "technical_decline": {
-          "accounts": 23,
-          "recovered": 4896.49,
-          "spend": 9.35,
-          "net": 4887.14,
-          "rate": 0.1304,
-          "n_recovered": 3,
-          "cost_per_100": 0.191
+          "accounts": 31,
+          "recovered": 42210.53,
+          "spend": 17.2,
+          "net": 42193.33,
+          "rate": 0.2258,
+          "n_recovered": 7,
+          "cost_per_100": 0.041
         },
         "mandate_expired": {
-          "accounts": 11,
-          "recovered": 2626.57,
-          "spend": 3.0,
-          "net": 2623.57,
-          "rate": 0.1818,
-          "n_recovered": 2,
-          "cost_per_100": 0.114
+          "accounts": 9,
+          "recovered": 1976.68,
+          "spend": 4.3,
+          "net": 1972.38,
+          "rate": 0.1111,
+          "n_recovered": 1,
+          "cost_per_100": 0.218
         },
         "mandate_revoked": {
-          "accounts": 11,
+          "accounts": 7,
           "recovered": 583.33,
-          "spend": 4.3,
-          "net": 579.03,
-          "rate": 0.0909,
+          "spend": 1.5,
+          "net": 581.83,
+          "rate": 0.1429,
           "n_recovered": 1,
-          "cost_per_100": 0.737
+          "cost_per_100": 0.257
         },
         "card_expired": {
-          "accounts": 26,
-          "recovered": 159517.32,
-          "spend": 13.45,
-          "net": 159503.87,
-          "rate": 0.3077,
-          "n_recovered": 8,
-          "cost_per_100": 0.008
+          "accounts": 14,
+          "recovered": 35435.18,
+          "spend": 4.5,
+          "net": 35430.68,
+          "rate": 0.2143,
+          "n_recovered": 3,
+          "cost_per_100": 0.013
         },
         "limit_exceeded": {
-          "accounts": 10,
-          "recovered": 3094.29,
-          "spend": 4.3,
-          "net": 3089.99,
-          "rate": 0.2,
-          "n_recovered": 2,
-          "cost_per_100": 0.139
+          "accounts": 9,
+          "recovered": 4451.67,
+          "spend": 3.35,
+          "net": 4448.32,
+          "rate": 0.3333,
+          "n_recovered": 3,
+          "cost_per_100": 0.075
         },
         "do_not_honour": {
-          "accounts": 25,
-          "recovered": 2677.34,
-          "spend": 10.85,
-          "net": 2666.49,
-          "rate": 0.08,
-          "n_recovered": 2,
-          "cost_per_100": 0.405
+          "accounts": 23,
+          "recovered": 42228.03,
+          "spend": 14.4,
+          "net": 42213.63,
+          "rate": 0.1304,
+          "n_recovered": 3,
+          "cost_per_100": 0.034
         },
         "invoice_overdue": {
-          "accounts": 42,
-          "recovered": 89087.34,
-          "spend": 19.5,
-          "net": 89067.84,
-          "rate": 0.119,
-          "n_recovered": 5,
-          "cost_per_100": 0.022
+          "accounts": 25,
+          "recovered": 3645.11,
+          "spend": 9.55,
+          "net": 3635.56,
+          "rate": 0.08,
+          "n_recovered": 2,
+          "cost_per_100": 0.262
+        },
+        "checkout_abandoned": {
+          "accounts": 51,
+          "recovered": 97640.73,
+          "spend": 22.9,
+          "net": 97617.83,
+          "rate": 0.1961,
+          "n_recovered": 10,
+          "cost_per_100": 0.023
         }
       }
     },
     {
       "policy": "call_first",
       "accounts": 250,
-      "recovered": 605924.68,
-      "spend": 1253.55,
-      "net": 604671.13,
+      "recovered": 618601.89,
+      "spend": 1253.2,
+      "net": 617348.69,
       "rate": 0.16,
       "n_recovered": 40,
-      "cost_per_100": 0.207,
+      "cost_per_100": 0.203,
       "calls": 100,
-      "ptps": 15,
-      "ptps_paid": 10,
+      "ptps": 17,
+      "ptps_paid": 12,
       "stops": 0,
       "violations": 0,
       "violation_breakdown": {},
       "by_segment": {
         "B2C": {
           "accounts": 183,
-          "recovered": 34271.2,
+          "recovered": 31999.85,
           "spend": 794.85,
-          "net": 33476.35,
-          "rate": 0.1421,
-          "n_recovered": 26,
-          "cost_per_100": 2.319
+          "net": 31205.0,
+          "rate": 0.1366,
+          "n_recovered": 25,
+          "cost_per_100": 2.484
         },
         "B2B": {
           "accounts": 67,
-          "recovered": 571653.48,
-          "spend": 458.7,
-          "net": 571194.78,
-          "rate": 0.209,
-          "n_recovered": 14,
-          "cost_per_100": 0.08
+          "recovered": 586602.04,
+          "spend": 458.35,
+          "net": 586143.69,
+          "rate": 0.2239,
+          "n_recovered": 15,
+          "cost_per_100": 0.078
         }
       },
       "by_reason": {
         "insufficient_funds": {
-          "accounts": 71,
-          "recovered": 146743.11,
-          "spend": 388.1,
-          "net": 146355.01,
-          "rate": 0.1268,
-          "n_recovered": 9,
-          "cost_per_100": 0.264
+          "accounts": 58,
+          "recovered": 143963.35,
+          "spend": 301.3,
+          "net": 143662.05,
+          "rate": 0.1207,
+          "n_recovered": 7,
+          "cost_per_100": 0.209
         },
         "bank_downtime": {
-          "accounts": 31,
-          "recovered": 125209.28,
-          "spend": 211.7,
-          "net": 124997.58,
-          "rate": 0.1613,
-          "n_recovered": 5,
-          "cost_per_100": 0.169
+          "accounts": 23,
+          "recovered": 333.01,
+          "spend": 136.55,
+          "net": 196.46,
+          "rate": 0.0435,
+          "n_recovered": 1,
+          "cost_per_100": 41.005
         },
         "technical_decline": {
-          "accounts": 23,
-          "recovered": 52121.23,
-          "spend": 88.2,
-          "net": 52033.03,
-          "rate": 0.2174,
-          "n_recovered": 5,
-          "cost_per_100": 0.169
+          "accounts": 31,
+          "recovered": 144204.57,
+          "spend": 211.35,
+          "net": 143993.22,
+          "rate": 0.2581,
+          "n_recovered": 8,
+          "cost_per_100": 0.147
         },
         "mandate_expired": {
-          "accounts": 11,
-          "recovered": 1120.57,
-          "spend": 1.75,
-          "net": 1118.82,
-          "rate": 0.0909,
-          "n_recovered": 1,
-          "cost_per_100": 0.156
-        },
-        "mandate_revoked": {
-          "accounts": 11,
+          "accounts": 9,
           "recovered": 3543.1,
           "spend": 37.75,
           "net": 3505.35,
-          "rate": 0.1818,
+          "rate": 0.2222,
           "n_recovered": 2,
           "cost_per_100": 1.065
         },
+        "mandate_revoked": {
+          "accounts": 7,
+          "recovered": 0.0,
+          "spend": 0.7,
+          "net": -0.7,
+          "rate": 0.0,
+          "n_recovered": 0,
+          "cost_per_100": null
+        },
         "card_expired": {
-          "accounts": 26,
-          "recovered": 181044.56,
-          "spend": 89.95,
-          "net": 180954.61,
-          "rate": 0.3462,
-          "n_recovered": 9,
-          "cost_per_100": 0.05
+          "accounts": 14,
+          "recovered": 16656.09,
+          "spend": 50.8,
+          "net": 16605.29,
+          "rate": 0.2857,
+          "n_recovered": 4,
+          "cost_per_100": 0.305
         },
         "limit_exceeded": {
-          "accounts": 10,
-          "recovered": 1800.72,
-          "spend": 50.1,
-          "net": 1750.62,
-          "rate": 0.2,
-          "n_recovered": 2,
-          "cost_per_100": 2.782
+          "accounts": 9,
+          "recovered": 1120.57,
+          "spend": 25.75,
+          "net": 1094.82,
+          "rate": 0.1111,
+          "n_recovered": 1,
+          "cost_per_100": 2.298
         },
         "do_not_honour": {
-          "accounts": 25,
-          "recovered": 333.01,
-          "spend": 137.25,
-          "net": 195.76,
-          "rate": 0.04,
-          "n_recovered": 1,
-          "cost_per_100": 41.215
+          "accounts": 23,
+          "recovered": 164462.34,
+          "spend": 77.6,
+          "net": 164384.74,
+          "rate": 0.2609,
+          "n_recovered": 6,
+          "cost_per_100": 0.047
         },
         "invoice_overdue": {
-          "accounts": 42,
-          "recovered": 94009.1,
-          "spend": 248.75,
-          "net": 93760.35,
-          "rate": 0.1429,
-          "n_recovered": 6,
-          "cost_per_100": 0.265
+          "accounts": 25,
+          "recovered": 50869.85,
+          "spend": 88.2,
+          "net": 50781.65,
+          "rate": 0.16,
+          "n_recovered": 4,
+          "cost_per_100": 0.173
+        },
+        "checkout_abandoned": {
+          "accounts": 51,
+          "recovered": 93449.01,
+          "spend": 323.2,
+          "net": 93125.81,
+          "rate": 0.1373,
+          "n_recovered": 7,
+          "cost_per_100": 0.346
         }
       }
     },
     {
       "policy": "standard_playbook",
       "accounts": 250,
-      "recovered": 2095536.33,
-      "spend": 1781.1,
-      "net": 2093755.23,
-      "rate": 0.364,
-      "n_recovered": 91,
-      "cost_per_100": 0.085,
-      "calls": 96,
-      "ptps": 18,
-      "ptps_paid": 16,
+      "recovered": 2033188.95,
+      "spend": 2517.25,
+      "net": 2030671.7,
+      "rate": 0.324,
+      "n_recovered": 81,
+      "cost_per_100": 0.124,
+      "calls": 100,
+      "ptps": 17,
+      "ptps_paid": 15,
       "stops": 0,
       "violations": 0,
       "violation_breakdown": {},
       "by_segment": {
         "B2C": {
           "accounts": 183,
-          "recovered": 108634.67,
-          "spend": 1158.15,
-          "net": 107476.52,
-          "rate": 0.3825,
-          "n_recovered": 70,
-          "cost_per_100": 1.066
+          "recovered": 92151.43,
+          "spend": 1661.65,
+          "net": 90489.78,
+          "rate": 0.3333,
+          "n_recovered": 61,
+          "cost_per_100": 1.803
         },
         "B2B": {
           "accounts": 67,
-          "recovered": 1986901.66,
-          "spend": 622.95,
-          "net": 1986278.71,
-          "rate": 0.3134,
-          "n_recovered": 21,
-          "cost_per_100": 0.031
+          "recovered": 1941037.52,
+          "spend": 855.6,
+          "net": 1940181.92,
+          "rate": 0.2985,
+          "n_recovered": 20,
+          "cost_per_100": 0.044
         }
       },
       "by_reason": {
         "insufficient_funds": {
-          "accounts": 71,
-          "recovered": 91635.85,
-          "spend": 591.5,
-          "net": 91044.35,
-          "rate": 0.2817,
-          "n_recovered": 20,
-          "cost_per_100": 0.645
+          "accounts": 58,
+          "recovered": 82095.81,
+          "spend": 752.5,
+          "net": 81343.31,
+          "rate": 0.2414,
+          "n_recovered": 14,
+          "cost_per_100": 0.917
         },
         "bank_downtime": {
-          "accounts": 31,
-          "recovered": 1307179.77,
-          "spend": 216.95,
-          "net": 1306962.82,
-          "rate": 0.5161,
-          "n_recovered": 16,
-          "cost_per_100": 0.017
-        },
-        "technical_decline": {
           "accounts": 23,
-          "recovered": 95450.33,
-          "spend": 50.1,
-          "net": 95400.23,
+          "recovered": 62830.71,
+          "spend": 101.0,
+          "net": 62729.71,
           "rate": 0.6087,
           "n_recovered": 14,
-          "cost_per_100": 0.052
+          "cost_per_100": 0.161
+        },
+        "technical_decline": {
+          "accounts": 31,
+          "recovered": 1245410.32,
+          "spend": 329.65,
+          "net": 1245080.67,
+          "rate": 0.4516,
+          "n_recovered": 14,
+          "cost_per_100": 0.026
         },
         "mandate_expired": {
-          "accounts": 11,
-          "recovered": 32861.53,
-          "spend": 43.9,
-          "net": 32817.63,
-          "rate": 0.2727,
-          "n_recovered": 3,
-          "cost_per_100": 0.134
+          "accounts": 9,
+          "recovered": 32211.64,
+          "spend": 67.45,
+          "net": 32144.19,
+          "rate": 0.2222,
+          "n_recovered": 2,
+          "cost_per_100": 0.209
         },
         "mandate_revoked": {
-          "accounts": 11,
+          "accounts": 7,
           "recovered": 253542.49,
-          "spend": 56.8,
-          "net": 253485.69,
-          "rate": 0.1818,
+          "spend": 16.6,
+          "net": 253525.89,
+          "rate": 0.2857,
           "n_recovered": 2,
-          "cost_per_100": 0.022
+          "cost_per_100": 0.007
         },
         "card_expired": {
-          "accounts": 26,
-          "recovered": 152841.14,
-          "spend": 240.0,
-          "net": 152601.14,
-          "rate": 0.3077,
-          "n_recovered": 8,
-          "cost_per_100": 0.157
+          "accounts": 14,
+          "recovered": 42166.15,
+          "spend": 70.9,
+          "net": 42095.25,
+          "rate": 0.3571,
+          "n_recovered": 5,
+          "cost_per_100": 0.168
         },
         "limit_exceeded": {
-          "accounts": 10,
-          "recovered": 10888.32,
-          "spend": 43.6,
-          "net": 10844.72,
-          "rate": 0.6,
-          "n_recovered": 6,
-          "cost_per_100": 0.4
+          "accounts": 9,
+          "recovered": 97520.09,
+          "spend": 30.55,
+          "net": 97489.54,
+          "rate": 0.5556,
+          "n_recovered": 5,
+          "cost_per_100": 0.031
         },
         "do_not_honour": {
-          "accounts": 25,
-          "recovered": 22124.67,
-          "spend": 225.75,
-          "net": 21898.92,
-          "rate": 0.36,
-          "n_recovered": 9,
-          "cost_per_100": 1.02
+          "accounts": 23,
+          "recovered": 82986.74,
+          "spend": 480.9,
+          "net": 82505.84,
+          "rate": 0.3478,
+          "n_recovered": 8,
+          "cost_per_100": 0.579
         },
         "invoice_overdue": {
-          "accounts": 42,
-          "recovered": 129012.23,
-          "spend": 312.5,
-          "net": 128699.73,
-          "rate": 0.3095,
+          "accounts": 25,
+          "recovered": 4764.24,
+          "spend": 225.05,
+          "net": 4539.19,
+          "rate": 0.16,
+          "n_recovered": 4,
+          "cost_per_100": 4.724
+        },
+        "checkout_abandoned": {
+          "accounts": 51,
+          "recovered": 129660.76,
+          "spend": 442.65,
+          "net": 129218.11,
+          "rate": 0.2549,
           "n_recovered": 13,
-          "cost_per_100": 0.242
+          "cost_per_100": 0.341
         }
       }
     }
@@ -692,932 +744,893 @@
       {
         "stress": 0.4,
         "voice_cost": 6.0,
-        "ladder_net": 2297089.97,
-        "baseline_net": 2016808.84,
-        "ladder_minus_baseline": 280281.13,
+        "ladder_net": 2436737.83,
+        "baseline_net": 1933978.69,
+        "ladder_minus_baseline": 502759.14,
         "ladder_calls": 200,
-        "ladder_cost_per_100": 0.156,
+        "ladder_cost_per_100": 0.145,
         "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 2297089.97,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1007879.64,
-          "standard_playbook": 2016808.84
+          "ladder": 2436737.83,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 933331.56,
+          "standard_playbook": 1933978.69
         }
       },
       {
         "stress": 0.4,
         "voice_cost": 8.0,
-        "ladder_net": 2266974.89,
-        "baseline_net": 2016616.84,
-        "ladder_minus_baseline": 250358.05,
+        "ladder_net": 2372889.58,
+        "baseline_net": 1933764.69,
+        "ladder_minus_baseline": 439124.89,
         "ladder_calls": 150,
-        "ladder_cost_per_100": 0.158,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2266974.89,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1010762.62,
-          "standard_playbook": 2016616.84
-        }
-      },
-      {
-        "stress": 0.4,
-        "voice_cost": 10.0,
-        "ladder_net": 2274869.29,
-        "baseline_net": 2016424.84,
-        "ladder_minus_baseline": 258444.45,
-        "ladder_calls": 120,
-        "ladder_cost_per_100": 0.158,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2274869.29,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 749393.31,
-          "standard_playbook": 2016424.84
-        }
-      },
-      {
-        "stress": 0.4,
-        "voice_cost": 12.0,
-        "ladder_net": 2262931.26,
-        "baseline_net": 2016232.84,
-        "ladder_minus_baseline": 246698.42,
-        "ladder_calls": 100,
-        "ladder_cost_per_100": 0.16,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2262931.26,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 569645.51,
-          "standard_playbook": 2016232.84
-        }
-      },
-      {
-        "stress": 0.4,
-        "voice_cost": 16.0,
-        "ladder_net": 1979949.56,
-        "baseline_net": 2014987.41,
-        "ladder_minus_baseline": -35037.85,
-        "ladder_calls": 75,
-        "ladder_cost_per_100": 0.183,
-        "ladder_wins": false,
-        "violations": 0,
-        "nets": {
-          "ladder": 1979949.56,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 569312.2,
-          "standard_playbook": 2014987.41
-        }
-      },
-      {
-        "stress": 0.4,
-        "voice_cost": 20.0,
-        "ladder_net": 1829188.15,
-        "baseline_net": 1994781.4,
-        "ladder_minus_baseline": -165593.25,
-        "ladder_calls": 60,
-        "ladder_cost_per_100": 0.198,
-        "ladder_wins": false,
-        "violations": 0,
-        "nets": {
-          "ladder": 1829188.15,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 577929.04,
-          "standard_playbook": 1994781.4
-        }
-      },
-      {
-        "stress": 0.4,
-        "voice_cost": 24.0,
-        "ladder_net": 1830908.61,
-        "baseline_net": 1994872.91,
-        "ladder_minus_baseline": -163964.3,
-        "ladder_calls": 50,
-        "ladder_cost_per_100": 0.198,
-        "ladder_wins": false,
-        "violations": 0,
-        "nets": {
-          "ladder": 1830908.61,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 441818.44,
-          "standard_playbook": 1994872.91
-        }
-      },
-      {
-        "stress": 0.6,
-        "voice_cost": 6.0,
-        "ladder_net": 2384461.69,
-        "baseline_net": 2016808.84,
-        "ladder_minus_baseline": 367652.85,
-        "ladder_calls": 200,
         "ladder_cost_per_100": 0.15,
         "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 2384461.69,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1055044.26,
-          "standard_playbook": 2016808.84
+          "ladder": 2372889.58,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 937772.65,
+          "standard_playbook": 1933764.69
         }
       },
       {
-        "stress": 0.6,
-        "voice_cost": 8.0,
-        "ladder_net": 2354347.06,
-        "baseline_net": 2016616.84,
-        "ladder_minus_baseline": 337730.22,
-        "ladder_calls": 150,
-        "ladder_cost_per_100": 0.152,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2354347.06,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1047764.92,
-          "standard_playbook": 2016616.84
-        }
-      },
-      {
-        "stress": 0.6,
+        "stress": 0.4,
         "voice_cost": 10.0,
-        "ladder_net": 2349747.46,
-        "baseline_net": 2016424.84,
-        "ladder_minus_baseline": 333322.62,
+        "ladder_net": 2379177.0,
+        "baseline_net": 1933550.69,
+        "ladder_minus_baseline": 445626.31,
         "ladder_calls": 120,
-        "ladder_cost_per_100": 0.153,
+        "ladder_cost_per_100": 0.15,
         "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 2349747.46,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 786395.26,
-          "standard_playbook": 2016424.84
+          "ladder": 2379177.0,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 676403.34,
+          "standard_playbook": 1933550.69
         }
       },
       {
-        "stress": 0.6,
+        "stress": 0.4,
         "voice_cost": 12.0,
-        "ladder_net": 2344462.22,
-        "baseline_net": 2016232.84,
-        "ladder_minus_baseline": 328229.38,
+        "ladder_net": 2372802.5,
+        "baseline_net": 1932825.69,
+        "ladder_minus_baseline": 439976.81,
         "ladder_calls": 100,
-        "ladder_cost_per_100": 0.154,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2344462.22,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 604670.78,
-          "standard_playbook": 2016232.84
-        }
-      },
-      {
-        "stress": 0.6,
-        "voice_cost": 16.0,
-        "ladder_net": 1912832.35,
-        "baseline_net": 2014987.41,
-        "ladder_minus_baseline": -102155.06,
-        "ladder_calls": 75,
-        "ladder_cost_per_100": 0.189,
-        "ladder_wins": false,
-        "violations": 0,
-        "nets": {
-          "ladder": 1912832.35,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 604337.47,
-          "standard_playbook": 2014987.41
-        }
-      },
-      {
-        "stress": 0.6,
-        "voice_cost": 20.0,
-        "ladder_net": 1862508.52,
-        "baseline_net": 1994781.4,
-        "ladder_minus_baseline": -132272.88,
-        "ladder_calls": 60,
-        "ladder_cost_per_100": 0.195,
-        "ladder_wins": false,
-        "violations": 0,
-        "nets": {
-          "ladder": 1862508.52,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 577929.04,
-          "standard_playbook": 1994781.4
-        }
-      },
-      {
-        "stress": 0.6,
-        "voice_cost": 24.0,
-        "ladder_net": 1862439.56,
-        "baseline_net": 1994872.91,
-        "ladder_minus_baseline": -132433.35,
-        "ladder_calls": 50,
-        "ladder_cost_per_100": 0.195,
-        "ladder_wins": false,
-        "violations": 0,
-        "nets": {
-          "ladder": 1862439.56,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 441818.44,
-          "standard_playbook": 1994872.91
-        }
-      },
-      {
-        "stress": 0.8,
-        "voice_cost": 6.0,
-        "ladder_net": 2408726.33,
-        "baseline_net": 2019020.26,
-        "ladder_minus_baseline": 389706.07,
-        "ladder_calls": 200,
-        "ladder_cost_per_100": 0.148,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2408726.33,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1056636.36,
-          "standard_playbook": 2019020.26
-        }
-      },
-      {
-        "stress": 0.8,
-        "voice_cost": 8.0,
-        "ladder_net": 2378125.67,
-        "baseline_net": 2018828.26,
-        "ladder_minus_baseline": 359297.41,
-        "ladder_calls": 150,
         "ladder_cost_per_100": 0.151,
         "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 2378125.67,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1058502.78,
-          "standard_playbook": 2018828.26
+          "ladder": 2372802.5,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 510885.79,
+          "standard_playbook": 1932825.69
         }
       },
       {
-        "stress": 0.8,
-        "voice_cost": 10.0,
-        "ladder_net": 2373526.07,
-        "baseline_net": 2018636.26,
-        "ladder_minus_baseline": 354889.81,
-        "ladder_calls": 120,
-        "ladder_cost_per_100": 0.152,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2373526.07,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 789148.31,
-          "standard_playbook": 2018636.26
-        }
-      },
-      {
-        "stress": 0.8,
-        "voice_cost": 12.0,
-        "ladder_net": 2365270.18,
-        "baseline_net": 2018444.26,
-        "ladder_minus_baseline": 346825.92,
-        "ladder_calls": 100,
-        "ladder_cost_per_100": 0.153,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2365270.18,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 604671.13,
-          "standard_playbook": 2018444.26
-        }
-      },
-      {
-        "stress": 0.8,
+        "stress": 0.4,
         "voice_cost": 16.0,
-        "ladder_net": 1930707.04,
-        "baseline_net": 2017198.83,
-        "ladder_minus_baseline": -86491.79,
+        "ladder_net": 2109935.83,
+        "baseline_net": 804289.47,
+        "ladder_minus_baseline": 1305646.36,
         "ladder_calls": 75,
-        "ladder_cost_per_100": 0.188,
-        "ladder_wins": false,
+        "ladder_cost_per_100": 0.17,
+        "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 1930707.04,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 604337.47,
-          "standard_playbook": 2017198.83
+          "ladder": 2109935.83,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 465421.93,
+          "standard_playbook": 804289.47
         }
       },
       {
-        "stress": 0.8,
+        "stress": 0.4,
         "voice_cost": 20.0,
-        "ladder_net": 1881720.59,
-        "baseline_net": 1995970.0,
-        "ladder_minus_baseline": -114249.41,
+        "ladder_net": 2103705.09,
+        "baseline_net": 811716.52,
+        "ladder_minus_baseline": 1291988.57,
         "ladder_calls": 60,
-        "ladder_cost_per_100": 0.193,
-        "ladder_wins": false,
+        "ladder_cost_per_100": 0.171,
+        "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 1881720.59,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 577929.04,
-          "standard_playbook": 1995970.0
+          "ladder": 2103705.09,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 474038.77,
+          "standard_playbook": 811716.52
         }
       },
       {
-        "stress": 0.8,
+        "stress": 0.4,
         "voice_cost": 24.0,
-        "ladder_net": 1883256.51,
-        "baseline_net": 1994872.91,
-        "ladder_minus_baseline": -111616.4,
+        "ladder_net": 2102980.49,
+        "baseline_net": 774382.58,
+        "ladder_minus_baseline": 1328597.91,
         "ladder_calls": 50,
-        "ladder_cost_per_100": 0.193,
-        "ladder_wins": false,
+        "ladder_cost_per_100": 0.171,
+        "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 1883256.51,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 487529.23,
-          "standard_playbook": 1994872.91
+          "ladder": 2102980.49,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 337928.17,
+          "standard_playbook": 774382.58
         }
       },
       {
-        "stress": 1.0,
+        "stress": 0.6,
         "voice_cost": 6.0,
-        "ladder_net": 2496183.99,
-        "baseline_net": 2094331.23,
-        "ladder_minus_baseline": 401852.76,
+        "ladder_net": 2480100.95,
+        "baseline_net": 2025845.26,
+        "ladder_minus_baseline": 454255.69,
         "ladder_calls": 200,
         "ladder_cost_per_100": 0.143,
         "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 2496183.99,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1169251.25,
-          "standard_playbook": 2094331.23
+          "ladder": 2480100.95,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 1063020.15,
+          "standard_playbook": 2025845.26
         }
       },
       {
-        "stress": 1.0,
+        "stress": 0.6,
         "voice_cost": 8.0,
-        "ladder_net": 2465188.94,
-        "baseline_net": 2094139.23,
-        "ladder_minus_baseline": 371049.71,
+        "ladder_net": 2442748.86,
+        "baseline_net": 2025631.26,
+        "ladder_minus_baseline": 417117.6,
+        "ladder_calls": 150,
+        "ladder_cost_per_100": 0.146,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2442748.86,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 1067461.59,
+          "standard_playbook": 2025631.26
+        }
+      },
+      {
+        "stress": 0.6,
+        "voice_cost": 10.0,
+        "ladder_net": 2455575.11,
+        "baseline_net": 2025417.26,
+        "ladder_minus_baseline": 430157.85,
+        "ladder_calls": 120,
+        "ladder_cost_per_100": 0.145,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2455575.11,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 806091.93,
+          "standard_playbook": 2025417.26
+        }
+      },
+      {
+        "stress": 0.6,
+        "voice_cost": 12.0,
+        "ladder_net": 2445082.93,
+        "baseline_net": 2024692.26,
+        "ladder_minus_baseline": 420390.67,
+        "ladder_calls": 100,
+        "ladder_cost_per_100": 0.146,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2445082.93,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 550042.78,
+          "standard_playbook": 2024692.26
+        }
+      },
+      {
+        "stress": 0.6,
+        "voice_cost": 16.0,
+        "ladder_net": 2184471.87,
+        "baseline_net": 896156.04,
+        "ladder_minus_baseline": 1288315.83,
+        "ladder_calls": 75,
+        "ladder_cost_per_100": 0.164,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2184471.87,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 503243.25,
+          "standard_playbook": 896156.04
+        }
+      },
+      {
+        "stress": 0.6,
+        "voice_cost": 20.0,
+        "ladder_net": 2165963.18,
+        "baseline_net": 903583.09,
+        "ladder_minus_baseline": 1262380.09,
+        "ladder_calls": 60,
+        "ladder_cost_per_100": 0.166,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2165963.18,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 476834.82,
+          "standard_playbook": 903583.09
+        }
+      },
+      {
+        "stress": 0.6,
+        "voice_cost": 24.0,
+        "ladder_net": 2086299.92,
+        "baseline_net": 866249.15,
+        "ladder_minus_baseline": 1220050.77,
+        "ladder_calls": 50,
+        "ladder_cost_per_100": 0.173,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2086299.92,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 340724.22,
+          "standard_playbook": 866249.15
+        }
+      },
+      {
+        "stress": 0.8,
+        "voice_cost": 6.0,
+        "ladder_net": 2500255.33,
+        "baseline_net": 2027033.86,
+        "ladder_minus_baseline": 473221.47,
+        "ladder_calls": 200,
+        "ladder_cost_per_100": 0.141,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2500255.33,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 1130810.74,
+          "standard_playbook": 2027033.86
+        }
+      },
+      {
+        "stress": 0.8,
+        "voice_cost": 8.0,
+        "ladder_net": 2459499.29,
+        "baseline_net": 2026819.86,
+        "ladder_minus_baseline": 432679.43,
         "ladder_calls": 150,
         "ladder_cost_per_100": 0.145,
         "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 2465188.94,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1171117.32,
-          "standard_playbook": 2094139.23
+          "ladder": 2459499.29,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 1134767.15,
+          "standard_playbook": 2026819.86
         }
       },
       {
-        "stress": 1.0,
+        "stress": 0.8,
         "voice_cost": 10.0,
-        "ladder_net": 2466983.24,
-        "baseline_net": 2093947.23,
-        "ladder_minus_baseline": 373036.01,
+        "ladder_net": 2473334.28,
+        "baseline_net": 2026605.86,
+        "ladder_minus_baseline": 446728.42,
         "ladder_calls": 120,
-        "ladder_cost_per_100": 0.146,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2466983.24,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 863472.98,
-          "standard_playbook": 2093947.23
-        }
-      },
-      {
-        "stress": 1.0,
-        "voice_cost": 12.0,
-        "ladder_net": 2455408.02,
-        "baseline_net": 2093755.23,
-        "ladder_minus_baseline": 361652.79,
-        "ladder_calls": 100,
-        "ladder_cost_per_100": 0.147,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2455408.02,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 604671.13,
-          "standard_playbook": 2093755.23
-        }
-      },
-      {
-        "stress": 1.0,
-        "voice_cost": 16.0,
-        "ladder_net": 2130805.04,
-        "baseline_net": 2092509.8,
-        "ladder_minus_baseline": 38295.24,
-        "ladder_calls": 75,
-        "ladder_cost_per_100": 0.17,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2130805.04,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 604337.47,
-          "standard_playbook": 2092509.8
-        }
-      },
-      {
-        "stress": 1.0,
-        "voice_cost": 20.0,
-        "ladder_net": 1934077.74,
-        "baseline_net": 2071280.97,
-        "ladder_minus_baseline": -137203.23,
-        "ladder_calls": 60,
-        "ladder_cost_per_100": 0.188,
-        "ladder_wins": false,
-        "violations": 0,
-        "nets": {
-          "ladder": 1934077.74,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 578686.34,
-          "standard_playbook": 2071280.97
-        }
-      },
-      {
-        "stress": 1.0,
-        "voice_cost": 24.0,
-        "ladder_net": 1935613.01,
-        "baseline_net": 2070183.88,
-        "ladder_minus_baseline": -134570.87,
-        "ladder_calls": 50,
-        "ladder_cost_per_100": 0.188,
-        "ladder_wins": false,
-        "violations": 0,
-        "nets": {
-          "ladder": 1935613.01,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 487529.23,
-          "standard_playbook": 2070183.88
-        }
-      },
-      {
-        "stress": 1.2,
-        "voice_cost": 6.0,
-        "ladder_net": 2556185.67,
-        "baseline_net": 2164471.77,
-        "ladder_minus_baseline": 391713.9,
-        "ladder_calls": 200,
-        "ladder_cost_per_100": 0.139,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2556185.67,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1174081.51,
-          "standard_playbook": 2164471.77
-        }
-      },
-      {
-        "stress": 1.2,
-        "voice_cost": 8.0,
-        "ladder_net": 2519225.71,
-        "baseline_net": 2164279.77,
-        "ladder_minus_baseline": 354945.94,
-        "ladder_calls": 150,
-        "ladder_cost_per_100": 0.142,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2519225.71,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1173913.37,
-          "standard_playbook": 2164279.77
-        }
-      },
-      {
-        "stress": 1.2,
-        "voice_cost": 10.0,
-        "ladder_net": 2522179.23,
-        "baseline_net": 2164087.77,
-        "ladder_minus_baseline": 358091.46,
-        "ladder_calls": 120,
-        "ladder_cost_per_100": 0.143,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2522179.23,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1156531.06,
-          "standard_playbook": 2164087.77
-        }
-      },
-      {
-        "stress": 1.2,
-        "voice_cost": 12.0,
-        "ladder_net": 2511800.25,
-        "baseline_net": 2163895.77,
-        "ladder_minus_baseline": 347904.48,
-        "ladder_calls": 100,
         "ladder_cost_per_100": 0.144,
         "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 2511800.25,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 681791.5,
-          "standard_playbook": 2163895.77
+          "ladder": 2473334.28,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 873397.84,
+          "standard_playbook": 2026605.86
         }
       },
       {
-        "stress": 1.2,
-        "voice_cost": 16.0,
-        "ladder_net": 2150148.27,
-        "baseline_net": 2162650.34,
-        "ladder_minus_baseline": -12502.07,
-        "ladder_calls": 75,
-        "ladder_cost_per_100": 0.168,
-        "ladder_wins": false,
-        "violations": 0,
-        "nets": {
-          "ladder": 2150148.27,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 607133.17,
-          "standard_playbook": 2162650.34
-        }
-      },
-      {
-        "stress": 1.2,
-        "voice_cost": 20.0,
-        "ladder_net": 1983532.66,
-        "baseline_net": 2141421.51,
-        "ladder_minus_baseline": -157888.85,
-        "ladder_calls": 60,
-        "ladder_cost_per_100": 0.183,
-        "ladder_wins": false,
-        "violations": 0,
-        "nets": {
-          "ladder": 1983532.66,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 567912.75,
-          "standard_playbook": 2141421.51
-        }
-      },
-      {
-        "stress": 1.2,
-        "voice_cost": 24.0,
-        "ladder_net": 1935612.51,
-        "baseline_net": 2140324.42,
-        "ladder_minus_baseline": -204711.91,
-        "ladder_calls": 50,
-        "ladder_cost_per_100": 0.188,
-        "ladder_wins": false,
-        "violations": 0,
-        "nets": {
-          "ladder": 1935612.51,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 493134.34,
-          "standard_playbook": 2140324.42
-        }
-      },
-      {
-        "stress": 1.4,
-        "voice_cost": 6.0,
-        "ladder_net": 2554598.02,
-        "baseline_net": 2164471.77,
-        "ladder_minus_baseline": 390126.25,
-        "ladder_calls": 200,
-        "ladder_cost_per_100": 0.139,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2554598.02,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1193429.85,
-          "standard_playbook": 2164471.77
-        }
-      },
-      {
-        "stress": 1.4,
-        "voice_cost": 8.0,
-        "ladder_net": 2514873.05,
-        "baseline_net": 2164279.77,
-        "ladder_minus_baseline": 350593.28,
-        "ladder_calls": 150,
-        "ladder_cost_per_100": 0.142,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2514873.05,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1193732.69,
-          "standard_playbook": 2164279.77
-        }
-      },
-      {
-        "stress": 1.4,
-        "voice_cost": 10.0,
-        "ladder_net": 2518833.53,
-        "baseline_net": 2164087.77,
-        "ladder_minus_baseline": 354745.76,
-        "ladder_calls": 120,
-        "ladder_cost_per_100": 0.143,
-        "ladder_wins": true,
-        "violations": 0,
-        "nets": {
-          "ladder": 2518833.53,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1175879.4,
-          "standard_playbook": 2164087.77
-        }
-      },
-      {
-        "stress": 1.4,
+        "stress": 0.8,
         "voice_cost": 12.0,
-        "ladder_net": 2468912.89,
-        "baseline_net": 2163895.77,
-        "ladder_minus_baseline": 305017.12,
+        "ladder_net": 2463254.14,
+        "baseline_net": 2025880.86,
+        "ladder_minus_baseline": 437373.28,
         "ladder_calls": 100,
-        "ladder_cost_per_100": 0.146,
+        "ladder_cost_per_100": 0.145,
         "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 2468912.89,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 702406.59,
-          "standard_playbook": 2163895.77
+          "ladder": 2463254.14,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 617348.69,
+          "standard_playbook": 2025880.86
         }
       },
       {
-        "stress": 1.4,
+        "stress": 0.8,
         "voice_cost": 16.0,
-        "ladder_net": 2125600.78,
-        "baseline_net": 2162650.34,
-        "ladder_minus_baseline": -37049.56,
+        "ladder_net": 2433712.1,
+        "baseline_net": 897344.64,
+        "ladder_minus_baseline": 1536367.46,
         "ladder_calls": 75,
-        "ladder_cost_per_100": 0.17,
-        "ladder_wins": false,
+        "ladder_cost_per_100": 0.148,
+        "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 2125600.78,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 625397.72,
-          "standard_playbook": 2162650.34
+          "ladder": 2433712.1,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 570548.81,
+          "standard_playbook": 897344.64
         }
       },
       {
-        "stress": 1.4,
+        "stress": 0.8,
         "voice_cost": 20.0,
-        "ladder_net": 1956592.3,
-        "baseline_net": 2141421.51,
-        "ladder_minus_baseline": -184829.21,
+        "ladder_net": 2181466.94,
+        "baseline_net": 904287.01,
+        "ladder_minus_baseline": 1277179.93,
         "ladder_calls": 60,
-        "ladder_cost_per_100": 0.186,
-        "ladder_wins": false,
+        "ladder_cost_per_100": 0.165,
+        "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 1956592.3,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 586177.3,
-          "standard_playbook": 2141421.51
+          "ladder": 2181466.94,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 544140.38,
+          "standard_playbook": 904287.01
         }
       },
       {
-        "stress": 1.4,
+        "stress": 0.8,
         "voice_cost": 24.0,
-        "ladder_net": 1924635.41,
-        "baseline_net": 2140324.42,
-        "ladder_minus_baseline": -215689.01,
+        "ladder_net": 2177380.08,
+        "baseline_net": 866249.15,
+        "ladder_minus_baseline": 1311130.93,
         "ladder_calls": 50,
-        "ladder_cost_per_100": 0.189,
-        "ladder_wins": false,
+        "ladder_cost_per_100": 0.165,
+        "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 1924635.41,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 493134.34,
-          "standard_playbook": 2140324.42
+          "ladder": 2177380.08,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 438791.66,
+          "standard_playbook": 866249.15
         }
       },
       {
-        "stress": 1.6,
+        "stress": 1.0,
         "voice_cost": 6.0,
-        "ladder_net": 2543678.62,
-        "baseline_net": 2165293.08,
-        "ladder_minus_baseline": 378385.54,
+        "ladder_net": 2411128.41,
+        "baseline_net": 2031824.7,
+        "ladder_minus_baseline": 379303.71,
+        "ladder_calls": 200,
+        "ladder_cost_per_100": 0.147,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2411128.41,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 1130810.74,
+          "standard_playbook": 2031824.7
+        }
+      },
+      {
+        "stress": 1.0,
+        "voice_cost": 8.0,
+        "ladder_net": 2371010.1,
+        "baseline_net": 2031610.7,
+        "ladder_minus_baseline": 339399.4,
+        "ladder_calls": 150,
+        "ladder_cost_per_100": 0.15,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2371010.1,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 1134767.15,
+          "standard_playbook": 2031610.7
+        }
+      },
+      {
+        "stress": 1.0,
+        "voice_cost": 10.0,
+        "ladder_net": 2383176.56,
+        "baseline_net": 2031396.7,
+        "ladder_minus_baseline": 351779.86,
+        "ladder_calls": 120,
+        "ladder_cost_per_100": 0.15,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2383176.56,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 873397.84,
+          "standard_playbook": 2031396.7
+        }
+      },
+      {
+        "stress": 1.0,
+        "voice_cost": 12.0,
+        "ladder_net": 2375876.9,
+        "baseline_net": 2030671.7,
+        "ladder_minus_baseline": 345205.2,
+        "ladder_calls": 100,
+        "ladder_cost_per_100": 0.151,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2375876.9,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 617348.69,
+          "standard_playbook": 2030671.7
+        }
+      },
+      {
+        "stress": 1.0,
+        "voice_cost": 16.0,
+        "ladder_net": 2346121.65,
+        "baseline_net": 902135.48,
+        "ladder_minus_baseline": 1443986.17,
+        "ladder_calls": 75,
+        "ladder_cost_per_100": 0.153,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2346121.65,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 570548.81,
+          "standard_playbook": 902135.48
+        }
+      },
+      {
+        "stress": 1.0,
+        "voice_cost": 20.0,
+        "ladder_net": 2093141.6,
+        "baseline_net": 908069.01,
+        "ladder_minus_baseline": 1185072.59,
+        "ladder_calls": 60,
+        "ladder_cost_per_100": 0.172,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2093141.6,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 544140.38,
+          "standard_playbook": 908069.01
+        }
+      },
+      {
+        "stress": 1.0,
+        "voice_cost": 24.0,
+        "ladder_net": 2015462.81,
+        "baseline_net": 870031.15,
+        "ladder_minus_baseline": 1145431.66,
+        "ladder_calls": 50,
+        "ladder_cost_per_100": 0.179,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2015462.81,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 438791.66,
+          "standard_playbook": 870031.15
+        }
+      },
+      {
+        "stress": 1.2,
+        "voice_cost": 6.0,
+        "ladder_net": 2530352.46,
+        "baseline_net": 2149347.14,
+        "ladder_minus_baseline": 381005.32,
         "ladder_calls": 200,
         "ladder_cost_per_100": 0.14,
         "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 2543678.62,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1213650.93,
-          "standard_playbook": 2165293.08
+          "ladder": 2530352.46,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 1136271.67,
+          "standard_playbook": 2149347.14
+        }
+      },
+      {
+        "stress": 1.2,
+        "voice_cost": 8.0,
+        "ladder_net": 2523125.48,
+        "baseline_net": 2149133.14,
+        "ladder_minus_baseline": 373992.34,
+        "ladder_calls": 150,
+        "ladder_cost_per_100": 0.141,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2523125.48,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 1139094.35,
+          "standard_playbook": 2149133.14
+        }
+      },
+      {
+        "stress": 1.2,
+        "voice_cost": 10.0,
+        "ladder_net": 2536655.64,
+        "baseline_net": 2148919.14,
+        "ladder_minus_baseline": 387736.5,
+        "ladder_calls": 120,
+        "ladder_cost_per_100": 0.141,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2536655.64,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 876738.04,
+          "standard_playbook": 2148919.14
+        }
+      },
+      {
+        "stress": 1.2,
+        "voice_cost": 12.0,
+        "ladder_net": 2526367.39,
+        "baseline_net": 2148194.14,
+        "ladder_minus_baseline": 378173.25,
+        "ladder_calls": 100,
+        "ladder_cost_per_100": 0.142,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2526367.39,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 620688.89,
+          "standard_playbook": 2148194.14
+        }
+      },
+      {
+        "stress": 1.2,
+        "voice_cost": 16.0,
+        "ladder_net": 2348441.62,
+        "baseline_net": 1019657.92,
+        "ladder_minus_baseline": 1328783.7,
+        "ladder_calls": 75,
+        "ladder_cost_per_100": 0.153,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2348441.62,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 573889.01,
+          "standard_playbook": 1019657.92
+        }
+      },
+      {
+        "stress": 1.2,
+        "voice_cost": 20.0,
+        "ladder_net": 2096482.3,
+        "baseline_net": 1025591.45,
+        "ladder_minus_baseline": 1070890.85,
+        "ladder_calls": 60,
+        "ladder_cost_per_100": 0.172,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2096482.3,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 547480.58,
+          "standard_playbook": 1025591.45
+        }
+      },
+      {
+        "stress": 1.2,
+        "voice_cost": 24.0,
+        "ladder_net": 2032374.85,
+        "baseline_net": 987553.59,
+        "ladder_minus_baseline": 1044821.26,
+        "ladder_calls": 50,
+        "ladder_cost_per_100": 0.177,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2032374.85,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 442131.86,
+          "standard_playbook": 987553.59
+        }
+      },
+      {
+        "stress": 1.4,
+        "voice_cost": 6.0,
+        "ladder_net": 2616026.8,
+        "baseline_net": 2150080.83,
+        "ladder_minus_baseline": 465945.97,
+        "ladder_calls": 200,
+        "ladder_cost_per_100": 0.135,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2616026.8,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 1140119.54,
+          "standard_playbook": 2150080.83
+        }
+      },
+      {
+        "stress": 1.4,
+        "voice_cost": 8.0,
+        "ladder_net": 2615400.55,
+        "baseline_net": 2149866.83,
+        "ladder_minus_baseline": 465533.72,
+        "ladder_calls": 150,
+        "ladder_cost_per_100": 0.136,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2615400.55,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 1142409.99,
+          "standard_playbook": 2149866.83
+        }
+      },
+      {
+        "stress": 1.4,
+        "voice_cost": 10.0,
+        "ladder_net": 2622009.42,
+        "baseline_net": 2149652.83,
+        "ladder_minus_baseline": 472356.59,
+        "ladder_calls": 120,
+        "ladder_cost_per_100": 0.136,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2622009.42,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 881699.66,
+          "standard_playbook": 2149652.83
+        }
+      },
+      {
+        "stress": 1.4,
+        "voice_cost": 12.0,
+        "ladder_net": 2616603.18,
+        "baseline_net": 2148927.83,
+        "ladder_minus_baseline": 467675.35,
+        "ladder_calls": 100,
+        "ladder_cost_per_100": 0.137,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2616603.18,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 624004.53,
+          "standard_playbook": 2148927.83
+        }
+      },
+      {
+        "stress": 1.4,
+        "voice_cost": 16.0,
+        "ladder_net": 2438497.94,
+        "baseline_net": 1020391.61,
+        "ladder_minus_baseline": 1418106.33,
+        "ladder_calls": 75,
+        "ladder_cost_per_100": 0.147,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2438497.94,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 577204.65,
+          "standard_playbook": 1020391.61
+        }
+      },
+      {
+        "stress": 1.4,
+        "voice_cost": 20.0,
+        "ladder_net": 2185819.27,
+        "baseline_net": 1026325.14,
+        "ladder_minus_baseline": 1159494.13,
+        "ladder_calls": 60,
+        "ladder_cost_per_100": 0.164,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2185819.27,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 551553.52,
+          "standard_playbook": 1026325.14
+        }
+      },
+      {
+        "stress": 1.4,
+        "voice_cost": 24.0,
+        "ladder_net": 2196035.44,
+        "baseline_net": 988287.28,
+        "ladder_minus_baseline": 1207748.16,
+        "ladder_calls": 50,
+        "ladder_cost_per_100": 0.164,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2196035.44,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 442131.86,
+          "standard_playbook": 988287.28
+        }
+      },
+      {
+        "stress": 1.6,
+        "voice_cost": 6.0,
+        "ladder_net": 2638376.81,
+        "baseline_net": 2150080.83,
+        "ladder_minus_baseline": 488295.98,
+        "ladder_calls": 200,
+        "ladder_cost_per_100": 0.134,
+        "ladder_wins": true,
+        "violations": 0,
+        "nets": {
+          "ladder": 2638376.81,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 1145213.34,
+          "standard_playbook": 2150080.83
         }
       },
       {
         "stress": 1.6,
         "voice_cost": 8.0,
-        "ladder_net": 2493706.72,
-        "baseline_net": 2165101.08,
-        "ladder_minus_baseline": 328605.64,
+        "ladder_net": 2631237.58,
+        "baseline_net": 2149866.83,
+        "ladder_minus_baseline": 481370.75,
         "ladder_calls": 150,
-        "ladder_cost_per_100": 0.144,
+        "ladder_cost_per_100": 0.135,
         "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 2493706.72,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1196163.52,
-          "standard_playbook": 2165101.08
+          "ladder": 2631237.58,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 1142410.34,
+          "standard_playbook": 2149866.83
         }
       },
       {
         "stress": 1.6,
         "voice_cost": 10.0,
-        "ladder_net": 2483503.79,
-        "baseline_net": 2164909.08,
-        "ladder_minus_baseline": 318594.71,
+        "ladder_net": 2624506.52,
+        "baseline_net": 2149652.83,
+        "ladder_minus_baseline": 474853.69,
         "ladder_calls": 120,
-        "ladder_cost_per_100": 0.145,
+        "ladder_cost_per_100": 0.136,
         "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 2483503.79,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 1177605.96,
-          "standard_playbook": 2164909.08
+          "ladder": 2624506.52,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 881699.66,
+          "standard_playbook": 2149652.83
         }
       },
       {
         "stress": 1.6,
         "voice_cost": 12.0,
-        "ladder_net": 2470884.67,
-        "baseline_net": 2164717.08,
-        "ladder_minus_baseline": 306167.59,
+        "ladder_net": 2619099.88,
+        "baseline_net": 2148927.83,
+        "ladder_minus_baseline": 470172.05,
         "ladder_calls": 100,
-        "ladder_cost_per_100": 0.146,
+        "ladder_cost_per_100": 0.137,
         "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 2470884.67,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 851872.45,
-          "standard_playbook": 2164717.08
+          "ladder": 2619099.88,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 698329.2,
+          "standard_playbook": 2148927.83
         }
       },
       {
         "stress": 1.6,
         "voice_cost": 16.0,
-        "ladder_net": 2126852.51,
-        "baseline_net": 2162650.34,
-        "ladder_minus_baseline": -35797.83,
+        "ladder_net": 2439078.72,
+        "baseline_net": 1020391.61,
+        "ladder_minus_baseline": 1418687.11,
         "ladder_calls": 75,
-        "ladder_cost_per_100": 0.17,
-        "ladder_wins": false,
+        "ladder_cost_per_100": 0.147,
+        "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 2126852.51,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 625397.72,
-          "standard_playbook": 2162650.34
+          "ladder": 2439078.72,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 577204.65,
+          "standard_playbook": 1020391.61
         }
       },
       {
         "stress": 1.6,
         "voice_cost": 20.0,
-        "ladder_net": 1957844.03,
-        "baseline_net": 2141421.51,
-        "ladder_minus_baseline": -183577.48,
+        "ladder_net": 2187071.5,
+        "baseline_net": 1026325.14,
+        "ladder_minus_baseline": 1160746.36,
         "ladder_calls": 60,
-        "ladder_cost_per_100": 0.186,
-        "ladder_wins": false,
+        "ladder_cost_per_100": 0.164,
+        "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 1957844.03,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 586177.3,
-          "standard_playbook": 2141421.51
+          "ladder": 2187071.5,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 551553.52,
+          "standard_playbook": 1026325.14
         }
       },
       {
         "stress": 1.6,
         "voice_cost": 24.0,
-        "ladder_net": 1924635.41,
-        "baseline_net": 2140324.42,
-        "ladder_minus_baseline": -215689.01,
+        "ladder_net": 2196035.44,
+        "baseline_net": 988287.28,
+        "ladder_minus_baseline": 1207748.16,
         "ladder_calls": 50,
-        "ladder_cost_per_100": 0.189,
-        "ladder_wins": false,
+        "ladder_cost_per_100": 0.164,
+        "ladder_wins": true,
         "violations": 0,
         "nets": {
-          "ladder": 1924635.41,
-          "retry_only": 1442275.72,
-          "nudge_ladder": 379499.1,
-          "call_first": 493134.34,
-          "standard_playbook": 2140324.42
+          "ladder": 2196035.44,
+          "retry_only": 509443.47,
+          "nudge_ladder": 301959.04,
+          "call_first": 442131.86,
+          "standard_playbook": 988287.28
         }
       }
     ],
     "crossover": {
       "min_stress_ladder_wins_at_cost_12": 0.4,
-      "max_cost_ladder_wins_at_stress_1": 16.0,
-      "ladder_wins_everywhere": false
+      "max_cost_ladder_wins_at_stress_1": 24.0,
+      "ladder_wins_everywhere": true
     }
   },
   "traces": [
-    {
-      "label": "big B2B recovered by a call",
-      "account_id": "acc_0001",
-      "segment": "B2B",
-      "reason": "card_expired",
-      "amount": 52356.3,
-      "prior_failures": 0,
-      "language": "hindi",
-      "events": [
-        {
-          "event": "episode_start"
-        },
-        {
-          "event": "action",
-          "stage": 1,
-          "intervention": "human_escalation",
-          "cost": 85.0,
-          "outcome": "failed",
-          "expected_net": 19810.39,
-          "p_now": 0.38
-        },
-        {
-          "event": "action",
-          "stage": 2,
-          "intervention": "voice_call",
-          "cost": 12.0,
-          "outcome": "recovered",
-          "expected_net": 16999.07,
-          "p_now": 0.2292,
-          "p_ptp": 0.1368
-        },
-        {
-          "event": "episode_end",
-          "recovered": true,
-          "recovered_via": "voice_call",
-          "spend": 97.0
-        }
-      ]
-    },
     {
       "label": "promise-to-pay captured on a connected call",
       "account_id": "acc_0005",
@@ -1660,12 +1673,12 @@
     },
     {
       "label": "small B2C the agent declined to chase",
-      "account_id": "acc_0034",
+      "account_id": "acc_0017",
       "segment": "B2C",
-      "reason": "card_expired",
-      "amount": 259.28,
+      "reason": "checkout_abandoned",
+      "amount": 517.84,
       "prior_failures": 3,
-      "language": "hindi",
+      "language": "hinglish",
       "events": [
         {
           "event": "episode_start"
@@ -1673,27 +1686,12 @@
         {
           "event": "blocked",
           "stage": 1,
-          "rule": "no_phone",
-          "channels": "voice_call"
-        },
-        {
-          "event": "action",
-          "stage": 1,
-          "intervention": "whatsapp_nudge",
-          "cost": 0.35,
-          "outcome": "failed",
-          "expected_net": 40.03,
-          "p_now": 0.1557
-        },
-        {
-          "event": "blocked",
-          "stage": 2,
-          "rule": "contact_cap_7d",
+          "rule": "ptp_suppression",
           "channels": "sms_link, whatsapp_nudge, voice_call, human_escalation"
         },
         {
           "event": "stop",
-          "stage": 2,
+          "stage": 1,
           "cause": "expected_net<=0",
           "best_net": -0.5
         },
@@ -1701,7 +1699,7 @@
           "event": "episode_end",
           "recovered": false,
           "recovered_via": null,
-          "spend": 0.35
+          "spend": 0.0
         }
       ]
     },
@@ -1738,10 +1736,10 @@
       ]
     },
     {
-      "label": "blocked by a guardrail mid-ladder",
+      "label": "abandoned checkout -- link, not a call",
       "account_id": "acc_0000",
       "segment": "B2C",
-      "reason": "insufficient_funds",
+      "reason": "checkout_abandoned",
       "amount": 2386.87,
       "prior_failures": 1,
       "language": "hindi",
@@ -1756,159 +1754,124 @@
           "channels": "sms_link, whatsapp_nudge, voice_call, human_escalation"
         },
         {
-          "event": "action",
+          "event": "stop",
           "stage": 1,
-          "intervention": "silent_retry",
-          "cost": 0.5,
-          "outcome": "failed",
-          "expected_net": 328.89,
-          "p_now": 0.138
-        },
-        {
-          "event": "blocked",
-          "stage": 2,
-          "rule": "contact_window",
-          "channels": "sms_link, whatsapp_nudge, voice_call, human_escalation"
-        },
-        {
-          "event": "action",
-          "stage": 2,
-          "intervention": "silent_retry",
-          "cost": 0.5,
-          "outcome": "failed",
-          "expected_net": 208.2,
-          "p_now": 0.0874
-        },
-        {
-          "event": "blocked",
-          "stage": 3,
-          "rule": "contact_window",
-          "channels": "sms_link, whatsapp_nudge, voice_call, human_escalation"
-        },
-        {
-          "event": "action",
-          "stage": 3,
-          "intervention": "silent_retry",
-          "cost": 0.5,
-          "outcome": "failed",
-          "expected_net": 131.73,
-          "p_now": 0.0554
-        },
-        {
-          "event": "blocked",
-          "stage": 4,
-          "rule": "contact_window",
-          "channels": "sms_link, whatsapp_nudge, voice_call, human_escalation"
-        },
-        {
-          "event": "action",
-          "stage": 4,
-          "intervention": "silent_retry",
-          "cost": 0.5,
-          "outcome": "failed",
-          "expected_net": 83.28,
-          "p_now": 0.0351
-        },
-        {
-          "event": "blocked",
-          "stage": 5,
-          "rule": "contact_window",
-          "channels": "sms_link, whatsapp_nudge, voice_call, human_escalation"
-        },
-        {
-          "event": "action",
-          "stage": 5,
-          "intervention": "silent_retry",
-          "cost": 0.5,
-          "outcome": "failed",
-          "expected_net": 52.58,
-          "p_now": 0.0222
+          "cause": "expected_net<=0",
+          "best_net": -0.5
         },
         {
           "event": "episode_end",
           "recovered": false,
           "recovered_via": null,
-          "spend": 2.5
+          "spend": 0.0
         }
       ]
     },
     {
-      "label": "recovered by a cheap nudge, no call needed",
-      "account_id": "acc_0048",
-      "segment": "B2C",
-      "reason": "insufficient_funds",
-      "amount": 1707.75,
-      "prior_failures": 1,
+      "label": "blocked by a guardrail mid-ladder",
+      "account_id": "acc_0001",
+      "segment": "B2B",
+      "reason": "do_not_honour",
+      "amount": 52356.3,
+      "prior_failures": 0,
       "language": "hindi",
       "events": [
         {
           "event": "episode_start"
         },
         {
-          "event": "blocked",
-          "stage": 1,
-          "rule": "no_phone",
-          "channels": "voice_call"
-        },
-        {
           "event": "action",
           "stage": 1,
-          "intervention": "silent_retry",
-          "cost": 0.5,
+          "intervention": "human_escalation",
+          "cost": 85.0,
           "outcome": "failed",
-          "expected_net": 235.17,
-          "p_now": 0.138
-        },
-        {
-          "event": "blocked",
-          "stage": 2,
-          "rule": "no_phone",
-          "channels": "voice_call"
+          "expected_net": 14574.76,
+          "p_now": 0.28
         },
         {
           "event": "action",
           "stage": 2,
-          "intervention": "whatsapp_nudge",
-          "cost": 0.35,
+          "intervention": "voice_call",
+          "cost": 12.0,
           "outcome": "failed",
-          "expected_net": 165.56,
-          "p_now": 0.0972
-        },
-        {
-          "event": "blocked",
-          "stage": 3,
-          "rule": "no_phone",
-          "channels": "voice_call"
+          "expected_net": 10960.31,
+          "p_now": 0.0764,
+          "p_ptp": 0.1903
         },
         {
           "event": "action",
           "stage": 3,
+          "intervention": "voice_call",
+          "cost": 12.0,
+          "outcome": "no_pickup",
+          "expected_net": 9854.0,
+          "p_now": 0.0484,
+          "p_ptp": 0.2001
+        },
+        {
+          "event": "blocked",
+          "stage": 4,
+          "rule": "contact_cap_7d",
+          "channels": "sms_link, whatsapp_nudge, voice_call, human_escalation"
+        },
+        {
+          "event": "action",
+          "stage": 4,
           "intervention": "silent_retry",
           "cost": 0.5,
           "outcome": "failed",
-          "expected_net": 130.9,
-          "p_now": 0.0769
+          "expected_net": 3210.64,
+          "p_now": 0.0613
         },
         {
           "event": "blocked",
-          "stage": 4,
-          "rule": "no_phone",
-          "channels": "voice_call"
+          "stage": 5,
+          "rule": "contact_cap_7d",
+          "channels": "sms_link, whatsapp_nudge, voice_call, human_escalation"
         },
         {
           "event": "action",
-          "stage": 4,
+          "stage": 5,
+          "intervention": "silent_retry",
+          "cost": 0.5,
+          "outcome": "failed",
+          "expected_net": 2034.08,
+          "p_now": 0.0389
+        },
+        {
+          "event": "episode_end",
+          "recovered": false,
+          "recovered_via": null,
+          "spend": 110.0
+        }
+      ]
+    },
+    {
+      "label": "recovered by a cheap nudge, no call needed",
+      "account_id": "acc_0019",
+      "segment": "B2C",
+      "reason": "checkout_abandoned",
+      "amount": 1571.12,
+      "prior_failures": 0,
+      "language": "tamil",
+      "events": [
+        {
+          "event": "episode_start"
+        },
+        {
+          "event": "action",
+          "stage": 1,
           "intervention": "whatsapp_nudge",
           "cost": 0.35,
           "outcome": "recovered",
-          "expected_net": 92.16,
-          "p_now": 0.0542
+          "expected_net": 313.87,
+          "p_now": 0.2
         },
         {
           "event": "episode_end",
           "recovered": true,
           "recovered_via": "whatsapp_nudge",
-          "spend": 1.7
+          "spend": 0.35
         }
       ]
     }

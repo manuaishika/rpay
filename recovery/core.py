@@ -25,6 +25,7 @@ FAILURE_REASONS = (
     "limit_exceeded",
     "do_not_honour",
     "invoice_overdue",
+    "checkout_abandoned",
 )
 
 # TRANSIENT      -- the money may simply appear if we wait / retry.
@@ -41,10 +42,23 @@ ACTION_REQUIRED = frozenset({
     "mandate_revoked",
     "card_expired",
     "invoice_overdue",
+    "checkout_abandoned",
 })
 
 assert TRANSIENT | ACTION_REQUIRED == frozenset(FAILURE_REASONS)
 assert not (TRANSIENT & ACTION_REQUIRED)
+
+# Where in the revenue funnel the money is at risk -- mirrors "payment
+# failures and checkout abandonment to overdue receivables" (Track 03 brief)
+# rather than treating every reason as the same kind of loss.
+RISK_STAGE = {
+    "checkout_abandoned": "checkout",
+    "invoice_overdue": "receivable",
+}
+
+
+def risk_stage(reason: str) -> str:
+    return RISK_STAGE.get(reason, "payment")
 
 # --------------------------------------------------------------------------
 # Interventions and their marginal cost in rupees
@@ -88,15 +102,16 @@ LANGUAGES = ("hinglish", "hindi", "english", "tamil", "telugu", "marathi", "beng
 _LANG_WEIGHTS = (0.34, 0.25, 0.15, 0.08, 0.07, 0.06, 0.05)
 
 _REASON_WEIGHTS = {
-    "insufficient_funds": 0.28,
-    "invoice_overdue": 0.18,
-    "technical_decline": 0.12,
-    "bank_downtime": 0.10,
-    "do_not_honour": 0.09,
-    "card_expired": 0.08,
-    "limit_exceeded": 0.06,
-    "mandate_expired": 0.06,
-    "mandate_revoked": 0.03,
+    "insufficient_funds": 0.22,
+    "checkout_abandoned": 0.20,   # never reached a payment attempt at all
+    "invoice_overdue": 0.15,
+    "technical_decline": 0.10,
+    "bank_downtime": 0.08,
+    "do_not_honour": 0.08,
+    "card_expired": 0.07,
+    "limit_exceeded": 0.05,
+    "mandate_expired": 0.03,
+    "mandate_revoked": 0.02,
 }
 
 LEDGER_EPOCH = datetime(2026, 9, 3)
@@ -169,6 +184,7 @@ def build_ledger(seed: int = 20260903, n: int = 250) -> list[Account]:
 def ledger_summary(accounts: list[Account]) -> dict:
     total = sum(a.amount for a in accounts)
     b2b = [a for a in accounts if a.segment == "B2B"]
+    stages = ("checkout", "payment", "receivable")
     return {
         "accounts": len(accounts),
         "at_risk_rupees": round(total, 2),
@@ -177,4 +193,5 @@ def ledger_summary(accounts: list[Account]) -> dict:
         "dnc_accounts": sum(1 for a in accounts if a.dnc),
         "with_open_ptp": sum(1 for a in accounts if a.promise_to_pay_due),
         "by_reason": {r: sum(1 for a in accounts if a.reason == r) for r in FAILURE_REASONS},
+        "by_stage": {s: sum(1 for a in accounts if risk_stage(a.reason) == s) for s in stages},
     }

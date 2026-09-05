@@ -42,7 +42,7 @@ def _collapse(evs: list) -> list:
     return out
 
 
-def _traces(seed, stress, voice_budget, human_cap, want=6):
+def _traces(seed, stress, voice_budget, human_cap, want=7):
     ledger = core.build_ledger(seed)
     by_id = {a.account_id: a for a in ledger}
     _, events = run_policy("ladder", ledger, seed, stress, voice_budget, human_cap)
@@ -52,9 +52,9 @@ def _traces(seed, stress, voice_budget, human_cap, want=6):
             {k: ev[k] for k in TRACE_KEYS if k in ev})
     per_acc = {aid: _collapse(evs) for aid, evs in per_acc.items()}
 
-    def pick(pred):
+    def pick(pred, seen):
         for aid, evs in per_acc.items():
-            if pred(by_id[aid], evs):
+            if aid not in seen and pred(by_id[aid], evs):
                 return aid
 
     wanted = [
@@ -68,6 +68,8 @@ def _traces(seed, stress, voice_budget, human_cap, want=6):
          and any(x["event"] == "stop" for x in e)),
         ("revoked mandate -- retry scores 0.0",
          lambda a, e: a.reason == "mandate_revoked"),
+        ("abandoned checkout -- link, not a call",
+         lambda a, e: a.reason == "checkout_abandoned"),
         ("blocked by a guardrail mid-ladder",
          lambda a, e: any(x["event"] == "blocked" for x in e)),
         ("recovered by a cheap nudge, no call needed",
@@ -77,8 +79,8 @@ def _traces(seed, stress, voice_budget, human_cap, want=6):
     out = []
     seen = set()
     for label, pred in wanted:
-        aid = pick(pred)
-        if aid and aid not in seen:
+        aid = pick(pred, seen)
+        if aid:
             seen.add(aid)
             a = by_id[aid]
             out.append({

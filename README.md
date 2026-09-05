@@ -1,16 +1,18 @@
-# recovery/ — a bounded revenue-recovery agent
+# Vasool — a bounded revenue-recovery agent
 
-**Razorpay Buildathon · Track 03**
+**Razorpay Buildathon · Track 03, "AI Revenue Recovery"**
 
-> A Hinglish voice call costs **~₹12**. Most failed payments aren't worth ₹12.
+> A Hinglish voice call costs **~₹12**. Most revenue at risk isn't worth chasing that way.
 > The hard part isn't dialing — it's deciding **who** to call and **when to stop**.
 
-`recovery/` is a stdlib-only Python package (no dependencies) that models a
-failed-payment book and puts an agent in the decision seat: for each failed
-payment it weighs the actions the guardrail gate currently permits and either
-spends or stops. Every decision passes through a **hard guardrail gate**, and
-an **independent auditor** re-derives the rules from the emitted audit trail
-so a gate bug shows up as a counted violation instead of leaking.
+`recovery/` is a stdlib-only Python package (no dependencies) that models
+revenue at risk across the three points the brief names — a stalled
+**checkout**, a failed **payment**, an overdue **receivable** — and puts an
+agent in the decision seat: for each one it weighs the actions the guardrail
+gate currently permits and either spends or stops. Every decision passes
+through a **hard guardrail gate**, and an **independent auditor** re-derives
+the rules from the emitted audit trail so a gate bug shows up as a counted
+violation instead of leaking.
 
 ## Run it — the console
 
@@ -46,7 +48,7 @@ python tests.py                    # 25 stdlib self-checks
 
 | module | responsibility |
 |---|---|
-| `core.py` | 9-way failure taxonomy split into `TRANSIENT` / `ACTION_REQUIRED`; five interventions with rupee costs (`silent_retry` ₹0.50 → `human_escalation` ₹85); a seeded synthetic ledger of 250 accounts — lognormal amounts, heavy right tail for B2B, plus tenure / prior failures / language / DNC / `contacts_last_7d` / open promise-to-pay |
+| `core.py` | 10-way revenue-at-risk taxonomy spanning checkout / payment / receivable (`risk_stage()`), split into `TRANSIENT` / `ACTION_REQUIRED`; five interventions with rupee costs (`silent_retry` ₹0.50 → `human_escalation` ₹85); a seeded synthetic ledger of 250 accounts — lognormal amounts, heavy right tail for B2B, plus tenure / prior failures / language / DNC / `contacts_last_7d` / open promise-to-pay |
 | `world.py` | **stated priors** `p(recover \| reason, intervention)` — loudly flagged as ASSUMPTIONS, not data. Retrying a revoked mandate is `0.0`. Voice is gated by a `0.62` pickup rate. `--stress` scales the voice lift *only*, for sensitivity runs |
 | `guardrails.py` | the **hard gate**: 09:00–19:00 contact window, permanent DNC, 3 contacts / 7 days, 2 voice attempts max, promise-to-pay suppression, a global voice-budget cap and a human-escalation capacity cap. `audit_executed()` re-derives every rule from scratch against the JSONL trail |
 | `ladder.py` | the **expected-value policy** + the fixed-playbook baselines. Each stage re-scores every *compliant* channel by expected net rupees given what already failed (channel fatigue `0.72` per repeat, evidence decay `0.88` per failed attempt). Voice carries extra **option value**: a connected call that doesn't convert can still capture a dated promise-to-pay that converts later at zero spend. Stops the moment nothing clears ₹0 in expectation. Baselines: `retry_only`, `nudge_ladder`, `call_first`, `standard_playbook` |
@@ -72,18 +74,18 @@ whether the sequential agent still beats `standard_playbook`.
 ```
 policy                 recovered     spend           net    rate  calls   PTP   Rs/100  viol
 --------------------------------------------------------------------------------------------
-ladder                 2,459,020     3,612     2,455,408   41.2%    100    18     0.15     0
-retry_only             1,442,605       329     1,442,276   23.2%      0     0     0.02     0
-nudge_ladder             379,615       116       379,499   16.4%      0     0     0.03     0
-call_first               605,925     1,254       604,671   16.0%    100    15     0.21     0
-standard_playbook      2,095,536     1,781     2,093,755   36.4%     96    18     0.09     0
+ladder                 2,379,461     3,584     2,375,877   38.8%    100    21     0.15     0
+retry_only               509,786       342       509,443   20.0%      0     0     0.07     0
+nudge_ladder             302,075       116       301,959   16.8%      0     0     0.04     0
+call_first               618,602     1,253       617,349   16.0%    100    17     0.20     0
+standard_playbook      2,033,189     2,517     2,030,672   32.4%    100    17     0.12     0
 ```
 
-Across seeds the sequential agent wins on net in most runs and is always far
-ahead on cost-per-₹100 recovered; `standard_playbook` occasionally matches it
-on net by spending nearly as much blind outreach. `call_first` burns the
-voice budget on everyone and recovers a third as much. Guardrail violations
-are `0` for every policy at every stress level — that is the point of the
+`retry_only`'s net is a fifth of the ladder's here on purpose: a fifth of the
+book is `checkout_abandoned` (nothing was ever attempted, so a silent retry
+is structurally unable to help), and blind retrying spends money on all of
+it. The ladder scores that at zero and stops. Guardrail violations are `0`
+for every policy at every stress level — that is the point of the
 independent auditor, not a lucky outcome.
 
 ### Where the "don't call" discipline actually comes from

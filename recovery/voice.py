@@ -35,6 +35,7 @@ REASON_ASK = {
     "mandate_revoked": "aapka mandate cancel ho chuka hai; naya mandate set karne ke liye ek link bhej rahe hain",
     "card_expired": "aapke card ki validity khatam ho gayi hai; naya card add karne ke liye link bhej rahe hain",
     "invoice_overdue": "aapka invoice due ho gaya hai; payment link bhej rahe hain, aap aaj kar dijiye toh accha rahega",
+    "checkout_abandoned": "aapne cart mein items add kiye the par checkout complete nahi hua; ek click checkout link bhej rahe hain",
 }
 
 SYSTEM_PROMPT = (

@@ -27,6 +27,15 @@ class Taxonomy(unittest.TestCase):
     def test_revoked_mandate_retry_is_zero(self):
         self.assertEqual(world.p_recover("mandate_revoked", "silent_retry"), 0.0)
 
+    def test_checkout_abandoned_has_no_retry_path(self):
+        # nothing was ever attempted, so there is nothing to retry
+        self.assertEqual(world.p_recover("checkout_abandoned", "silent_retry"), 0.0)
+
+    def test_risk_stage_mirrors_the_track_brief(self):
+        self.assertEqual(core.risk_stage("checkout_abandoned"), "checkout")
+        self.assertEqual(core.risk_stage("invoice_overdue"), "receivable")
+        self.assertEqual(core.risk_stage("insufficient_funds"), "payment")
+
     def test_stress_scales_voice_only(self):
         self.assertAlmostEqual(world.p_recover("card_expired", "voice_call", 0.5),
                                world.p_recover("card_expired", "voice_call") * 0.5)

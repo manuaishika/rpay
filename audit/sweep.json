@@ -25,889 +25,889 @@
     {
       "stress": 0.4,
       "voice_cost": 6.0,
-      "ladder_net": 2297089.97,
-      "baseline_net": 2016808.84,
-      "ladder_minus_baseline": 280281.13,
+      "ladder_net": 2436737.83,
+      "baseline_net": 1933978.69,
+      "ladder_minus_baseline": 502759.14,
       "ladder_calls": 200,
-      "ladder_cost_per_100": 0.156,
+      "ladder_cost_per_100": 0.145,
       "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 2297089.97,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1007879.64,
-        "standard_playbook": 2016808.84
+        "ladder": 2436737.83,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 933331.56,
+        "standard_playbook": 1933978.69
       }
     },
     {
       "stress": 0.4,
       "voice_cost": 8.0,
-      "ladder_net": 2266974.89,
-      "baseline_net": 2016616.84,
-      "ladder_minus_baseline": 250358.05,
+      "ladder_net": 2372889.58,
+      "baseline_net": 1933764.69,
+      "ladder_minus_baseline": 439124.89,
       "ladder_calls": 150,
-      "ladder_cost_per_100": 0.158,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2266974.89,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1010762.62,
-        "standard_playbook": 2016616.84
-      }
-    },
-    {
-      "stress": 0.4,
-      "voice_cost": 10.0,
-      "ladder_net": 2274869.29,
-      "baseline_net": 2016424.84,
-      "ladder_minus_baseline": 258444.45,
-      "ladder_calls": 120,
-      "ladder_cost_per_100": 0.158,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2274869.29,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 749393.31,
-        "standard_playbook": 2016424.84
-      }
-    },
-    {
-      "stress": 0.4,
-      "voice_cost": 12.0,
-      "ladder_net": 2262931.26,
-      "baseline_net": 2016232.84,
-      "ladder_minus_baseline": 246698.42,
-      "ladder_calls": 100,
-      "ladder_cost_per_100": 0.16,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2262931.26,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 569645.51,
-        "standard_playbook": 2016232.84
-      }
-    },
-    {
-      "stress": 0.4,
-      "voice_cost": 16.0,
-      "ladder_net": 1979949.56,
-      "baseline_net": 2014987.41,
-      "ladder_minus_baseline": -35037.85,
-      "ladder_calls": 75,
-      "ladder_cost_per_100": 0.183,
-      "ladder_wins": false,
-      "violations": 0,
-      "nets": {
-        "ladder": 1979949.56,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 569312.2,
-        "standard_playbook": 2014987.41
-      }
-    },
-    {
-      "stress": 0.4,
-      "voice_cost": 20.0,
-      "ladder_net": 1829188.15,
-      "baseline_net": 1994781.4,
-      "ladder_minus_baseline": -165593.25,
-      "ladder_calls": 60,
-      "ladder_cost_per_100": 0.198,
-      "ladder_wins": false,
-      "violations": 0,
-      "nets": {
-        "ladder": 1829188.15,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 577929.04,
-        "standard_playbook": 1994781.4
-      }
-    },
-    {
-      "stress": 0.4,
-      "voice_cost": 24.0,
-      "ladder_net": 1830908.61,
-      "baseline_net": 1994872.91,
-      "ladder_minus_baseline": -163964.3,
-      "ladder_calls": 50,
-      "ladder_cost_per_100": 0.198,
-      "ladder_wins": false,
-      "violations": 0,
-      "nets": {
-        "ladder": 1830908.61,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 441818.44,
-        "standard_playbook": 1994872.91
-      }
-    },
-    {
-      "stress": 0.6,
-      "voice_cost": 6.0,
-      "ladder_net": 2384461.69,
-      "baseline_net": 2016808.84,
-      "ladder_minus_baseline": 367652.85,
-      "ladder_calls": 200,
       "ladder_cost_per_100": 0.15,
       "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 2384461.69,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1055044.26,
-        "standard_playbook": 2016808.84
+        "ladder": 2372889.58,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 937772.65,
+        "standard_playbook": 1933764.69
       }
     },
     {
-      "stress": 0.6,
-      "voice_cost": 8.0,
-      "ladder_net": 2354347.06,
-      "baseline_net": 2016616.84,
-      "ladder_minus_baseline": 337730.22,
-      "ladder_calls": 150,
-      "ladder_cost_per_100": 0.152,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2354347.06,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1047764.92,
-        "standard_playbook": 2016616.84
-      }
-    },
-    {
-      "stress": 0.6,
+      "stress": 0.4,
       "voice_cost": 10.0,
-      "ladder_net": 2349747.46,
-      "baseline_net": 2016424.84,
-      "ladder_minus_baseline": 333322.62,
+      "ladder_net": 2379177.0,
+      "baseline_net": 1933550.69,
+      "ladder_minus_baseline": 445626.31,
       "ladder_calls": 120,
-      "ladder_cost_per_100": 0.153,
+      "ladder_cost_per_100": 0.15,
       "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 2349747.46,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 786395.26,
-        "standard_playbook": 2016424.84
+        "ladder": 2379177.0,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 676403.34,
+        "standard_playbook": 1933550.69
       }
     },
     {
-      "stress": 0.6,
+      "stress": 0.4,
       "voice_cost": 12.0,
-      "ladder_net": 2344462.22,
-      "baseline_net": 2016232.84,
-      "ladder_minus_baseline": 328229.38,
+      "ladder_net": 2372802.5,
+      "baseline_net": 1932825.69,
+      "ladder_minus_baseline": 439976.81,
       "ladder_calls": 100,
-      "ladder_cost_per_100": 0.154,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2344462.22,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 604670.78,
-        "standard_playbook": 2016232.84
-      }
-    },
-    {
-      "stress": 0.6,
-      "voice_cost": 16.0,
-      "ladder_net": 1912832.35,
-      "baseline_net": 2014987.41,
-      "ladder_minus_baseline": -102155.06,
-      "ladder_calls": 75,
-      "ladder_cost_per_100": 0.189,
-      "ladder_wins": false,
-      "violations": 0,
-      "nets": {
-        "ladder": 1912832.35,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 604337.47,
-        "standard_playbook": 2014987.41
-      }
-    },
-    {
-      "stress": 0.6,
-      "voice_cost": 20.0,
-      "ladder_net": 1862508.52,
-      "baseline_net": 1994781.4,
-      "ladder_minus_baseline": -132272.88,
-      "ladder_calls": 60,
-      "ladder_cost_per_100": 0.195,
-      "ladder_wins": false,
-      "violations": 0,
-      "nets": {
-        "ladder": 1862508.52,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 577929.04,
-        "standard_playbook": 1994781.4
-      }
-    },
-    {
-      "stress": 0.6,
-      "voice_cost": 24.0,
-      "ladder_net": 1862439.56,
-      "baseline_net": 1994872.91,
-      "ladder_minus_baseline": -132433.35,
-      "ladder_calls": 50,
-      "ladder_cost_per_100": 0.195,
-      "ladder_wins": false,
-      "violations": 0,
-      "nets": {
-        "ladder": 1862439.56,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 441818.44,
-        "standard_playbook": 1994872.91
-      }
-    },
-    {
-      "stress": 0.8,
-      "voice_cost": 6.0,
-      "ladder_net": 2408726.33,
-      "baseline_net": 2019020.26,
-      "ladder_minus_baseline": 389706.07,
-      "ladder_calls": 200,
-      "ladder_cost_per_100": 0.148,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2408726.33,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1056636.36,
-        "standard_playbook": 2019020.26
-      }
-    },
-    {
-      "stress": 0.8,
-      "voice_cost": 8.0,
-      "ladder_net": 2378125.67,
-      "baseline_net": 2018828.26,
-      "ladder_minus_baseline": 359297.41,
-      "ladder_calls": 150,
       "ladder_cost_per_100": 0.151,
       "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 2378125.67,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1058502.78,
-        "standard_playbook": 2018828.26
+        "ladder": 2372802.5,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 510885.79,
+        "standard_playbook": 1932825.69
       }
     },
     {
-      "stress": 0.8,
-      "voice_cost": 10.0,
-      "ladder_net": 2373526.07,
-      "baseline_net": 2018636.26,
-      "ladder_minus_baseline": 354889.81,
-      "ladder_calls": 120,
-      "ladder_cost_per_100": 0.152,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2373526.07,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 789148.31,
-        "standard_playbook": 2018636.26
-      }
-    },
-    {
-      "stress": 0.8,
-      "voice_cost": 12.0,
-      "ladder_net": 2365270.18,
-      "baseline_net": 2018444.26,
-      "ladder_minus_baseline": 346825.92,
-      "ladder_calls": 100,
-      "ladder_cost_per_100": 0.153,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2365270.18,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 604671.13,
-        "standard_playbook": 2018444.26
-      }
-    },
-    {
-      "stress": 0.8,
+      "stress": 0.4,
       "voice_cost": 16.0,
-      "ladder_net": 1930707.04,
-      "baseline_net": 2017198.83,
-      "ladder_minus_baseline": -86491.79,
+      "ladder_net": 2109935.83,
+      "baseline_net": 804289.47,
+      "ladder_minus_baseline": 1305646.36,
       "ladder_calls": 75,
-      "ladder_cost_per_100": 0.188,
-      "ladder_wins": false,
+      "ladder_cost_per_100": 0.17,
+      "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 1930707.04,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 604337.47,
-        "standard_playbook": 2017198.83
+        "ladder": 2109935.83,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 465421.93,
+        "standard_playbook": 804289.47
       }
     },
     {
-      "stress": 0.8,
+      "stress": 0.4,
       "voice_cost": 20.0,
-      "ladder_net": 1881720.59,
-      "baseline_net": 1995970.0,
-      "ladder_minus_baseline": -114249.41,
+      "ladder_net": 2103705.09,
+      "baseline_net": 811716.52,
+      "ladder_minus_baseline": 1291988.57,
       "ladder_calls": 60,
-      "ladder_cost_per_100": 0.193,
-      "ladder_wins": false,
+      "ladder_cost_per_100": 0.171,
+      "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 1881720.59,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 577929.04,
-        "standard_playbook": 1995970.0
+        "ladder": 2103705.09,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 474038.77,
+        "standard_playbook": 811716.52
       }
     },
     {
-      "stress": 0.8,
+      "stress": 0.4,
       "voice_cost": 24.0,
-      "ladder_net": 1883256.51,
-      "baseline_net": 1994872.91,
-      "ladder_minus_baseline": -111616.4,
+      "ladder_net": 2102980.49,
+      "baseline_net": 774382.58,
+      "ladder_minus_baseline": 1328597.91,
       "ladder_calls": 50,
-      "ladder_cost_per_100": 0.193,
-      "ladder_wins": false,
+      "ladder_cost_per_100": 0.171,
+      "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 1883256.51,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 487529.23,
-        "standard_playbook": 1994872.91
+        "ladder": 2102980.49,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 337928.17,
+        "standard_playbook": 774382.58
       }
     },
     {
-      "stress": 1.0,
+      "stress": 0.6,
       "voice_cost": 6.0,
-      "ladder_net": 2496183.99,
-      "baseline_net": 2094331.23,
-      "ladder_minus_baseline": 401852.76,
+      "ladder_net": 2480100.95,
+      "baseline_net": 2025845.26,
+      "ladder_minus_baseline": 454255.69,
       "ladder_calls": 200,
       "ladder_cost_per_100": 0.143,
       "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 2496183.99,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1169251.25,
-        "standard_playbook": 2094331.23
+        "ladder": 2480100.95,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 1063020.15,
+        "standard_playbook": 2025845.26
       }
     },
     {
-      "stress": 1.0,
+      "stress": 0.6,
       "voice_cost": 8.0,
-      "ladder_net": 2465188.94,
-      "baseline_net": 2094139.23,
-      "ladder_minus_baseline": 371049.71,
+      "ladder_net": 2442748.86,
+      "baseline_net": 2025631.26,
+      "ladder_minus_baseline": 417117.6,
+      "ladder_calls": 150,
+      "ladder_cost_per_100": 0.146,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2442748.86,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 1067461.59,
+        "standard_playbook": 2025631.26
+      }
+    },
+    {
+      "stress": 0.6,
+      "voice_cost": 10.0,
+      "ladder_net": 2455575.11,
+      "baseline_net": 2025417.26,
+      "ladder_minus_baseline": 430157.85,
+      "ladder_calls": 120,
+      "ladder_cost_per_100": 0.145,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2455575.11,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 806091.93,
+        "standard_playbook": 2025417.26
+      }
+    },
+    {
+      "stress": 0.6,
+      "voice_cost": 12.0,
+      "ladder_net": 2445082.93,
+      "baseline_net": 2024692.26,
+      "ladder_minus_baseline": 420390.67,
+      "ladder_calls": 100,
+      "ladder_cost_per_100": 0.146,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2445082.93,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 550042.78,
+        "standard_playbook": 2024692.26
+      }
+    },
+    {
+      "stress": 0.6,
+      "voice_cost": 16.0,
+      "ladder_net": 2184471.87,
+      "baseline_net": 896156.04,
+      "ladder_minus_baseline": 1288315.83,
+      "ladder_calls": 75,
+      "ladder_cost_per_100": 0.164,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2184471.87,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 503243.25,
+        "standard_playbook": 896156.04
+      }
+    },
+    {
+      "stress": 0.6,
+      "voice_cost": 20.0,
+      "ladder_net": 2165963.18,
+      "baseline_net": 903583.09,
+      "ladder_minus_baseline": 1262380.09,
+      "ladder_calls": 60,
+      "ladder_cost_per_100": 0.166,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2165963.18,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 476834.82,
+        "standard_playbook": 903583.09
+      }
+    },
+    {
+      "stress": 0.6,
+      "voice_cost": 24.0,
+      "ladder_net": 2086299.92,
+      "baseline_net": 866249.15,
+      "ladder_minus_baseline": 1220050.77,
+      "ladder_calls": 50,
+      "ladder_cost_per_100": 0.173,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2086299.92,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 340724.22,
+        "standard_playbook": 866249.15
+      }
+    },
+    {
+      "stress": 0.8,
+      "voice_cost": 6.0,
+      "ladder_net": 2500255.33,
+      "baseline_net": 2027033.86,
+      "ladder_minus_baseline": 473221.47,
+      "ladder_calls": 200,
+      "ladder_cost_per_100": 0.141,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2500255.33,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 1130810.74,
+        "standard_playbook": 2027033.86
+      }
+    },
+    {
+      "stress": 0.8,
+      "voice_cost": 8.0,
+      "ladder_net": 2459499.29,
+      "baseline_net": 2026819.86,
+      "ladder_minus_baseline": 432679.43,
       "ladder_calls": 150,
       "ladder_cost_per_100": 0.145,
       "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 2465188.94,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1171117.32,
-        "standard_playbook": 2094139.23
+        "ladder": 2459499.29,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 1134767.15,
+        "standard_playbook": 2026819.86
       }
     },
     {
-      "stress": 1.0,
+      "stress": 0.8,
       "voice_cost": 10.0,
-      "ladder_net": 2466983.24,
-      "baseline_net": 2093947.23,
-      "ladder_minus_baseline": 373036.01,
+      "ladder_net": 2473334.28,
+      "baseline_net": 2026605.86,
+      "ladder_minus_baseline": 446728.42,
       "ladder_calls": 120,
-      "ladder_cost_per_100": 0.146,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2466983.24,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 863472.98,
-        "standard_playbook": 2093947.23
-      }
-    },
-    {
-      "stress": 1.0,
-      "voice_cost": 12.0,
-      "ladder_net": 2455408.02,
-      "baseline_net": 2093755.23,
-      "ladder_minus_baseline": 361652.79,
-      "ladder_calls": 100,
-      "ladder_cost_per_100": 0.147,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2455408.02,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 604671.13,
-        "standard_playbook": 2093755.23
-      }
-    },
-    {
-      "stress": 1.0,
-      "voice_cost": 16.0,
-      "ladder_net": 2130805.04,
-      "baseline_net": 2092509.8,
-      "ladder_minus_baseline": 38295.24,
-      "ladder_calls": 75,
-      "ladder_cost_per_100": 0.17,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2130805.04,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 604337.47,
-        "standard_playbook": 2092509.8
-      }
-    },
-    {
-      "stress": 1.0,
-      "voice_cost": 20.0,
-      "ladder_net": 1934077.74,
-      "baseline_net": 2071280.97,
-      "ladder_minus_baseline": -137203.23,
-      "ladder_calls": 60,
-      "ladder_cost_per_100": 0.188,
-      "ladder_wins": false,
-      "violations": 0,
-      "nets": {
-        "ladder": 1934077.74,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 578686.34,
-        "standard_playbook": 2071280.97
-      }
-    },
-    {
-      "stress": 1.0,
-      "voice_cost": 24.0,
-      "ladder_net": 1935613.01,
-      "baseline_net": 2070183.88,
-      "ladder_minus_baseline": -134570.87,
-      "ladder_calls": 50,
-      "ladder_cost_per_100": 0.188,
-      "ladder_wins": false,
-      "violations": 0,
-      "nets": {
-        "ladder": 1935613.01,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 487529.23,
-        "standard_playbook": 2070183.88
-      }
-    },
-    {
-      "stress": 1.2,
-      "voice_cost": 6.0,
-      "ladder_net": 2556185.67,
-      "baseline_net": 2164471.77,
-      "ladder_minus_baseline": 391713.9,
-      "ladder_calls": 200,
-      "ladder_cost_per_100": 0.139,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2556185.67,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1174081.51,
-        "standard_playbook": 2164471.77
-      }
-    },
-    {
-      "stress": 1.2,
-      "voice_cost": 8.0,
-      "ladder_net": 2519225.71,
-      "baseline_net": 2164279.77,
-      "ladder_minus_baseline": 354945.94,
-      "ladder_calls": 150,
-      "ladder_cost_per_100": 0.142,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2519225.71,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1173913.37,
-        "standard_playbook": 2164279.77
-      }
-    },
-    {
-      "stress": 1.2,
-      "voice_cost": 10.0,
-      "ladder_net": 2522179.23,
-      "baseline_net": 2164087.77,
-      "ladder_minus_baseline": 358091.46,
-      "ladder_calls": 120,
-      "ladder_cost_per_100": 0.143,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2522179.23,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1156531.06,
-        "standard_playbook": 2164087.77
-      }
-    },
-    {
-      "stress": 1.2,
-      "voice_cost": 12.0,
-      "ladder_net": 2511800.25,
-      "baseline_net": 2163895.77,
-      "ladder_minus_baseline": 347904.48,
-      "ladder_calls": 100,
       "ladder_cost_per_100": 0.144,
       "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 2511800.25,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 681791.5,
-        "standard_playbook": 2163895.77
+        "ladder": 2473334.28,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 873397.84,
+        "standard_playbook": 2026605.86
       }
     },
     {
-      "stress": 1.2,
-      "voice_cost": 16.0,
-      "ladder_net": 2150148.27,
-      "baseline_net": 2162650.34,
-      "ladder_minus_baseline": -12502.07,
-      "ladder_calls": 75,
-      "ladder_cost_per_100": 0.168,
-      "ladder_wins": false,
-      "violations": 0,
-      "nets": {
-        "ladder": 2150148.27,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 607133.17,
-        "standard_playbook": 2162650.34
-      }
-    },
-    {
-      "stress": 1.2,
-      "voice_cost": 20.0,
-      "ladder_net": 1983532.66,
-      "baseline_net": 2141421.51,
-      "ladder_minus_baseline": -157888.85,
-      "ladder_calls": 60,
-      "ladder_cost_per_100": 0.183,
-      "ladder_wins": false,
-      "violations": 0,
-      "nets": {
-        "ladder": 1983532.66,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 567912.75,
-        "standard_playbook": 2141421.51
-      }
-    },
-    {
-      "stress": 1.2,
-      "voice_cost": 24.0,
-      "ladder_net": 1935612.51,
-      "baseline_net": 2140324.42,
-      "ladder_minus_baseline": -204711.91,
-      "ladder_calls": 50,
-      "ladder_cost_per_100": 0.188,
-      "ladder_wins": false,
-      "violations": 0,
-      "nets": {
-        "ladder": 1935612.51,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 493134.34,
-        "standard_playbook": 2140324.42
-      }
-    },
-    {
-      "stress": 1.4,
-      "voice_cost": 6.0,
-      "ladder_net": 2554598.02,
-      "baseline_net": 2164471.77,
-      "ladder_minus_baseline": 390126.25,
-      "ladder_calls": 200,
-      "ladder_cost_per_100": 0.139,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2554598.02,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1193429.85,
-        "standard_playbook": 2164471.77
-      }
-    },
-    {
-      "stress": 1.4,
-      "voice_cost": 8.0,
-      "ladder_net": 2514873.05,
-      "baseline_net": 2164279.77,
-      "ladder_minus_baseline": 350593.28,
-      "ladder_calls": 150,
-      "ladder_cost_per_100": 0.142,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2514873.05,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1193732.69,
-        "standard_playbook": 2164279.77
-      }
-    },
-    {
-      "stress": 1.4,
-      "voice_cost": 10.0,
-      "ladder_net": 2518833.53,
-      "baseline_net": 2164087.77,
-      "ladder_minus_baseline": 354745.76,
-      "ladder_calls": 120,
-      "ladder_cost_per_100": 0.143,
-      "ladder_wins": true,
-      "violations": 0,
-      "nets": {
-        "ladder": 2518833.53,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1175879.4,
-        "standard_playbook": 2164087.77
-      }
-    },
-    {
-      "stress": 1.4,
+      "stress": 0.8,
       "voice_cost": 12.0,
-      "ladder_net": 2468912.89,
-      "baseline_net": 2163895.77,
-      "ladder_minus_baseline": 305017.12,
+      "ladder_net": 2463254.14,
+      "baseline_net": 2025880.86,
+      "ladder_minus_baseline": 437373.28,
       "ladder_calls": 100,
-      "ladder_cost_per_100": 0.146,
+      "ladder_cost_per_100": 0.145,
       "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 2468912.89,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 702406.59,
-        "standard_playbook": 2163895.77
+        "ladder": 2463254.14,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 617348.69,
+        "standard_playbook": 2025880.86
       }
     },
     {
-      "stress": 1.4,
+      "stress": 0.8,
       "voice_cost": 16.0,
-      "ladder_net": 2125600.78,
-      "baseline_net": 2162650.34,
-      "ladder_minus_baseline": -37049.56,
+      "ladder_net": 2433712.1,
+      "baseline_net": 897344.64,
+      "ladder_minus_baseline": 1536367.46,
       "ladder_calls": 75,
-      "ladder_cost_per_100": 0.17,
-      "ladder_wins": false,
+      "ladder_cost_per_100": 0.148,
+      "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 2125600.78,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 625397.72,
-        "standard_playbook": 2162650.34
+        "ladder": 2433712.1,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 570548.81,
+        "standard_playbook": 897344.64
       }
     },
     {
-      "stress": 1.4,
+      "stress": 0.8,
       "voice_cost": 20.0,
-      "ladder_net": 1956592.3,
-      "baseline_net": 2141421.51,
-      "ladder_minus_baseline": -184829.21,
+      "ladder_net": 2181466.94,
+      "baseline_net": 904287.01,
+      "ladder_minus_baseline": 1277179.93,
       "ladder_calls": 60,
-      "ladder_cost_per_100": 0.186,
-      "ladder_wins": false,
+      "ladder_cost_per_100": 0.165,
+      "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 1956592.3,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 586177.3,
-        "standard_playbook": 2141421.51
+        "ladder": 2181466.94,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 544140.38,
+        "standard_playbook": 904287.01
       }
     },
     {
-      "stress": 1.4,
+      "stress": 0.8,
       "voice_cost": 24.0,
-      "ladder_net": 1924635.41,
-      "baseline_net": 2140324.42,
-      "ladder_minus_baseline": -215689.01,
+      "ladder_net": 2177380.08,
+      "baseline_net": 866249.15,
+      "ladder_minus_baseline": 1311130.93,
       "ladder_calls": 50,
-      "ladder_cost_per_100": 0.189,
-      "ladder_wins": false,
+      "ladder_cost_per_100": 0.165,
+      "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 1924635.41,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 493134.34,
-        "standard_playbook": 2140324.42
+        "ladder": 2177380.08,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 438791.66,
+        "standard_playbook": 866249.15
       }
     },
     {
-      "stress": 1.6,
+      "stress": 1.0,
       "voice_cost": 6.0,
-      "ladder_net": 2543678.62,
-      "baseline_net": 2165293.08,
-      "ladder_minus_baseline": 378385.54,
+      "ladder_net": 2411128.41,
+      "baseline_net": 2031824.7,
+      "ladder_minus_baseline": 379303.71,
+      "ladder_calls": 200,
+      "ladder_cost_per_100": 0.147,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2411128.41,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 1130810.74,
+        "standard_playbook": 2031824.7
+      }
+    },
+    {
+      "stress": 1.0,
+      "voice_cost": 8.0,
+      "ladder_net": 2371010.1,
+      "baseline_net": 2031610.7,
+      "ladder_minus_baseline": 339399.4,
+      "ladder_calls": 150,
+      "ladder_cost_per_100": 0.15,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2371010.1,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 1134767.15,
+        "standard_playbook": 2031610.7
+      }
+    },
+    {
+      "stress": 1.0,
+      "voice_cost": 10.0,
+      "ladder_net": 2383176.56,
+      "baseline_net": 2031396.7,
+      "ladder_minus_baseline": 351779.86,
+      "ladder_calls": 120,
+      "ladder_cost_per_100": 0.15,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2383176.56,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 873397.84,
+        "standard_playbook": 2031396.7
+      }
+    },
+    {
+      "stress": 1.0,
+      "voice_cost": 12.0,
+      "ladder_net": 2375876.9,
+      "baseline_net": 2030671.7,
+      "ladder_minus_baseline": 345205.2,
+      "ladder_calls": 100,
+      "ladder_cost_per_100": 0.151,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2375876.9,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 617348.69,
+        "standard_playbook": 2030671.7
+      }
+    },
+    {
+      "stress": 1.0,
+      "voice_cost": 16.0,
+      "ladder_net": 2346121.65,
+      "baseline_net": 902135.48,
+      "ladder_minus_baseline": 1443986.17,
+      "ladder_calls": 75,
+      "ladder_cost_per_100": 0.153,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2346121.65,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 570548.81,
+        "standard_playbook": 902135.48
+      }
+    },
+    {
+      "stress": 1.0,
+      "voice_cost": 20.0,
+      "ladder_net": 2093141.6,
+      "baseline_net": 908069.01,
+      "ladder_minus_baseline": 1185072.59,
+      "ladder_calls": 60,
+      "ladder_cost_per_100": 0.172,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2093141.6,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 544140.38,
+        "standard_playbook": 908069.01
+      }
+    },
+    {
+      "stress": 1.0,
+      "voice_cost": 24.0,
+      "ladder_net": 2015462.81,
+      "baseline_net": 870031.15,
+      "ladder_minus_baseline": 1145431.66,
+      "ladder_calls": 50,
+      "ladder_cost_per_100": 0.179,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2015462.81,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 438791.66,
+        "standard_playbook": 870031.15
+      }
+    },
+    {
+      "stress": 1.2,
+      "voice_cost": 6.0,
+      "ladder_net": 2530352.46,
+      "baseline_net": 2149347.14,
+      "ladder_minus_baseline": 381005.32,
       "ladder_calls": 200,
       "ladder_cost_per_100": 0.14,
       "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 2543678.62,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1213650.93,
-        "standard_playbook": 2165293.08
+        "ladder": 2530352.46,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 1136271.67,
+        "standard_playbook": 2149347.14
+      }
+    },
+    {
+      "stress": 1.2,
+      "voice_cost": 8.0,
+      "ladder_net": 2523125.48,
+      "baseline_net": 2149133.14,
+      "ladder_minus_baseline": 373992.34,
+      "ladder_calls": 150,
+      "ladder_cost_per_100": 0.141,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2523125.48,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 1139094.35,
+        "standard_playbook": 2149133.14
+      }
+    },
+    {
+      "stress": 1.2,
+      "voice_cost": 10.0,
+      "ladder_net": 2536655.64,
+      "baseline_net": 2148919.14,
+      "ladder_minus_baseline": 387736.5,
+      "ladder_calls": 120,
+      "ladder_cost_per_100": 0.141,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2536655.64,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 876738.04,
+        "standard_playbook": 2148919.14
+      }
+    },
+    {
+      "stress": 1.2,
+      "voice_cost": 12.0,
+      "ladder_net": 2526367.39,
+      "baseline_net": 2148194.14,
+      "ladder_minus_baseline": 378173.25,
+      "ladder_calls": 100,
+      "ladder_cost_per_100": 0.142,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2526367.39,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 620688.89,
+        "standard_playbook": 2148194.14
+      }
+    },
+    {
+      "stress": 1.2,
+      "voice_cost": 16.0,
+      "ladder_net": 2348441.62,
+      "baseline_net": 1019657.92,
+      "ladder_minus_baseline": 1328783.7,
+      "ladder_calls": 75,
+      "ladder_cost_per_100": 0.153,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2348441.62,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 573889.01,
+        "standard_playbook": 1019657.92
+      }
+    },
+    {
+      "stress": 1.2,
+      "voice_cost": 20.0,
+      "ladder_net": 2096482.3,
+      "baseline_net": 1025591.45,
+      "ladder_minus_baseline": 1070890.85,
+      "ladder_calls": 60,
+      "ladder_cost_per_100": 0.172,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2096482.3,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 547480.58,
+        "standard_playbook": 1025591.45
+      }
+    },
+    {
+      "stress": 1.2,
+      "voice_cost": 24.0,
+      "ladder_net": 2032374.85,
+      "baseline_net": 987553.59,
+      "ladder_minus_baseline": 1044821.26,
+      "ladder_calls": 50,
+      "ladder_cost_per_100": 0.177,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2032374.85,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 442131.86,
+        "standard_playbook": 987553.59
+      }
+    },
+    {
+      "stress": 1.4,
+      "voice_cost": 6.0,
+      "ladder_net": 2616026.8,
+      "baseline_net": 2150080.83,
+      "ladder_minus_baseline": 465945.97,
+      "ladder_calls": 200,
+      "ladder_cost_per_100": 0.135,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2616026.8,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 1140119.54,
+        "standard_playbook": 2150080.83
+      }
+    },
+    {
+      "stress": 1.4,
+      "voice_cost": 8.0,
+      "ladder_net": 2615400.55,
+      "baseline_net": 2149866.83,
+      "ladder_minus_baseline": 465533.72,
+      "ladder_calls": 150,
+      "ladder_cost_per_100": 0.136,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2615400.55,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 1142409.99,
+        "standard_playbook": 2149866.83
+      }
+    },
+    {
+      "stress": 1.4,
+      "voice_cost": 10.0,
+      "ladder_net": 2622009.42,
+      "baseline_net": 2149652.83,
+      "ladder_minus_baseline": 472356.59,
+      "ladder_calls": 120,
+      "ladder_cost_per_100": 0.136,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2622009.42,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 881699.66,
+        "standard_playbook": 2149652.83
+      }
+    },
+    {
+      "stress": 1.4,
+      "voice_cost": 12.0,
+      "ladder_net": 2616603.18,
+      "baseline_net": 2148927.83,
+      "ladder_minus_baseline": 467675.35,
+      "ladder_calls": 100,
+      "ladder_cost_per_100": 0.137,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2616603.18,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 624004.53,
+        "standard_playbook": 2148927.83
+      }
+    },
+    {
+      "stress": 1.4,
+      "voice_cost": 16.0,
+      "ladder_net": 2438497.94,
+      "baseline_net": 1020391.61,
+      "ladder_minus_baseline": 1418106.33,
+      "ladder_calls": 75,
+      "ladder_cost_per_100": 0.147,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2438497.94,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 577204.65,
+        "standard_playbook": 1020391.61
+      }
+    },
+    {
+      "stress": 1.4,
+      "voice_cost": 20.0,
+      "ladder_net": 2185819.27,
+      "baseline_net": 1026325.14,
+      "ladder_minus_baseline": 1159494.13,
+      "ladder_calls": 60,
+      "ladder_cost_per_100": 0.164,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2185819.27,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 551553.52,
+        "standard_playbook": 1026325.14
+      }
+    },
+    {
+      "stress": 1.4,
+      "voice_cost": 24.0,
+      "ladder_net": 2196035.44,
+      "baseline_net": 988287.28,
+      "ladder_minus_baseline": 1207748.16,
+      "ladder_calls": 50,
+      "ladder_cost_per_100": 0.164,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2196035.44,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 442131.86,
+        "standard_playbook": 988287.28
+      }
+    },
+    {
+      "stress": 1.6,
+      "voice_cost": 6.0,
+      "ladder_net": 2638376.81,
+      "baseline_net": 2150080.83,
+      "ladder_minus_baseline": 488295.98,
+      "ladder_calls": 200,
+      "ladder_cost_per_100": 0.134,
+      "ladder_wins": true,
+      "violations": 0,
+      "nets": {
+        "ladder": 2638376.81,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 1145213.34,
+        "standard_playbook": 2150080.83
       }
     },
     {
       "stress": 1.6,
       "voice_cost": 8.0,
-      "ladder_net": 2493706.72,
-      "baseline_net": 2165101.08,
-      "ladder_minus_baseline": 328605.64,
+      "ladder_net": 2631237.58,
+      "baseline_net": 2149866.83,
+      "ladder_minus_baseline": 481370.75,
       "ladder_calls": 150,
-      "ladder_cost_per_100": 0.144,
+      "ladder_cost_per_100": 0.135,
       "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 2493706.72,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1196163.52,
-        "standard_playbook": 2165101.08
+        "ladder": 2631237.58,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 1142410.34,
+        "standard_playbook": 2149866.83
       }
     },
     {
       "stress": 1.6,
       "voice_cost": 10.0,
-      "ladder_net": 2483503.79,
-      "baseline_net": 2164909.08,
-      "ladder_minus_baseline": 318594.71,
+      "ladder_net": 2624506.52,
+      "baseline_net": 2149652.83,
+      "ladder_minus_baseline": 474853.69,
       "ladder_calls": 120,
-      "ladder_cost_per_100": 0.145,
+      "ladder_cost_per_100": 0.136,
       "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 2483503.79,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 1177605.96,
-        "standard_playbook": 2164909.08
+        "ladder": 2624506.52,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 881699.66,
+        "standard_playbook": 2149652.83
       }
     },
     {
       "stress": 1.6,
       "voice_cost": 12.0,
-      "ladder_net": 2470884.67,
-      "baseline_net": 2164717.08,
-      "ladder_minus_baseline": 306167.59,
+      "ladder_net": 2619099.88,
+      "baseline_net": 2148927.83,
+      "ladder_minus_baseline": 470172.05,
       "ladder_calls": 100,
-      "ladder_cost_per_100": 0.146,
+      "ladder_cost_per_100": 0.137,
       "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 2470884.67,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 851872.45,
-        "standard_playbook": 2164717.08
+        "ladder": 2619099.88,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 698329.2,
+        "standard_playbook": 2148927.83
       }
     },
     {
       "stress": 1.6,
       "voice_cost": 16.0,
-      "ladder_net": 2126852.51,
-      "baseline_net": 2162650.34,
-      "ladder_minus_baseline": -35797.83,
+      "ladder_net": 2439078.72,
+      "baseline_net": 1020391.61,
+      "ladder_minus_baseline": 1418687.11,
       "ladder_calls": 75,
-      "ladder_cost_per_100": 0.17,
-      "ladder_wins": false,
+      "ladder_cost_per_100": 0.147,
+      "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 2126852.51,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 625397.72,
-        "standard_playbook": 2162650.34
+        "ladder": 2439078.72,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 577204.65,
+        "standard_playbook": 1020391.61
       }
     },
     {
       "stress": 1.6,
       "voice_cost": 20.0,
-      "ladder_net": 1957844.03,
-      "baseline_net": 2141421.51,
-      "ladder_minus_baseline": -183577.48,
+      "ladder_net": 2187071.5,
+      "baseline_net": 1026325.14,
+      "ladder_minus_baseline": 1160746.36,
       "ladder_calls": 60,
-      "ladder_cost_per_100": 0.186,
-      "ladder_wins": false,
+      "ladder_cost_per_100": 0.164,
+      "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 1957844.03,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 586177.3,
-        "standard_playbook": 2141421.51
+        "ladder": 2187071.5,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 551553.52,
+        "standard_playbook": 1026325.14
       }
     },
     {
       "stress": 1.6,
       "voice_cost": 24.0,
-      "ladder_net": 1924635.41,
-      "baseline_net": 2140324.42,
-      "ladder_minus_baseline": -215689.01,
+      "ladder_net": 2196035.44,
+      "baseline_net": 988287.28,
+      "ladder_minus_baseline": 1207748.16,
       "ladder_calls": 50,
-      "ladder_cost_per_100": 0.189,
-      "ladder_wins": false,
+      "ladder_cost_per_100": 0.164,
+      "ladder_wins": true,
       "violations": 0,
       "nets": {
-        "ladder": 1924635.41,
-        "retry_only": 1442275.72,
-        "nudge_ladder": 379499.1,
-        "call_first": 493134.34,
-        "standard_playbook": 2140324.42
+        "ladder": 2196035.44,
+        "retry_only": 509443.47,
+        "nudge_ladder": 301959.04,
+        "call_first": 442131.86,
+        "standard_playbook": 988287.28
       }
     }
   ],
   "crossover": {
     "min_stress_ladder_wins_at_cost_12": 0.4,
-    "max_cost_ladder_wins_at_stress_1": 16.0,
-    "ladder_wins_everywhere": false
+    "max_cost_ladder_wins_at_stress_1": 24.0,
+    "ladder_wins_everywhere": true
   }
 }

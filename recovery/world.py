@@ -81,6 +81,15 @@ PRIORS: dict[str, dict[str, float]] = {
         "silent_retry": 0.02, "sms_link": 0.10, "whatsapp_nudge": 0.16,
         "voice_call": 0.38, "human_escalation": 0.48,
     },
+    "checkout_abandoned": {
+        # never reached a payment attempt -- there is nothing to retry, and a
+        # phone call about an unfinished cart reads as intrusive rather than
+        # helpful. A reminder link is the natural channel here; consistent
+        # with commonly-reported cart-recovery ranges (link nudges recovering
+        # a low-teens to twenties percentage), not fit to any dataset.
+        "sms_link": 0.16, "whatsapp_nudge": 0.20,
+        "voice_call": 0.10, "human_escalation": 0.12,
+    },
 }
 
 

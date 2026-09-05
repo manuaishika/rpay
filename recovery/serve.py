@@ -64,6 +64,10 @@ def pick_sample(ledger, n: int, seed: int):
         if a.reason in ("mandate_revoked", "mandate_expired") and len(chosen) < n // 3 + 3:
             take(a)
     for a in ledger:
+        if a.reason == "checkout_abandoned":
+            take(a)
+            break
+    for a in ledger:
         if a.dnc:
             take(a)
     rest = [a for a in ledger if a.account_id not in seen]
