@@ -5,6 +5,11 @@ played; a rejected action is removed from the choice set, so the agent
 physically cannot emit it. That is the difference between a guardrail and a
 line in a prompt: the prompt can be argued with.
 
+The contact rules live in `ContactPolicy` -- a merchant-tunable config with
+CONFIGURABLE DEFAULTS, not a legal assertion. The window, frequency cap and
+voice-attempt ceiling were chosen by the author, not lifted from any RBI or
+TRAI circular; mapping them to real regulation is pre-production work.
+
 `audit_executed()` is the second half. It re-derives every rule FROM SCRATCH
 against the emitted JSONL trail, deliberately without importing the
 `Guardrails` class, so a bug in the gate shows up as a counted violation in
@@ -14,17 +19,41 @@ ever disagree, the report stops saying "0".
 from __future__ import annotations
 
 import threading
+from dataclasses import dataclass
 from datetime import date, datetime, time, timedelta
 
 from .core import INTERVENTION_COST, CONTACTING
 
-# ---- the rules ---------------------------------------------------------
-WINDOW_START = time(9, 0)          # 09:00 local, inclusive
-WINDOW_END = time(19, 0)           # 19:00 local, exclusive
-CONTACT_CAP_7D = 3                 # max contacting touches per rolling 7 days
-VOICE_ATTEMPTS_MAX = 2             # max voice dials per account, ever
-DEFAULT_VOICE_BUDGET = 1200.0      # rupees of voice spend across the whole run
-DEFAULT_HUMAN_CAP = 25            # manual escalations a human team can absorb per run
+
+@dataclass(frozen=True)
+class ContactPolicy:
+    """A merchant-tunable outreach policy.
+
+    These values are CONFIGURABLE DEFAULTS chosen to be conservative. They are
+    NOT taken from any RBI or TRAI circular -- the 09:00-19:00 window, the
+    3-contacts-per-7-days cap and the 2-voice-attempts ceiling were picked by
+    the author, not sourced. Mapping them to the actual RBI recovery-agent
+    guidelines and TRAI UCC/DND regulation is required before production use.
+    Pass a different `ContactPolicy` to `Guardrails(...)` / `audit_executed(...)`
+    to run under a different merchant's rules.
+    """
+    window_start: time = time(9, 0)      # local, inclusive        -- ESTIMATED
+    window_end: time = time(19, 0)       # local, exclusive        -- ESTIMATED
+    contacts_per_7d: int = 3             # contacting touches / 7d  -- ESTIMATED
+    voice_attempts_max: int = 2          # voice dials per account  -- ESTIMATED
+
+
+CONTACT_POLICY = ContactPolicy()
+
+# Back-compat module aliases -- everything reads these; they are just the
+# default policy's fields exposed by their old names.
+WINDOW_START = CONTACT_POLICY.window_start
+WINDOW_END = CONTACT_POLICY.window_end
+CONTACT_CAP_7D = CONTACT_POLICY.contacts_per_7d
+VOICE_ATTEMPTS_MAX = CONTACT_POLICY.voice_attempts_max
+
+DEFAULT_VOICE_BUDGET = 1200.0      # rupees of voice spend across the whole run -- ESTIMATED
+DEFAULT_HUMAN_CAP = 25            # manual escalations a human team can absorb per run -- ESTIMATED
 NOW0 = datetime(2026, 9, 3, 0, 0)  # reference epoch for seeded history
 
 _EPS = 1e-9
@@ -39,7 +68,9 @@ class Guardrails:
     """Stateful gate. One instance per policy run (the voice budget is global)."""
 
     def __init__(self, ledger, voice_budget: float = DEFAULT_VOICE_BUDGET,
-                 human_cap: int = DEFAULT_HUMAN_CAP, now0: datetime | None = None):
+                 human_cap: int = DEFAULT_HUMAN_CAP, now0: datetime | None = None,
+                 policy: ContactPolicy = CONTACT_POLICY):
+        self.policy = policy
         self.voice_budget = float(voice_budget)
         self.voice_spent = 0.0
         self.human_cap = int(human_cap)
@@ -77,19 +108,20 @@ class Guardrails:
         aid = account.account_id
         cost = INTERVENTION_COST[intervention]
         contacting = intervention in CONTACTING
+        pol = self.policy
 
         if contacting and account.dnc:
             return False, "dnc"
-        if contacting and not (WINDOW_START <= now.time() < WINDOW_END):
+        if contacting and not (pol.window_start <= now.time() < pol.window_end):
             return False, "contact_window"
-        if contacting and self._contacts_7d(aid, now) >= CONTACT_CAP_7D:
+        if contacting and self._contacts_7d(aid, now) >= pol.contacts_per_7d:
             return False, "contact_cap_7d"
         if contacting and aid in self.ptp and now.date() < self.ptp[aid]:
             return False, "ptp_suppression"
         if intervention == "voice_call":
             if not account.has_phone:
                 return False, "no_phone"
-            if self._voice_attempts(aid) >= VOICE_ATTEMPTS_MAX:
+            if self._voice_attempts(aid) >= pol.voice_attempts_max:
                 return False, "voice_attempts_max"
             if self.voice_spent + cost > self.voice_budget + _EPS:
                 return False, "voice_budget"
@@ -130,9 +162,11 @@ class Guardrails:
 
 def audit_executed(events: list[dict], ledger, voice_budget: float = DEFAULT_VOICE_BUDGET,
                    human_cap: int = DEFAULT_HUMAN_CAP,
-                   now0: datetime | None = None) -> list[dict]:
+                   now0: datetime | None = None,
+                   policy: ContactPolicy = CONTACT_POLICY) -> list[dict]:
     """Return one record per rule violation found in `events`. Should be empty."""
     now0 = now0 or NOW0
+    pol = policy
     acc = {a.account_id: a for a in ledger}
     human_used = 0
 
@@ -167,18 +201,18 @@ def audit_executed(events: list[dict], ledger, voice_budget: float = DEFAULT_VOI
 
         if contacting and a.dnc:
             hits.append("dnc")
-        if contacting and not (WINDOW_START <= now.time() < WINDOW_END):
+        if contacting and not (pol.window_start <= now.time() < pol.window_end):
             hits.append("contact_window")
         if contacting:
             recent = [t for t in contacts[aid] if t > now - timedelta(days=7)]
-            if len(recent) >= CONTACT_CAP_7D:
+            if len(recent) >= pol.contacts_per_7d:
                 hits.append("contact_cap_7d")
         if contacting and aid in ptp and now.date() < ptp[aid]:
             hits.append("ptp_suppression")
         if iv == "voice_call":
             if not a.has_phone:
                 hits.append("no_phone")
-            if voice_ct[aid] >= VOICE_ATTEMPTS_MAX:
+            if voice_ct[aid] >= pol.voice_attempts_max:
                 hits.append("voice_attempts_max")
             if voice_spent + cost > voice_budget + _EPS:
                 hits.append("voice_budget")

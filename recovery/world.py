@@ -25,6 +25,7 @@ ASSUMPTION_BANNER = (
     "=" * 70 + "\n"
     "  world.py PRIORS ARE ASSUMPTIONS, NOT DATA. Not fit to any ledger.\n"
     "  Voice lift is the fragile hinge -- always cross-check with --stress.\n"
+    "  (voice-call COST is derived, not guessed -- see recovery/costs.py)\n"
     + "=" * 70
 )
 

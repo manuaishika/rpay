@@ -15,7 +15,7 @@ The agent runs up to 5 stages per failed payment. At each stage it:
   4. plays the highest-scoring action IF its expected net is > 0, else STOPS.
 
 Stopping the moment nothing clears zero in expectation is the entire point:
-it is why the agent will not spend Rs.12 chasing a Rs.90 B2C invoice with a
+it is why the agent will not spend Rs.5+ chasing a Rs.90 B2C invoice with a
 revoked mandate. The fixed playbooks below do not stop -- they just run
 their script until it recovers, runs out, or the gate blocks everything.
 

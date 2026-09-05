@@ -9,7 +9,7 @@ Pipeline per account:
 
 This never places a phone call. The ledger is synthetic; there is no real
 number to dial and no consent to do so. The output is an audio file that
-demonstrates what the Rs.12 intervention would actually sound like, and how
+demonstrates what the voice intervention would actually sound like, and how
 the script changes with the failure reason.
 """
 from __future__ import annotations

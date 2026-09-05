@@ -1,8 +1,10 @@
 """recovery/ — a bounded revenue-recovery agent.
 
-Thesis: a Hinglish voice call costs ~Rs.12. Most failed payments are not
-worth Rs.12. The hard problems are deciding WHO to call and knowing WHEN
-TO STOP. This package is stdlib-only and fully deterministic from a seed.
+Thesis: a Hinglish voice call costs ~Rs.5.44 -- DERIVED from Sarvam's
+published rates (see recovery/costs.py), not guessed. At that price plenty
+of failed payments ARE worth a call, so the hard problem is deciding WHICH
+ones, in what order, against a fixed budget -- and knowing WHEN TO STOP.
+This package is stdlib-only and fully deterministic from a seed.
 
 Modules
 -------

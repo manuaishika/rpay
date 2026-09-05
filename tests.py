@@ -130,6 +130,57 @@ class EndToEnd(unittest.TestCase):
         self.assertGreater(top, 0.4)
 
 
+class DerivedCost(unittest.TestCase):
+    def test_voice_cost_is_derived_and_sane(self):
+        from recovery import costs
+        c = costs.voice_call_cost()
+        self.assertGreater(c, 3.0)
+        self.assertLess(c, 12.0)
+        self.assertEqual(core.INTERVENTION_COST["voice_call"], costs.VOICE_CALL)
+
+    def test_breakdown_components_sum_to_total(self):
+        from recovery import costs
+        b = costs.breakdown()
+        parts = (b["stt"] + b["tts"] + b["llm"]
+                 + b["telephony_connected"] + b["failed_dial_amortised"])
+        self.assertAlmostEqual(parts, b["per_connected_call"], places=1)
+
+    def test_no_hardcoded_twelve(self):
+        # the whole point of costs.py -- voice cost must not be a literal 12
+        self.assertNotEqual(core.INTERVENTION_COST["voice_call"], 12.0)
+
+
+class Assumptions(unittest.TestCase):
+    def test_header_matches_counts(self):
+        from recovery import assumptions
+        c = assumptions.counts()
+        h = assumptions.header()
+        self.assertIn(f"{c['sourced']} sourced", h)
+        self.assertIn(f"{c['estimated']} estimated", h)
+        self.assertGreaterEqual(c["sourced"], 4)          # the 4 Sarvam rates
+        self.assertGreater(c["estimated"], c["sourced"])
+
+    def test_md_renders(self):
+        from recovery import assumptions
+        md = assumptions.render_md()
+        self.assertIn("| **SOURCED** |", md)
+        self.assertIn("| **ESTIMATED** |", md)
+        self.assertIn("docs.sarvam.ai", md)
+
+
+class ContactPolicyConfig(unittest.TestCase):
+    def test_custom_policy_changes_the_gate(self):
+        from recovery.guardrails import ContactPolicy
+        a = _acc()
+        strict = ContactPolicy(contacts_per_7d=0)
+        g = Guardrails([a], policy=strict)
+        ok, code = g.check(a, "sms_link", datetime(2026, 9, 3, 12, 0))
+        self.assertFalse(ok)
+        self.assertEqual(code, "contact_cap_7d")
+        # default policy still allows it
+        self.assertTrue(Guardrails([a]).check(a, "sms_link", datetime(2026, 9, 3, 12, 0))[0])
+
+
 class Analysis(unittest.TestCase):
     def test_run_all_shape_and_cohort_conservation(self):
         from recovery.analysis import run_all

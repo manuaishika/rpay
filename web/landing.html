@@ -86,9 +86,10 @@
     <div class="eyebrow">Bounded revenue recovery</div>
     <h1>Recovers what's worth recovering. <span class="accent">Skips what isn't.</span></h1>
     <p class="lede">Revenue leaks at three points &mdash; a stalled checkout, a failed payment, an
-      overdue invoice &mdash; and a Hinglish voice call costs <b>~&#8377;12</b>. Most of it isn't
-      worth chasing that way. Vasool decides which ones are, spends only when the math clears, and
-      explains every call it makes and every one it refuses to.</p>
+      overdue invoice &mdash; and a Hinglish voice call costs <b>~&#8377;5.44</b>, derived from
+      published API rates. At that price plenty of it <em>is</em> worth a call, so Vasool decides
+      which ones, in what order, against a fixed budget &mdash; and explains every call it makes and
+      every one it refuses.</p>
     <div class="cta-row">
       <a class="cta" href="/console">Run it on the book &rarr;</a>
       <span class="cta-sub">live agent, real guardrails, on 250 failed payments</span>
@@ -135,6 +136,9 @@
       <div class="rule"><div class="rn">promise-to-pay</div><div class="rd">suppresses contact until due</div></div>
       <div class="rule"><div class="rn">voice + human budget</div><div class="rd">capped for the whole run</div></div>
     </div>
+    <p style="color:var(--dim);font-size:.82rem;margin-top:12px">The window, the frequency cap and the
+      attempt ceiling are configurable defaults chosen by us &mdash; not taken from an RBI or TRAI
+      circular. What the auditor proves is that the agent obeyed the policy it was given.</p>
   </section>
 
   <section class="closer">

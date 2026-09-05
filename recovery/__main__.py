@@ -11,6 +11,7 @@ import sys
 
 from . import core, world
 from .analysis import run_all
+from .assumptions import header as assumptions_header
 from .guardrails import DEFAULT_HUMAN_CAP, DEFAULT_VOICE_BUDGET
 
 
@@ -70,6 +71,9 @@ def main(argv=None):
 
     if not args.json:
         print(world.ASSUMPTION_BANNER)
+        print(assumptions_header())
+        print(f"voice_call cost Rs.{core.INTERVENTION_COST['voice_call']:.2f} "
+              f"(derived, recovery/costs.py)")
         print()
 
     result = run_all(args.seed, args.stress, args.voice_budget, args.human_cap,
@@ -86,8 +90,11 @@ def main(argv=None):
                 fh.write(json.dumps(ev, ensure_ascii=False) + "\n")
 
     if args.json:
+        from .assumptions import counts as _acounts
         payload = {"ledger": lsum, "run": vars(args), "policies": rows,
-                   "total_violations": result["total_violations"]}
+                   "total_violations": result["total_violations"],
+                   "assumptions": _acounts(),
+                   "voice_call_cost": core.INTERVENTION_COST["voice_call"]}
         json.dump(payload, sys.stdout, indent=2)
         sys.stdout.write("\n")
         return 1 if result["total_violations"] else 0

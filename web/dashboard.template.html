@@ -272,14 +272,14 @@ footer .run { font-family: "IBM Plex Mono", monospace; font-size: .8rem; backgro
       <span>Razorpay Buildathon</span><span>Track 03</span><span>synthetic ledger &middot; seed 20260903</span>
     </div>
     <h1>The &#8377;12 Question</h1>
-    <p class="lede">A Hinglish voice call costs <strong>~&#8377;12</strong>. Most failed payments aren&rsquo;t worth &#8377;12. The agent&rsquo;s real job is deciding <strong>who</strong> to call &mdash; and <strong>when to stop</strong>.</p>
+    <p class="lede">A Hinglish voice call costs <strong>~&#8377;5.44</strong> &mdash; derived from published API rates, not guessed. The agent&rsquo;s real job is deciding <strong>which</strong> payments to call, in what order &mdash; and <strong>when to stop</strong>.</p>
   </header>
 
   <section id="thesis">
     <div class="sec-head"><span class="num">01</span><h2>The wager</h2></div>
     <p class="sec-intro">Five recovery policies run over the same 250-account book of failed payments. Every one passes through the same hard guardrail gate. The sequential <strong>ladder</strong> scores each still-allowed channel by expected net rupees and acts only when that number clears zero; the four fixed playbooks just run their script.</p>
     <div class="pivots" id="pivots"></div>
-    <div class="assume"><b>These are assumptions, not data.</b> Every recovery probability lives in <span class="mono">world.py</span> and was invented to be plausible, not fitted to a real ledger. The pickup rate, the promise-to-pay conversion, the voice lift &mdash; all guessed. Section 04 sweeps them.</div>
+    <div class="assume"><b>Most inputs are estimates, not data.</b> The recovery probabilities in <span class="mono">world.py</span>, the pickup rate, the promise-to-pay conversions &mdash; all chosen to be plausible, not fitted. The one thing that <em>is</em> derived is the voice-call cost (<span class="mono">costs.py</span>, from Sarvam&rsquo;s published rates). Full register in <span class="mono">ASSUMPTIONS.md</span>; section 04 sweeps the fragile ones.</div>
   </section>
 
   <section id="scorecard">
@@ -302,7 +302,7 @@ footer .run { font-family: "IBM Plex Mono", monospace; font-size: .8rem; backgro
 
   <section id="sweep">
     <div class="sec-head"><span class="num">04</span><h2>How wrong can the assumptions be?</h2></div>
-    <p class="sec-intro">The whole case pivots on two guessed numbers: the voice <strong>lift</strong> (how much a call really helps) and the voice <strong>cost</strong>. Each cell runs all five policies. Colour is the ladder&rsquo;s net minus the best fixed playbook&rsquo;s (<span class="mono" id="baseName"></span>). Pick a cell.</p>
+    <p class="sec-intro">The case pivots on the voice <strong>lift</strong> (estimated &mdash; how much a call really helps) and the voice <strong>cost</strong> (derived at &#8377;5.44, swept here anyway). Each cell runs all five policies. Colour is the ladder&rsquo;s net minus the best fixed playbook&rsquo;s (<span class="mono" id="baseName"></span>). Pick a cell.</p>
     <div class="sweep-layout">
       <div class="heat">
         <div class="axis-cap">stress &times; voice cost &rarr;</div>
@@ -375,7 +375,7 @@ tb.addEventListener("click", () => {
 const L = DATA.policies.find(p => p.policy === "ladder");
 const B = DATA.policies.find(p => p.policy === DATA.sweep.baseline);
 const pivotData = [
-  [INR(DATA.meta.voice_cost), "assumed cost of one voice call"],
+  [INR(DATA.meta.voice_cost), "derived cost of one connected call"],
   [DATA.meta.voice_pickup_rate.toFixed(2), "assumed voice pickup rate"],
   [DATA.ledger.accounts, "accounts in the synthetic book"],
   [INR(DATA.ledger.at_risk_rupees), "rupees at risk"],
@@ -491,7 +491,7 @@ SG.slice().reverse().forEach(s => {
 const x = DATA.sweep.crossover;
 document.getElementById("crossover").innerHTML =
   `<span>ladder ahead in <b>${DATA.sweep.cells.filter(c => c.ladder_wins).length}/${DATA.sweep.cells.length}</b> cells</span>`
-  + `<span>at &#8377;12: wins for every stress &ge; <b>${x.min_stress_ladder_wins_at_cost_12}</b></span>`
+  + `<span>at the derived &#8377;${DATA.sweep.derived_voice_cost}: wins for every stress &ge; <b>${x.min_stress_ladder_wins_at_derived_cost}</b></span>`
   + `<span>at stress 1.0: wins up to voice cost <b>&#8377;${x.max_cost_ladder_wins_at_stress_1}</b></span>`;
 
 const readout = document.getElementById("readout");

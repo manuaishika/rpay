@@ -1,0 +1,121 @@
+"""assumptions.py -- the single source of truth for every input this system
+depends on, and whether it is SOURCED or ESTIMATED.
+
+`header()` is printed at the top of every eval run. `python -m recovery.assumptions`
+regenerates ASSUMPTIONS.md so the file and the counts can never drift.
+"""
+from __future__ import annotations
+
+SARVAM_PRICING = "https://docs.sarvam.ai/api/getting-started/pricing"
+
+# (name, value, status, source_or_replacement_note)
+#   status: "SOURCED" -> `source` is a URL
+#           "ESTIMATED" -> `source` is what it would take to replace it
+REGISTRY: list[tuple[str, str, str, str]] = [
+    # ---- SOURCED -------------------------------------------------------
+    ("STT rate", "Rs.30 / hour (per-second billing)", "SOURCED", SARVAM_PRICING),
+    ("TTS rate", "Rs.30 / 10K characters", "SOURCED", SARVAM_PRICING),
+    ("LLM input rate", "Rs.29.28 / 1M tokens", "SOURCED", SARVAM_PRICING),
+    ("LLM output rate", "Rs.73.20 / 1M tokens", "SOURCED", SARVAM_PRICING),
+
+    # ---- ESTIMATED: the call cost model (recovery/costs.py) -----------
+    ("voice_call cost", "Rs.5.44 / connected call (DERIVED from the rows below)",
+     "ESTIMATED", "derived; firms up once the estimated inputs below are real"),
+    ("call length", "1.8 min", "ESTIMATED", "measure from real recovery-call logs"),
+    ("turns per call", "8", "ESTIMATED", "measure from real transcripts"),
+    ("agent talk fraction", "0.60", "ESTIMATED", "measure from real transcripts"),
+    ("speech density", "900 chars/min", "ESTIMATED", "measure TTS output length vs audio duration"),
+    ("telephony rate", "Rs.0.90 / min", "ESTIMATED", "a real CPaaS (Exotel/Plivo/Knowlarity) invoice"),
+    ("failed-dial telephony", "Rs.0.50 / dial", "ESTIMATED", "same invoice, unanswered-call line item"),
+    ("LLM tokens per turn", "~250 instr + 150 transcript in, 90 out", "ESTIMATED", "token-count real prompts"),
+
+    # ---- ESTIMATED: other intervention costs -------------------------
+    ("silent_retry cost", "Rs.0.50", "ESTIMATED", "gateway per-attempt fee + reconciliation cost"),
+    ("sms_link cost", "Rs.0.20", "ESTIMATED", "the merchant's transactional-SMS contract"),
+    ("whatsapp_nudge cost", "Rs.0.35", "ESTIMATED", "Meta business-initiated conversation pricing"),
+    ("human_escalation cost", "Rs.85", "ESTIMATED", "loaded cost of ~15 min of a collections agent"),
+
+    # ---- ESTIMATED: recovery behaviour (world.py) --------------------
+    ("recovery priors p(recover | reason, intervention)", "~45 values, 0.0-0.65",
+     "ESTIMATED", "run the agent for weeks, fit each cell from observed recovery outcomes"),
+    ("voice pickup rate", "0.62", "ESTIMATED", "dialer connect-rate report"),
+    ("PTP capture on connect", "0.35", "ESTIMATED", "tag call outcomes, measure promise rate"),
+    ("PTP conversion", "0.70", "ESTIMATED", "track dated promises to their due date"),
+    ("promise horizon", "3 days", "ESTIMATED", "measure promise dates customers actually give"),
+    ("channel fatigue", "0.72 per repeat", "ESTIMATED", "regress recovery on prior same-channel touches"),
+    ("evidence decay", "0.88 per failed attempt", "ESTIMATED", "regress recovery on attempts already failed"),
+    ("chronic-failure penalty", "0.92 per lifetime prior failure", "ESTIMATED", "regress recovery on prior-failure count"),
+
+    # ---- ESTIMATED: the synthetic ledger (core.py) -----------------
+    ("B2B share of accounts", "~22%", "ESTIMATED", "the merchant's own customer mix"),
+    ("amount distribution", "lognormal, B2C mu=7.1 s=0.7 / B2B mu=10.1 s=1.35",
+     "ESTIMATED", "fit to the merchant's real failed-payment amounts"),
+    ("reason mix", "10 weights, checkout_abandoned 0.20 ... mandate_revoked 0.02",
+     "ESTIMATED", "count real failures by gateway reason code + funnel stage"),
+    ("DNC rate", "8%", "ESTIMATED", "the merchant's actual opt-out list"),
+    ("prior contacts in last 7d", "0-3, mostly 0", "ESTIMATED", "the merchant's outreach history"),
+    ("phone on file", "94%", "ESTIMATED", "the merchant's contact-data completeness"),
+    ("open promise-to-pay at start", "5%", "ESTIMATED", "existing PTP records"),
+    ("tenure / prior-failure distributions", "exponential / geometric-ish", "ESTIMATED", "the merchant's account history"),
+
+    # ---- ESTIMATED: the contact policy (guardrails.py) -------------
+    ("contact window", "09:00-19:00", "ESTIMATED", "RBI recovery-agent guidelines + legal review"),
+    ("contact frequency cap", "3 / rolling 7 days", "ESTIMATED", "TRAI UCC rules + the merchant's policy"),
+    ("voice attempts cap", "2 / account", "ESTIMATED", "RBI recovery-agent guidelines + legal review"),
+    ("voice budget", "Rs.1,200 / run", "ESTIMATED", "the merchant's recovery-ops budget"),
+    ("human-escalation capacity", "25 / run", "ESTIMATED", "the collections team's real throughput"),
+]
+
+
+def counts() -> dict:
+    sourced = sum(1 for r in REGISTRY if r[2] == "SOURCED")
+    estimated = sum(1 for r in REGISTRY if r[2] == "ESTIMATED")
+    return {"sourced": sourced, "estimated": estimated, "total": len(REGISTRY)}
+
+
+def header() -> str:
+    c = counts()
+    return (f"assumptions: {c['sourced']} sourced / {c['estimated']} estimated "
+            f"({c['total']} inputs) -- see ASSUMPTIONS.md")
+
+
+def render_md() -> str:
+    c = counts()
+    lines = [
+        "# Assumptions register",
+        "",
+        "Generated by `python -m recovery.assumptions` -- do not edit by hand.",
+        "",
+        f"**{c['sourced']} of {c['total']} inputs are SOURCED** (the Sarvam API rates). "
+        f"The other {c['estimated']} are ESTIMATED: chosen to be plausible, not measured.",
+        "",
+        "The system is a decision engine wrapped around these numbers. The engine "
+        "(the guardrail gate, the expected-value scoring, the auditor, the stopping "
+        "rule) is real and testable regardless. The numbers are what a production "
+        "deployment would replace with the merchant's own data.",
+        "",
+        "| input | value | status | source / what would replace it |",
+        "|---|---|---|---|",
+    ]
+    for name, value, status, note in REGISTRY:
+        note_md = f"[{note}]({note})" if status == "SOURCED" else note
+        lines.append(f"| {name} | {value} | **{status}** | {note_md} |")
+    lines += [
+        "",
+        "## Replacing the estimates",
+        "",
+        "1. Connect to the real payment-failure / checkout / invoice event stream "
+        "and to recovery outcomes (did the money land, on what channel, when).",
+        "2. Run for a few weeks in shadow mode to accumulate outcomes.",
+        "3. Fit `world.py`'s recovery priors per `(reason x intervention)` cell "
+        "from observed recovery rates; fit the ledger distributions to the real book.",
+        "4. Replace the telephony estimates in `costs.py` with a real CPaaS invoice.",
+        "5. Have the contact policy in `guardrails.py` reviewed against the actual "
+        "RBI recovery-agent guidelines and TRAI UCC/DND regulation before going live.",
+        "",
+    ]
+    return "\n".join(lines)
+
+
+if __name__ == "__main__":
+    print(render_md())

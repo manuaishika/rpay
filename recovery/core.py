@@ -11,6 +11,8 @@ from contextlib import contextmanager
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timedelta
 
+from .costs import VOICE_CALL   # derived from published rates -- see recovery/costs.py
+
 # --------------------------------------------------------------------------
 # Failure taxonomy
 # --------------------------------------------------------------------------
@@ -65,11 +67,11 @@ def risk_stage(reason: str) -> str:
 # --------------------------------------------------------------------------
 
 INTERVENTION_COST = {
-    "silent_retry": 0.50,
-    "sms_link": 0.20,
-    "whatsapp_nudge": 0.35,
-    "voice_call": 12.00,
-    "human_escalation": 85.00,
+    "silent_retry": 0.50,       # ESTIMATED -- gateway re-attempt + reconciliation overhead
+    "sms_link": 0.20,           # ESTIMATED -- transactional SMS
+    "whatsapp_nudge": 0.35,     # ESTIMATED -- WhatsApp business-initiated conversation
+    "voice_call": VOICE_CALL,   # DERIVED   -- recovery/costs.py (Rs.~5.44 per connected call)
+    "human_escalation": 85.00,  # ESTIMATED -- ~15 min of a trained collections agent
 }
 
 # A "contacting" intervention touches the customer and is subject to the
