@@ -15,20 +15,28 @@ def count_rules(violations) -> dict:
     return out
 
 
-def _slice(episodes) -> dict:
+def _slice(episodes, by_id) -> dict:
+    """One aggregate. `rate` is the RUPEE recovery rate (recovered / at-risk) so
+    it is consistent with the rupee columns next to it; `acct_rate` is the
+    fraction of accounts recovered, which can differ a lot when value is
+    concentrated in a few accounts."""
     n = len(episodes)
     if n == 0:
-        return {"accounts": 0, "recovered": 0.0, "spend": 0.0, "net": 0.0,
-                "rate": 0.0, "n_recovered": 0, "cost_per_100": None}
+        return {"accounts": 0, "at_risk": 0.0, "recovered": 0.0, "spend": 0.0,
+                "net": 0.0, "rate": 0.0, "acct_rate": 0.0, "n_recovered": 0,
+                "cost_per_100": None}
+    at_risk = sum(by_id[e.account_id].amount for e in episodes)
     recovered = sum(e.recovered_amount for e in episodes)
     spend = sum(e.spend for e in episodes)
     n_rec = sum(1 for e in episodes if e.recovered)
     return {
         "accounts": n,
+        "at_risk": round(at_risk, 2),
         "recovered": round(recovered, 2),
         "spend": round(spend, 2),
         "net": round(recovered - spend, 2),
-        "rate": round(n_rec / n, 4),
+        "rate": round(recovered / at_risk, 4) if at_risk > 0 else 0.0,
+        "acct_rate": round(n_rec / n, 4),
         "n_recovered": n_rec,
         "cost_per_100": round(spend / recovered * 100.0, 3) if recovered > 0 else None,
     }
@@ -41,7 +49,7 @@ def policy_metrics(name, episodes, events, violations, ledger) -> dict:
     ptps = sum(1 for ev in events if ev.get("event") == "ptp_created")
     stops = sum(1 for ev in events if ev.get("event") == "stop")
 
-    m = {"policy": name, **_slice(episodes)}
+    m = {"policy": name, **_slice(episodes, by_id)}
     m.update({
         "calls": calls,
         "ptps": ptps,
@@ -50,12 +58,18 @@ def policy_metrics(name, episodes, events, violations, ledger) -> dict:
         "violations": len(violations),
         "violation_breakdown": count_rules(violations),
         "by_segment": {
-            seg: _slice([e for e in episodes if by_id[e.account_id].segment == seg])
+            seg: _slice([e for e in episodes if by_id[e.account_id].segment == seg], by_id)
             for seg in ("B2C", "B2B")
         },
         "by_reason": {
-            reason: _slice([e for e in episodes if by_id[e.account_id].reason == reason])
+            reason: _slice([e for e in episodes if by_id[e.account_id].reason == reason], by_id)
             for reason in core.FAILURE_REASONS
+        },
+        "by_class": {
+            cls: _slice([e for e in episodes
+                         if (by_id[e.account_id].reason in core.TRANSIENT) == (cls == "transient")],
+                        by_id)
+            for cls in ("transient", "action_required")
         },
     })
     return m

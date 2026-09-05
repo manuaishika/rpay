@@ -78,10 +78,12 @@
     {
       "policy": "ladder",
       "accounts": 250,
+      "at_risk": 4587848.18,
       "recovered": 2418139.14,
       "spend": 3531.05,
       "net": 2414608.09,
-      "rate": 0.412,
+      "rate": 0.5271,
+      "acct_rate": 0.412,
       "n_recovered": 103,
       "cost_per_100": 0.146,
       "calls": 220,
@@ -93,19 +95,23 @@
       "by_segment": {
         "B2C": {
           "accounts": 183,
+          "at_risk": 272403.66,
           "recovered": 121015.12,
           "spend": 2067.57,
           "net": 118947.55,
-          "rate": 0.4317,
+          "rate": 0.4442,
+          "acct_rate": 0.4317,
           "n_recovered": 79,
           "cost_per_100": 1.709
         },
         "B2B": {
           "accounts": 67,
+          "at_risk": 4315444.52,
           "recovered": 2297124.02,
           "spend": 1463.48,
           "net": 2295660.54,
-          "rate": 0.3582,
+          "rate": 0.5323,
+          "acct_rate": 0.3582,
           "n_recovered": 24,
           "cost_per_100": 0.064
         }
@@ -113,103 +119,149 @@
       "by_reason": {
         "insufficient_funds": {
           "accounts": 58,
+          "at_risk": 616754.77,
           "recovered": 180883.04,
           "spend": 642.77,
           "net": 180240.27,
-          "rate": 0.3793,
+          "rate": 0.2933,
+          "acct_rate": 0.3793,
           "n_recovered": 22,
           "cost_per_100": 0.355
         },
         "bank_downtime": {
           "accounts": 23,
+          "at_risk": 134785.19,
           "recovered": 67869.95,
           "spend": 83.69,
           "net": 67786.26,
-          "rate": 0.7391,
+          "rate": 0.5035,
+          "acct_rate": 0.7391,
           "n_recovered": 17,
           "cost_per_100": 0.123
         },
         "technical_decline": {
           "accounts": 31,
+          "at_risk": 1735492.94,
           "recovered": 1247587.68,
           "spend": 643.71,
           "net": 1246943.97,
-          "rate": 0.5161,
+          "rate": 0.7189,
+          "acct_rate": 0.5161,
           "n_recovered": 16,
           "cost_per_100": 0.052
         },
         "mandate_expired": {
           "accounts": 9,
+          "at_risk": 63344.66,
           "recovered": 36992.15,
           "spend": 123.98,
           "net": 36868.17,
-          "rate": 0.5556,
+          "rate": 0.584,
+          "acct_rate": 0.5556,
           "n_recovered": 5,
           "cost_per_100": 0.335
         },
         "mandate_revoked": {
           "accounts": 7,
+          "at_risk": 270702.69,
           "recovered": 252959.16,
           "spend": 10.88,
           "net": 252948.28,
-          "rate": 0.1429,
+          "rate": 0.9345,
+          "acct_rate": 0.1429,
           "n_recovered": 1,
           "cost_per_100": 0.004
         },
         "card_expired": {
           "accounts": 14,
+          "at_risk": 73280.16,
           "recovered": 37193.62,
           "spend": 226.7,
           "net": 36966.92,
-          "rate": 0.2857,
+          "rate": 0.5076,
+          "acct_rate": 0.2857,
           "n_recovered": 4,
           "cost_per_100": 0.61
         },
         "limit_exceeded": {
           "accounts": 9,
+          "at_risk": 266457.9,
           "recovered": 259967.51,
           "spend": 139.16,
           "net": 259828.35,
-          "rate": 0.5556,
+          "rate": 0.9756,
+          "acct_rate": 0.5556,
           "n_recovered": 5,
           "cost_per_100": 0.054
         },
         "do_not_honour": {
           "accounts": 23,
+          "at_risk": 361651.87,
           "recovered": 117617.73,
           "spend": 727.0,
           "net": 116890.73,
-          "rate": 0.3913,
+          "rate": 0.3252,
+          "acct_rate": 0.3913,
           "n_recovered": 9,
           "cost_per_100": 0.618
         },
         "invoice_overdue": {
           "accounts": 25,
+          "at_risk": 390625.78,
           "recovered": 83691.98,
           "spend": 638.13,
           "net": 83053.85,
-          "rate": 0.32,
+          "rate": 0.2143,
+          "acct_rate": 0.32,
           "n_recovered": 8,
           "cost_per_100": 0.762
         },
         "checkout_abandoned": {
           "accounts": 51,
+          "at_risk": 674752.22,
           "recovered": 133376.32,
           "spend": 295.03,
           "net": 133081.29,
-          "rate": 0.3137,
+          "rate": 0.1977,
+          "acct_rate": 0.3137,
           "n_recovered": 16,
           "cost_per_100": 0.221
+        }
+      },
+      "by_class": {
+        "transient": {
+          "accounts": 144,
+          "at_risk": 3115142.67,
+          "recovered": 1873925.91,
+          "spend": 2236.33,
+          "net": 1871689.58,
+          "rate": 0.6016,
+          "acct_rate": 0.4792,
+          "n_recovered": 69,
+          "cost_per_100": 0.119
+        },
+        "action_required": {
+          "accounts": 106,
+          "at_risk": 1472705.51,
+          "recovered": 544213.23,
+          "spend": 1294.72,
+          "net": 542918.51,
+          "rate": 0.3695,
+          "acct_rate": 0.3208,
+          "n_recovered": 34,
+          "cost_per_100": 0.238
         }
       }
     },
     {
       "policy": "retry_only",
       "accounts": 250,
+      "at_risk": 4587848.18,
       "recovered": 509785.97,
       "spend": 342.5,
       "net": 509443.47,
-      "rate": 0.2,
+      "rate": 0.1111,
+      "acct_rate": 0.2,
       "n_recovered": 50,
       "cost_per_100": 0.067,
       "calls": 0,
@@ -221,19 +273,23 @@
       "by_segment": {
         "B2C": {
           "accounts": 183,
+          "at_risk": 272403.66,
           "recovered": 61073.95,
           "spend": 249.0,
           "net": 60824.95,
-          "rate": 0.2186,
+          "rate": 0.2242,
+          "acct_rate": 0.2186,
           "n_recovered": 40,
           "cost_per_100": 0.408
         },
         "B2B": {
           "accounts": 67,
+          "at_risk": 4315444.52,
           "recovered": 448712.02,
           "spend": 93.5,
           "net": 448618.52,
-          "rate": 0.1493,
+          "rate": 0.104,
+          "acct_rate": 0.1493,
           "n_recovered": 10,
           "cost_per_100": 0.021
         }
@@ -241,103 +297,149 @@
       "by_reason": {
         "insufficient_funds": {
           "accounts": 58,
+          "at_risk": 616754.77,
           "recovered": 72941.47,
           "spend": 81.5,
           "net": 72859.97,
-          "rate": 0.1724,
+          "rate": 0.1183,
+          "acct_rate": 0.1724,
           "n_recovered": 10,
           "cost_per_100": 0.112
         },
         "bank_downtime": {
           "accounts": 23,
+          "at_risk": 134785.19,
           "recovered": 66415.75,
           "spend": 22.5,
           "net": 66393.25,
-          "rate": 0.6522,
+          "rate": 0.4928,
+          "acct_rate": 0.6522,
           "n_recovered": 15,
           "cost_per_100": 0.034
         },
         "technical_decline": {
           "accounts": 31,
+          "at_risk": 1735492.94,
           "recovered": 64095.86,
           "spend": 39.0,
           "net": 64056.86,
-          "rate": 0.4194,
+          "rate": 0.0369,
+          "acct_rate": 0.4194,
           "n_recovered": 13,
           "cost_per_100": 0.061
         },
         "mandate_expired": {
           "accounts": 9,
+          "at_risk": 63344.66,
           "recovered": 0.0,
           "spend": 13.5,
           "net": -13.5,
           "rate": 0.0,
+          "acct_rate": 0.0,
           "n_recovered": 0,
           "cost_per_100": null
         },
         "mandate_revoked": {
           "accounts": 7,
+          "at_risk": 270702.69,
           "recovered": 0.0,
           "spend": 10.5,
           "net": -10.5,
           "rate": 0.0,
+          "acct_rate": 0.0,
           "n_recovered": 0,
           "cost_per_100": null
         },
         "card_expired": {
           "accounts": 14,
+          "at_risk": 73280.16,
           "recovered": 0.0,
           "spend": 21.0,
           "net": -21.0,
           "rate": 0.0,
+          "acct_rate": 0.0,
           "n_recovered": 0,
           "cost_per_100": null
         },
         "limit_exceeded": {
           "accounts": 9,
+          "at_risk": 266457.9,
           "recovered": 261473.51,
           "spend": 9.0,
           "net": 261464.51,
-          "rate": 0.6667,
+          "rate": 0.9813,
+          "acct_rate": 0.6667,
           "n_recovered": 6,
           "cost_per_100": 0.003
         },
         "do_not_honour": {
           "accounts": 23,
+          "at_risk": 361651.87,
           "recovered": 43962.2,
           "spend": 31.5,
           "net": 43930.7,
-          "rate": 0.2174,
+          "rate": 0.1216,
+          "acct_rate": 0.2174,
           "n_recovered": 5,
           "cost_per_100": 0.072
         },
         "invoice_overdue": {
           "accounts": 25,
+          "at_risk": 390625.78,
           "recovered": 897.18,
           "spend": 37.5,
           "net": 859.68,
-          "rate": 0.04,
+          "rate": 0.0023,
+          "acct_rate": 0.04,
           "n_recovered": 1,
           "cost_per_100": 4.18
         },
         "checkout_abandoned": {
           "accounts": 51,
+          "at_risk": 674752.22,
           "recovered": 0.0,
           "spend": 76.5,
           "net": -76.5,
           "rate": 0.0,
+          "acct_rate": 0.0,
           "n_recovered": 0,
           "cost_per_100": null
+        }
+      },
+      "by_class": {
+        "transient": {
+          "accounts": 144,
+          "at_risk": 3115142.67,
+          "recovered": 508888.79,
+          "spend": 183.5,
+          "net": 508705.29,
+          "rate": 0.1634,
+          "acct_rate": 0.3403,
+          "n_recovered": 49,
+          "cost_per_100": 0.036
+        },
+        "action_required": {
+          "accounts": 106,
+          "at_risk": 1472705.51,
+          "recovered": 897.18,
+          "spend": 159.0,
+          "net": 738.18,
+          "rate": 0.0006,
+          "acct_rate": 0.0094,
+          "n_recovered": 1,
+          "cost_per_100": 17.722
         }
       }
     },
     {
       "policy": "nudge_ladder",
       "accounts": 250,
+      "at_risk": 4587848.18,
       "recovered": 302075.19,
       "spend": 116.15,
       "net": 301959.04,
-      "rate": 0.168,
+      "rate": 0.0658,
+      "acct_rate": 0.168,
       "n_recovered": 42,
       "cost_per_100": 0.038,
       "calls": 0,
@@ -349,19 +451,23 @@
       "by_segment": {
         "B2C": {
           "accounts": 183,
+          "at_risk": 272403.66,
           "recovered": 46596.25,
           "spend": 80.75,
           "net": 46515.5,
-          "rate": 0.1803,
+          "rate": 0.1711,
+          "acct_rate": 0.1803,
           "n_recovered": 33,
           "cost_per_100": 0.173
         },
         "B2B": {
           "accounts": 67,
+          "at_risk": 4315444.52,
           "recovered": 255478.94,
           "spend": 35.4,
           "net": 255443.54,
-          "rate": 0.1343,
+          "rate": 0.0592,
+          "acct_rate": 0.1343,
           "n_recovered": 9,
           "cost_per_100": 0.014
         }
@@ -369,103 +475,149 @@
       "by_reason": {
         "insufficient_funds": {
           "accounts": 58,
+          "at_risk": 616754.77,
           "recovered": 69191.15,
           "spend": 29.3,
           "net": 69161.85,
-          "rate": 0.1379,
+          "rate": 0.1122,
+          "acct_rate": 0.1379,
           "n_recovered": 8,
           "cost_per_100": 0.042
         },
         "bank_downtime": {
           "accounts": 23,
+          "at_risk": 134785.19,
           "recovered": 4712.78,
           "spend": 9.15,
           "net": 4703.63,
-          "rate": 0.1739,
+          "rate": 0.035,
+          "acct_rate": 0.1739,
           "n_recovered": 4,
           "cost_per_100": 0.194
         },
         "technical_decline": {
           "accounts": 31,
+          "at_risk": 1735492.94,
           "recovered": 42210.53,
           "spend": 17.2,
           "net": 42193.33,
-          "rate": 0.2258,
+          "rate": 0.0243,
+          "acct_rate": 0.2258,
           "n_recovered": 7,
           "cost_per_100": 0.041
         },
         "mandate_expired": {
           "accounts": 9,
+          "at_risk": 63344.66,
           "recovered": 1976.68,
           "spend": 4.3,
           "net": 1972.38,
-          "rate": 0.1111,
+          "rate": 0.0312,
+          "acct_rate": 0.1111,
           "n_recovered": 1,
           "cost_per_100": 0.218
         },
         "mandate_revoked": {
           "accounts": 7,
+          "at_risk": 270702.69,
           "recovered": 583.33,
           "spend": 1.5,
           "net": 581.83,
-          "rate": 0.1429,
+          "rate": 0.0022,
+          "acct_rate": 0.1429,
           "n_recovered": 1,
           "cost_per_100": 0.257
         },
         "card_expired": {
           "accounts": 14,
+          "at_risk": 73280.16,
           "recovered": 35435.18,
           "spend": 4.5,
           "net": 35430.68,
-          "rate": 0.2143,
+          "rate": 0.4836,
+          "acct_rate": 0.2143,
           "n_recovered": 3,
           "cost_per_100": 0.013
         },
         "limit_exceeded": {
           "accounts": 9,
+          "at_risk": 266457.9,
           "recovered": 4451.67,
           "spend": 3.35,
           "net": 4448.32,
-          "rate": 0.3333,
+          "rate": 0.0167,
+          "acct_rate": 0.3333,
           "n_recovered": 3,
           "cost_per_100": 0.075
         },
         "do_not_honour": {
           "accounts": 23,
+          "at_risk": 361651.87,
           "recovered": 42228.03,
           "spend": 14.4,
           "net": 42213.63,
-          "rate": 0.1304,
+          "rate": 0.1168,
+          "acct_rate": 0.1304,
           "n_recovered": 3,
           "cost_per_100": 0.034
         },
         "invoice_overdue": {
           "accounts": 25,
+          "at_risk": 390625.78,
           "recovered": 3645.11,
           "spend": 9.55,
           "net": 3635.56,
-          "rate": 0.08,
+          "rate": 0.0093,
+          "acct_rate": 0.08,
           "n_recovered": 2,
           "cost_per_100": 0.262
         },
         "checkout_abandoned": {
           "accounts": 51,
+          "at_risk": 674752.22,
           "recovered": 97640.73,
           "spend": 22.9,
           "net": 97617.83,
-          "rate": 0.1961,
+          "rate": 0.1447,
+          "acct_rate": 0.1961,
           "n_recovered": 10,
           "cost_per_100": 0.023
+        }
+      },
+      "by_class": {
+        "transient": {
+          "accounts": 144,
+          "at_risk": 3115142.67,
+          "recovered": 162794.16,
+          "spend": 73.4,
+          "net": 162720.76,
+          "rate": 0.0523,
+          "acct_rate": 0.1736,
+          "n_recovered": 25,
+          "cost_per_100": 0.045
+        },
+        "action_required": {
+          "accounts": 106,
+          "at_risk": 1472705.51,
+          "recovered": 139281.03,
+          "spend": 42.75,
+          "net": 139238.28,
+          "rate": 0.0946,
+          "acct_rate": 0.1604,
+          "n_recovered": 17,
+          "cost_per_100": 0.031
         }
       }
     },
     {
       "policy": "call_first",
       "accounts": 250,
+      "at_risk": 4587848.18,
       "recovered": 1167198.56,
       "spend": 1234.95,
       "net": 1165963.61,
-      "rate": 0.228,
+      "rate": 0.2544,
+      "acct_rate": 0.228,
       "n_recovered": 57,
       "cost_per_100": 0.106,
       "calls": 220,
@@ -477,19 +629,23 @@
       "by_segment": {
         "B2C": {
           "accounts": 183,
+          "at_risk": 272403.66,
           "recovered": 53121.01,
           "spend": 821.89,
           "net": 52299.12,
-          "rate": 0.1967,
+          "rate": 0.195,
+          "acct_rate": 0.1967,
           "n_recovered": 36,
           "cost_per_100": 1.547
         },
         "B2B": {
           "accounts": 67,
+          "at_risk": 4315444.52,
           "recovered": 1114077.55,
           "spend": 413.06,
           "net": 1113664.49,
-          "rate": 0.3134,
+          "rate": 0.2582,
+          "acct_rate": 0.3134,
           "n_recovered": 21,
           "cost_per_100": 0.037
         }
@@ -497,103 +653,149 @@
       "by_reason": {
         "insufficient_funds": {
           "accounts": 58,
+          "at_risk": 616754.77,
           "recovered": 160795.94,
           "spend": 276.36,
           "net": 160519.58,
-          "rate": 0.2241,
+          "rate": 0.2607,
+          "acct_rate": 0.2241,
           "n_recovered": 13,
           "cost_per_100": 0.172
         },
         "bank_downtime": {
           "accounts": 23,
+          "at_risk": 134785.19,
           "recovered": 1521.61,
           "spend": 128.27,
           "net": 1393.34,
-          "rate": 0.1304,
+          "rate": 0.0113,
+          "acct_rate": 0.1304,
           "n_recovered": 3,
           "cost_per_100": 8.43
         },
         "technical_decline": {
           "accounts": 31,
+          "at_risk": 1735492.94,
           "recovered": 223111.43,
           "spend": 163.01,
           "net": 222948.42,
-          "rate": 0.3871,
+          "rate": 0.1286,
+          "acct_rate": 0.3871,
           "n_recovered": 12,
           "cost_per_100": 0.073
         },
         "mandate_expired": {
           "accounts": 9,
+          "at_risk": 63344.66,
           "recovered": 36992.15,
           "spend": 38.78,
           "net": 36953.37,
-          "rate": 0.5556,
+          "rate": 0.584,
+          "acct_rate": 0.5556,
           "n_recovered": 5,
           "cost_per_100": 0.105
         },
         "mandate_revoked": {
           "accounts": 7,
+          "at_risk": 270702.69,
           "recovered": 252959.16,
           "spend": 10.88,
           "net": 252948.28,
-          "rate": 0.1429,
+          "rate": 0.9345,
+          "acct_rate": 0.1429,
           "n_recovered": 1,
           "cost_per_100": 0.004
         },
         "card_expired": {
           "accounts": 14,
+          "at_risk": 73280.16,
           "recovered": 2604.86,
           "spend": 51.41,
           "net": 2553.45,
-          "rate": 0.1429,
+          "rate": 0.0355,
+          "acct_rate": 0.1429,
           "n_recovered": 2,
           "cost_per_100": 1.974
         },
         "limit_exceeded": {
           "accounts": 9,
+          "at_risk": 266457.9,
           "recovered": 1120.57,
           "spend": 50.01,
           "net": 1070.56,
-          "rate": 0.1111,
+          "rate": 0.0042,
+          "acct_rate": 0.1111,
           "n_recovered": 1,
           "cost_per_100": 4.463
         },
         "do_not_honour": {
           "accounts": 23,
+          "at_risk": 361651.87,
           "recovered": 164690.21,
           "spend": 97.03,
           "net": 164593.18,
-          "rate": 0.2609,
+          "rate": 0.4554,
+          "acct_rate": 0.2609,
           "n_recovered": 6,
           "cost_per_100": 0.059
         },
         "invoice_overdue": {
           "accounts": 25,
+          "at_risk": 390625.78,
           "recovered": 49355.55,
           "spend": 84.75,
           "net": 49270.8,
-          "rate": 0.12,
+          "rate": 0.1263,
+          "acct_rate": 0.12,
           "n_recovered": 3,
           "cost_per_100": 0.172
         },
         "checkout_abandoned": {
           "accounts": 51,
+          "at_risk": 674752.22,
           "recovered": 274047.08,
           "spend": 334.45,
           "net": 273712.63,
-          "rate": 0.2157,
+          "rate": 0.4061,
+          "acct_rate": 0.2157,
           "n_recovered": 11,
           "cost_per_100": 0.122
+        }
+      },
+      "by_class": {
+        "transient": {
+          "accounts": 144,
+          "at_risk": 3115142.67,
+          "recovered": 551239.76,
+          "spend": 714.68,
+          "net": 550525.08,
+          "rate": 0.177,
+          "acct_rate": 0.2431,
+          "n_recovered": 35,
+          "cost_per_100": 0.13
+        },
+        "action_required": {
+          "accounts": 106,
+          "at_risk": 1472705.51,
+          "recovered": 615958.8,
+          "spend": 520.27,
+          "net": 615438.53,
+          "rate": 0.4182,
+          "acct_rate": 0.2075,
+          "n_recovered": 22,
+          "cost_per_100": 0.084
         }
       }
     },
     {
       "policy": "standard_playbook",
       "accounts": 250,
+      "at_risk": 4587848.18,
       "recovered": 2033188.95,
       "spend": 1304.33,
       "net": 2031884.62,
-      "rate": 0.324,
+      "rate": 0.4432,
+      "acct_rate": 0.324,
       "n_recovered": 81,
       "cost_per_100": 0.064,
       "calls": 107,
@@ -605,19 +807,23 @@
       "by_segment": {
         "B2C": {
           "accounts": 183,
+          "at_risk": 272403.66,
           "recovered": 92151.43,
           "spend": 811.21,
           "net": 91340.22,
-          "rate": 0.3333,
+          "rate": 0.3383,
+          "acct_rate": 0.3333,
           "n_recovered": 61,
           "cost_per_100": 0.88
         },
         "B2B": {
           "accounts": 67,
+          "at_risk": 4315444.52,
           "recovered": 1941037.52,
           "spend": 493.12,
           "net": 1940544.4,
-          "rate": 0.2985,
+          "rate": 0.4498,
+          "acct_rate": 0.2985,
           "n_recovered": 20,
           "cost_per_100": 0.025
         }
@@ -625,93 +831,137 @@
       "by_reason": {
         "insufficient_funds": {
           "accounts": 58,
+          "at_risk": 616754.77,
           "recovered": 82095.81,
           "spend": 362.94,
           "net": 81732.87,
-          "rate": 0.2414,
+          "rate": 0.1331,
+          "acct_rate": 0.2414,
           "n_recovered": 14,
           "cost_per_100": 0.442
         },
         "bank_downtime": {
           "accounts": 23,
+          "at_risk": 134785.19,
           "recovered": 62830.71,
           "spend": 55.08,
           "net": 62775.63,
-          "rate": 0.6087,
+          "rate": 0.4662,
+          "acct_rate": 0.6087,
           "n_recovered": 14,
           "cost_per_100": 0.088
         },
         "technical_decline": {
           "accounts": 31,
+          "at_risk": 1735492.94,
           "recovered": 1245410.32,
           "spend": 257.49,
           "net": 1245152.83,
-          "rate": 0.4516,
+          "rate": 0.7176,
+          "acct_rate": 0.4516,
           "n_recovered": 14,
           "cost_per_100": 0.021
         },
         "mandate_expired": {
           "accounts": 9,
+          "at_risk": 63344.66,
           "recovered": 32211.64,
           "spend": 34.65,
           "net": 32176.99,
-          "rate": 0.2222,
+          "rate": 0.5085,
+          "acct_rate": 0.2222,
           "n_recovered": 2,
           "cost_per_100": 0.108
         },
         "mandate_revoked": {
           "accounts": 7,
+          "at_risk": 270702.69,
           "recovered": 253542.49,
           "spend": 10.04,
           "net": 253532.45,
-          "rate": 0.2857,
+          "rate": 0.9366,
+          "acct_rate": 0.2857,
           "n_recovered": 2,
           "cost_per_100": 0.004
         },
         "card_expired": {
           "accounts": 14,
+          "at_risk": 73280.16,
           "recovered": 42166.15,
           "spend": 38.1,
           "net": 42128.05,
-          "rate": 0.3571,
+          "rate": 0.5754,
+          "acct_rate": 0.3571,
           "n_recovered": 5,
           "cost_per_100": 0.09
         },
         "limit_exceeded": {
           "accounts": 9,
+          "at_risk": 266457.9,
           "recovered": 97520.09,
           "spend": 17.43,
           "net": 97502.66,
-          "rate": 0.5556,
+          "rate": 0.366,
+          "acct_rate": 0.5556,
           "n_recovered": 5,
           "cost_per_100": 0.018
         },
         "do_not_honour": {
           "accounts": 23,
+          "at_risk": 361651.87,
           "recovered": 82986.74,
           "spend": 256.18,
           "net": 82730.56,
-          "rate": 0.3478,
+          "rate": 0.2295,
+          "acct_rate": 0.3478,
           "n_recovered": 8,
           "cost_per_100": 0.309
         },
         "invoice_overdue": {
           "accounts": 25,
+          "at_risk": 390625.78,
           "recovered": 4764.24,
           "spend": 79.89,
           "net": 4684.35,
-          "rate": 0.16,
+          "rate": 0.0122,
+          "acct_rate": 0.16,
           "n_recovered": 4,
           "cost_per_100": 1.677
         },
         "checkout_abandoned": {
           "accounts": 51,
+          "at_risk": 674752.22,
           "recovered": 129660.76,
           "spend": 192.53,
           "net": 129468.23,
-          "rate": 0.2549,
+          "rate": 0.1922,
+          "acct_rate": 0.2549,
           "n_recovered": 13,
           "cost_per_100": 0.148
+        }
+      },
+      "by_class": {
+        "transient": {
+          "accounts": 144,
+          "at_risk": 3115142.67,
+          "recovered": 1570843.67,
+          "spend": 949.12,
+          "net": 1569894.55,
+          "rate": 0.5043,
+          "acct_rate": 0.3819,
+          "n_recovered": 55,
+          "cost_per_100": 0.06
+        },
+        "action_required": {
+          "accounts": 106,
+          "at_risk": 1472705.51,
+          "recovered": 462345.28,
+          "spend": 355.21,
+          "net": 461990.07,
+          "rate": 0.3139,
+          "acct_rate": 0.2453,
+          "n_recovered": 26,
+          "cost_per_100": 0.077
         }
       }
     }

@@ -21,7 +21,8 @@ def _print_table(rows):
         ("recovered", 14, ">", lambda r: f"{r['recovered']:,.0f}"),
         ("spend", 10, ">", lambda r: f"{r['spend']:,.0f}"),
         ("net", 14, ">", lambda r: f"{r['net']:,.0f}"),
-        ("rate", 8, ">", lambda r: f"{r['rate'] * 100:.1f}%"),
+        ("rec-%", 8, ">", lambda r: f"{r['rate'] * 100:.1f}%"),
+        ("acct-%", 8, ">", lambda r: f"{r['acct_rate'] * 100:.1f}%"),
         ("calls", 7, ">", lambda r: str(r["calls"])),
         ("PTP", 6, ">", lambda r: str(r["ptps"])),
         ("Rs/100", 9, ">", lambda r: "-" if r["cost_per_100"] is None else f"{r['cost_per_100']:.2f}"),
@@ -33,8 +34,54 @@ def _print_table(rows):
     for r in rows:
         print("".join(f"{fn(r):{align}{width}}" for _, width, align, fn in cols))
     print("-" * len(header))
-    print("all rupee figures are synthetic; 'Rs/100' = spend to recover Rs.100; "
-          "'viol' MUST be 0")
+    print("all rupee figures are synthetic; rec-% = rupees recovered / rupees at risk; "
+          "acct-% = accounts recovered / accounts; 'viol' MUST be 0")
+
+
+def _print_concentration(rows, events_by_policy, ledger):
+    by_id = {a.account_id: a for a in ledger}
+    total_at_risk = sum(a.amount for a in ledger)
+    rowmap = {r["policy"]: r for r in rows}
+
+    # per-account recovered, for the ladder
+    rec = {}
+    for ev in events_by_policy["ladder"]:
+        if ev.get("event") == "episode_end":
+            rec[ev["account_id"]] = ev.get("recovered_amount", 0.0) or 0.0
+    ladder_total = sum(rec.values()) or 1.0
+    top = sorted(rec.values(), reverse=True)
+    top_amt = sorted(((v, k) for k, v in rec.items()), reverse=True)
+
+    print("\n-- concentration --------------------------------------------------")
+    for n in (1, 5, 10):
+        share_rec = sum(top[:n]) / ladder_total * 100
+        share_book = sum(a.amount for a in
+                         sorted(ledger, key=lambda a: -a.amount)[:n]) / total_at_risk * 100
+        print(f"  top {n:>2} accounts: {share_rec:5.1f}% of what the ladder recovered  "
+              f"| {share_book:5.1f}% of the book's rupees at risk")
+    print(f"  the single biggest recovered account: "
+          f"{top_amt[0][1]} ({by_id[top_amt[0][1]].reason}), Rs.{top_amt[0][0]:,.0f}")
+
+    print("\n-- recovered by failure class (recovered rupees / at-risk rupees) -")
+    print(f"  {'policy':<18}{'TRANSIENT (self-heals)':>28}{'ACTION_REQUIRED':>22}")
+    for name in ("ladder", "standard_playbook", "retry_only"):
+        c = rowmap[name]["by_class"]
+        t, a = c["transient"], c["action_required"]
+        print(f"  {name:<18}"
+              f"{('Rs.' + format(t['recovered'], ',.0f') + f'  ({t['rate']*100:.0f}%)'):>28}"
+              f"{('Rs.' + format(a['recovered'], ',.0f') + f'  ({a['rate']*100:.0f}%)'):>22}")
+
+    print("\n-- the real test: ACTION_REQUIRED accounts only -----------------")
+    la = rowmap["ladder"]["by_class"]["action_required"]
+    sa = rowmap["standard_playbook"]["by_class"]["action_required"]
+    ra = rowmap["retry_only"]["by_class"]["action_required"]
+    print(f"  accounts in class: {la['accounts']}  |  at risk: Rs.{la['at_risk']:,.0f}")
+    for name, s in (("ladder", la), ("standard_playbook", sa), ("retry_only", ra)):
+        print(f"  {name:<18} recovered Rs.{s['recovered']:>12,.0f}  "
+              f"spend Rs.{s['spend']:>8,.0f}  net Rs.{s['net']:>12,.0f}  "
+              f"({s['rate']*100:.0f}% of rupees, {s['n_recovered']}/{s['accounts']} accts)")
+    print(f"  ladder net minus standard_playbook net on this class: "
+          f"Rs.{la['net'] - sa['net']:,.0f}")
 
 
 def _print_cohorts(rows):
@@ -68,6 +115,8 @@ def main(argv=None):
                     help="directory for per-policy JSONL trails")
     ap.add_argument("--cohorts", action="store_true",
                     help="also print the B2B/B2C and by-reason breakdown")
+    ap.add_argument("--concentration", action="store_true",
+                    help="print value concentration + transient vs action-required split")
     ap.add_argument("--json", action="store_true",
                     help="emit the full scorecard (incl. cohorts) as JSON")
     args = ap.parse_args(argv)
@@ -118,6 +167,8 @@ def main(argv=None):
     _print_table(rows)
     if args.cohorts:
         _print_cohorts(rows)
+    if args.concentration:
+        _print_concentration(rows, result["events"], core.build_ledger(args.seed))
     print()
     best = max(rows, key=lambda r: r["net"])
     print(f"best net: {best['policy']}  (Rs.{best['net']:,.0f})")

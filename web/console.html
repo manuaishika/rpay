@@ -157,7 +157,7 @@
     <div class="feed" id="feed"><div class="empty">Set the knobs and hit <b>Run recovery</b> &mdash; the agent will work each failed payment here, live.</div></div>
 
     <div class="scorecard" id="scorecard">
-      <table><thead><tr><th>policy</th><th>recovered</th><th>spend</th><th>net</th><th>rate</th><th>&#8377;/&#8377;100</th><th>calls</th><th>viol</th></tr></thead>
+      <table><thead><tr><th>policy</th><th>recovered</th><th>spend</th><th>net</th><th title="rupees recovered / rupees at risk">&#8377; rec %</th><th title="accounts recovered / accounts">acct %</th><th>&#8377;/&#8377;100</th><th>calls</th><th>viol</th></tr></thead>
       <tbody id="scoreBody"></tbody></table>
     </div>
     <div class="verdict" id="verdict"></div>
@@ -308,7 +308,7 @@ const handlers = {
     const m = e.metrics, tr = document.createElement("tr");
     if (e.policy === "agent") tr.className = "agent";
     tr.innerHTML = `<td>${e.policy}</td><td>${inr(m.recovered)}</td><td>${inr(m.spend)}</td>`
-      + `<td>${inr(m.net)}</td><td>${(m.rate*100).toFixed(0)}%</td>`
+      + `<td>${inr(m.net)}</td><td>${(m.rate*100).toFixed(0)}%</td><td>${(m.acct_rate*100).toFixed(0)}%</td>`
       + `<td>${m.cost_per_100==null?"—":RS+m.cost_per_100.toFixed(2)}</td><td>${m.calls}</td>`
       + `<td><span class="pill ${m.violations?"bad":"ok"}">${m.violations}</span></td>`;
     $("#scoreBody").appendChild(tr);

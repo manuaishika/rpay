@@ -394,7 +394,8 @@ const cols = [
   ["recovered", r => INR(r.recovered)],
   ["spend", r => INR(r.spend)],
   ["net", r => `<span class="netcell"><span class="netbar" style="width:${Math.max(2, r.net / L.net * 120)}px"></span>${INR(r.net)}</span>`],
-  ["rate", r => (r.rate * 100).toFixed(1) + "%"],
+  ["₹ rec %", r => (r.rate * 100).toFixed(1) + "%"],
+  ["acct %", r => (r.acct_rate * 100).toFixed(1) + "%"],
   ["calls", r => r.calls],
   ["PTP", r => r.ptps],
   [RS + "/" + RS + "100", r => r.cost_per_100 == null ? MDASH : r.cost_per_100.toFixed(2)],
@@ -414,10 +415,18 @@ DATA.policies.slice().sort((a, b) => b.net - a.net).forEach(r => {
   tbody.append(tr);
 });
 st.append(tbody);
-document.getElementById("scoreCaption").innerHTML =
-  `The ladder nets <b>${INR(L.net)}</b> at <b>${RS}${L.cost_per_100.toFixed(2)}</b> per ${RS}100 recovered &mdash; `
-  + `${INR(L.net - B.net)} ahead of <span class="mono">${B.policy}</span>, which spends nearly as much on blind outreach. `
-  + `<span class="mono">call_first</span> burns the voice budget on everyone and recovers a third as much.`;
+(function () {
+  const la = L.by_class && L.by_class.action_required;
+  const ba = B.by_class && B.by_class.action_required;
+  let s = `The ladder nets <b>${INR(L.net)}</b> at <b>${RS}${L.cost_per_100.toFixed(2)}</b> per ${RS}100 &mdash; `
+    + `${INR(L.net - B.net)} ahead of <span class="mono">${B.policy}</span> on the full book.`;
+  if (la && ba) {
+    s += ` But the book is concentrated. On <b>action-required</b> accounts only &mdash; the ones a `
+      + `transient failure can't self-heal for everyone &mdash; the lead is <b>${INR(la.net - ba.net)}</b> `
+      + `(${INR(la.recovered)} vs ${INR(ba.recovered)} recovered). That's the honest size of the triage edge.`;
+  }
+  document.getElementById("scoreCaption").innerHTML = s;
+})();
 
 /* ---- cohorts ---- */
 document.getElementById("cohortIntro").innerHTML =

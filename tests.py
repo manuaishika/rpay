@@ -182,6 +182,27 @@ class ContactPolicyConfig(unittest.TestCase):
 
 
 class Analysis(unittest.TestCase):
+    def test_rate_is_rupee_based_and_consistent(self):
+        from recovery.analysis import run_all
+        res = run_all(20260903, 1.0, 1200.0, 25)
+        at_risk = res["ledger"]["at_risk_rupees"]        # one shared denominator
+        for p in res["policies"]:
+            self.assertAlmostEqual(p["rate"], round(p["recovered"] / at_risk, 4), places=3)
+            self.assertAlmostEqual(p["acct_rate"],
+                                   round(p["n_recovered"] / p["accounts"], 4), places=3)
+            self.assertEqual(p["at_risk"], at_risk)      # same for every policy
+
+    def test_by_class_partitions_the_book(self):
+        from recovery.analysis import run_all
+        res = run_all(20260903, 1.0, 1200.0, 25)
+        for p in res["policies"]:
+            c = p["by_class"]
+            self.assertEqual(c["transient"]["accounts"] + c["action_required"]["accounts"],
+                             p["accounts"])
+            self.assertAlmostEqual(
+                round(c["transient"]["recovered"] + c["action_required"]["recovered"], 2),
+                p["recovered"], places=2)
+
     def test_run_all_shape_and_cohort_conservation(self):
         from recovery.analysis import run_all
         res = run_all(20260903, 1.0, 1200.0, 25)

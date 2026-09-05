@@ -87,9 +87,11 @@ mean margin holding around +₹300k. That's a stronger claim than "arithmetic
 beats no arithmetic": budget-aware triage wins even when the probabilities it
 triages on are wrong.
 
-The 58% recovery rate on a live console sample (41% over the full book)
-reads high for real dunning — because the ledger is **synthetic**, generated
-to be internally plausible, not sampled from a real book.
+The full-book recovery rate (53% of rupees, 41% of accounts) reads high for
+real dunning — because the ledger is **synthetic**, generated to be
+internally plausible, not sampled from a real book, and because most of the
+recovered value is transient failures that self-heal (see the concentration
+breakdown below).
 
 ## The assumptions register
 
@@ -114,24 +116,57 @@ RBI recovery-agent guidelines and TRAI UCC/DND requirements is required
 before production use. What the auditor proves is that the agent obeyed
 *whatever policy it was given*, not that the policy is lawful.
 
-## Representative run (`--seed 20260903`, voice cost derived at ₹5.44)
+## Full run (`python -m recovery --concentration`, `--seed 20260903`, voice cost ₹5.44)
+
+The 250-account batch — this is the number, not the 16-account console demo.
 
 ```
-policy                 recovered     spend           net    rate  calls   PTP   Rs/100  viol
+policy                 recovered     spend           net   rec-%  acct-%  calls   PTP   viol
 --------------------------------------------------------------------------------------------
-ladder                 2,418,139     3,531     2,414,608   41.2%    220    35     0.15     0
-retry_only               509,786       342       509,443   20.0%      0     0     0.07     0
-nudge_ladder             302,075       116       301,959   16.8%      0     0     0.04     0
-call_first             1,167,199     1,235     1,165,964   22.8%    220    38     0.11     0
-standard_playbook      2,033,189     1,304     2,031,885   32.4%    107    17     0.06     0
+ladder                 2,418,139     3,531     2,414,608   52.7%   41.2%    220    35     0
+retry_only               509,786       342       509,443   11.1%   20.0%      0     0     0
+nudge_ladder             302,075       116       301,959    6.6%   16.8%      0     0     0
+call_first             1,167,199     1,235     1,165,964   25.4%   22.8%    220    38     0
+standard_playbook      2,033,189     1,304     2,031,885   44.3%   32.4%    107    17     0
 ```
 
-`retry_only`'s net is a fifth of the ladder's: a fifth of the book is
-`checkout_abandoned` (nothing was ever attempted, so a silent retry is
-structurally unable to help), and blind retrying spends money on all of it.
-The ladder scores that at zero and stops. Guardrail violations are `0` for
-every policy in every one of the 70 sweep cells — that is the point of the
-independent auditor, not a lucky outcome.
+`rec-%` = rupees recovered / rupees at risk. `acct-%` = accounts recovered /
+accounts — the two diverge because value is concentrated (see below). Both
+use the same denominator for every policy. `retry_only` recovers 20% of
+*accounts* but only 11% of *rupees*: the self-healers are numerous and small.
+Guardrail violations are `0` for every policy in every one of the 70 sweep
+cells — the point of the independent auditor, not a lucky outcome.
+
+### The book is concentrated, and most of the win is in self-healing failures
+
+```
+top  1 account : 45.8% of what the ladder recovered  (acc_0249, technical_decline, ₹11.07L)
+top  5 accounts: 70.7%
+top 10 accounts: 83.1%
+
+recovered rupees / at-risk rupees, by failure class:
+  ladder             TRANSIENT ₹1,873,926 (60%)   ACTION_REQUIRED ₹544,213 (37%)
+  standard_playbook  TRANSIENT ₹1,570,844 (50%)   ACTION_REQUIRED ₹462,345 (31%)
+  retry_only         TRANSIENT   ₹508,889 (16%)   ACTION_REQUIRED     ₹897  (0%)
+```
+
+Transient failures self-heal on a ₹0.50 retry, so every policy gets the big
+ones. **The real test is action-required accounts** — expired cards, revoked
+mandates, abandoned checkouts, overdue invoices — where a retry does nothing
+and triage has to earn it:
+
+```
+ACTION_REQUIRED only (106 accounts, ₹1,472,706 at risk)
+  ladder             recovered ₹544,213   net ₹542,919   (37% of rupees, 34/106 accounts)
+  standard_playbook  recovered ₹462,345   net ₹461,990   (31% of rupees, 26/106 accounts)
+  ladder net − standard_playbook net on this class:  +₹80,928
+```
+
+So the honest size of the edge: on the full book the ladder nets **+₹383k**
+over `standard_playbook`, but ~₹300k of that is transient failures it reaches
+before stage 4. Strip those and the triage advantage is **+₹81k net** (₹543k
+vs ₹462k recovered, 37% vs 31% of at-risk rupees, 34 vs 26 accounts). Real,
+smaller, and it holds under estimate noise ([Misspecification](#misspecification)).
 
 ### What the cheaper call cost changes
 
