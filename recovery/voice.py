@@ -38,10 +38,36 @@ REASON_ASK = {
     "checkout_abandoned": "aapne cart mein items add kiye the par checkout complete nahi hua; ek click checkout link bhej rahe hain",
 }
 
-SYSTEM_PROMPT = (
+# Bulbul v3 supported language codes (docs.sarvam.ai text-to-speech/convert):
+#   bn-IN en-IN gu-IN hi-IN kn-IN ml-IN mr-IN od-IN pa-IN ta-IN te-IN
+# name -> (TTS language_code, how the script should read). v3 speakers are
+# multilingual, so one speaker works across all of these.
+LANG = {
+    "hinglish": ("hi-IN", "natural Hinglish (Roman + Devanagari, the way urban Indians talk)"),
+    "hindi":    ("hi-IN", "natural conversational Hindi in Devanagari"),
+    "english":  ("en-IN", "clear, warm Indian English"),
+    "tamil":    ("ta-IN", "natural conversational Tamil"),
+    "telugu":   ("te-IN", "natural conversational Telugu"),
+    "marathi":  ("mr-IN", "natural conversational Marathi"),
+    "bengali":  ("bn-IN", "natural conversational Bengali"),
+}
+DEFAULT_LANG = "hinglish"
+# what the console dropdown may force for a whole run (a subset, all TTS-supported)
+FORCEABLE_LANGS = ("hinglish", "hindi", "english")
+
+
+def resolve_language(account, choice: str | None = None) -> str:
+    """None / 'match' -> the account's own language field; else the forced choice.
+    Always returns a key that exists in LANG."""
+    if choice and choice != "match":
+        return choice if choice in LANG else DEFAULT_LANG
+    return account.language if account.language in LANG else DEFAULT_LANG
+
+
+SYSTEM_PROMPT_TMPL = (
     "You are a polite, professional payment-recovery voice assistant for a "
     "business that uses Razorpay. You call customers whose payment just failed. "
-    "Speak natural Hinglish (Roman script, the way urban Indians actually talk). "
+    "Speak {style}. "
     "Rules: stay respectful and calm, never threaten, never mention legal action "
     "or credit score, never shame the customer. Keep it to 3-4 short sentences. "
     "Open with a one-line greeting and who you are, state the failed amount and "
@@ -52,25 +78,35 @@ SYSTEM_PROMPT = (
 )
 
 
-def build_messages(account) -> list[dict]:
+def build_messages(account, language: str | None = None) -> list[dict]:
+    lang_key = resolve_language(account, language)
+    _, style = LANG[lang_key]
     amt = f"Rs.{account.amount:,.0f}"
     ask = REASON_ASK.get(account.reason, "payment dobara try kijiye")
     kind = "business (B2B)" if account.segment == "B2B" else "individual (B2C)"
     user = (
         f"Customer type: {kind}. Failed amount: {amt}. "
         f"Failure reason: {account.reason}. "
-        f"What fixes it (say this in your own Hinglish words): {ask}. "
+        f"What fixes it (convey this in your own words, in {style}): {ask}. "
         f"Write the call script now."
     )
     return [
-        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "system", "content": SYSTEM_PROMPT_TMPL.format(style=style)},
         {"role": "user", "content": user},
     ]
 
 
-def _fallback_script(account) -> str:
+def _fallback_script(account, language: str | None = None) -> str:
     amt = f"Rs.{account.amount:,.0f}"
     ask = REASON_ASK.get(account.reason, "payment dobara try kijiye")
+    if resolve_language(account, language) == "english":
+        return (
+            f"Hello, this is the Razorpay recovery team. "
+            f"Your payment of {amt} did not go through ({account.reason.replace('_', ' ')}). "
+            f"We've sent you a link to sort it out. "
+            f"If you can share a date you will pay, I'll note it and we'll try again. "
+            f"Thank you for your time."
+        )
     return (
         f"Namaste, main Razorpay ki recovery team se baat kar raha hoon. "
         f"Aapka {amt} ka payment abhi complete nahi ho paaya. "
@@ -96,16 +132,18 @@ def decided_calls(policy: str, seed: int, stress: float, voice_budget: float,
     return out
 
 
-def render(account, client, out_dir: Path, language: str, speaker: str,
+def render(account, client, out_dir: Path, lang_choice: str, speaker: str,
            dry_run: bool) -> dict:
+    lang_key = resolve_language(account, lang_choice)
+    tts_code, _ = LANG[lang_key]
     if client is not None:
         try:
-            script = client.chat(build_messages(account))
+            script = client.chat(build_messages(account, lang_choice))
         except Exception as e:                       # noqa: BLE001 - log and fall back
             print(f"  ! {account.account_id}: script generation failed ({e}); using fallback")
-            script = _fallback_script(account)
+            script = _fallback_script(account, lang_choice)
     else:
-        script = _fallback_script(account)
+        script = _fallback_script(account, lang_choice)
 
     stem = out_dir / account.account_id
     meta = {
@@ -113,7 +151,8 @@ def render(account, client, out_dir: Path, language: str, speaker: str,
         "segment": account.segment,
         "reason": account.reason,
         "amount": round(account.amount, 2),
-        "language": language,
+        "language": lang_key,
+        "language_code": tts_code,
         "speaker": speaker,
         "script": script,
         "chars": len(script),
@@ -123,7 +162,7 @@ def render(account, client, out_dir: Path, language: str, speaker: str,
 
     if not dry_run and client is not None:
         try:
-            wav = client.text_to_speech(script, language_code=language, speaker=speaker)
+            wav = client.text_to_speech(script, language_code=tts_code, speaker=speaker)
             stem.with_suffix(".wav").write_bytes(wav)
             meta["audio_file"] = stem.with_suffix(".wav").name
             meta["audio_bytes"] = len(wav)
@@ -144,7 +183,8 @@ def main(argv=None) -> int:
     ap.add_argument("--policy", default="ladder")
     ap.add_argument("--limit", type=int, default=10, help="max calls to render")
     ap.add_argument("--out", default="audit/calls")
-    ap.add_argument("--language", default="hi-IN")
+    ap.add_argument("--language", default="match",
+                    help="match (each account's own) | " + " | ".join(LANG))
     ap.add_argument("--speaker", default="priya")
     ap.add_argument("--dry-run", action="store_true",
                     help="generate scripts only: no TTS, no API key needed")
@@ -172,11 +212,11 @@ def main(argv=None) -> int:
     metas = [render(a, client, out_dir, args.language, args.speaker, args.dry_run)
              for a in accounts]
 
-    print(f"\n{'account':<12}{'segment':<9}{'reason':<20}{'amount':>12}  {'audio':>10}")
-    print("-" * 66)
+    print(f"\n{'account':<12}{'segment':<9}{'reason':<20}{'lang':<10}{'amount':>12}  {'audio':>10}")
+    print("-" * 76)
     for m in metas:
         audio = m.get("audio_file") or ("-" if args.dry_run else "FAILED")
-        print(f"{m['account_id']:<12}{m['segment']:<9}{m['reason']:<20}"
+        print(f"{m['account_id']:<12}{m['segment']:<9}{m['reason']:<20}{m['language']:<10}"
               f"{'Rs.' + format(m['amount'], ',.0f'):>12}  {audio:>10}")
     print(f"\nwrote {len(metas)} script(s)"
           + ("" if args.dry_run else f" + audio to {out_dir.resolve()}"))

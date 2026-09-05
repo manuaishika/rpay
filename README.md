@@ -239,9 +239,14 @@ can play plus a `.json` with the script and metadata.
 ```bash
 # needs a key: env SARVAM_API_KEY, or a gitignored recovery/.env
 python -m recovery.voice --limit 5
-python -m recovery.voice --dry-run          # scripts only, no key, no TTS
-python -m recovery.voice --speaker rahul --language hi-IN --limit 3
+python -m recovery.voice --dry-run              # scripts only, no key, no TTS
+python -m recovery.voice --language english     # match (default) | hinglish | hindi | english
 ```
+
+**Language:** the console has a "call language" dropdown — *match account*
+(uses each `Account.language`) or force hinglish / hindi / english for the
+run. Bulbul v3's supported codes (`hi-IN`, `en-IN`, `ta-IN`, …) are the only
+ones offered; the language used shows on each rendered call.
 
 The generated scripts are LLM output and therefore not deterministic (the
 economic model in the other modules is). Example (`acc_0001`, card expired,

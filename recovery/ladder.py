@@ -330,3 +330,9 @@ def run_policy(name: str, ledger, seed: int, stress: float, voice_budget: float,
                human_cap: int):
     """Run one named policy over the whole ledger. Returns (episodes, events)."""
     return run_policy_on(name, ledger, seed, stress, voice_budget, human_cap)
+
+
+if __name__ == "__main__":
+    # `python -m recovery.ladder` == the full 250-account batch scorecard
+    from .__main__ import main
+    raise SystemExit(main())

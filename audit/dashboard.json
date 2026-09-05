@@ -2624,29 +2624,29 @@
     {
       "account_id": "acc_0001",
       "segment": "B2B",
-      "reason": "card_expired",
+      "reason": "do_not_honour",
       "amount": 52356.3,
-      "language": "hi-IN",
+      "language": "hindi",
       "speaker": "priya",
-      "script": "Hello, main Razorpay se baat kar raha hoon. Aapka 52,356 rupees ka payment fail ho gaya hai kyunki aapke card ki validity khatam ho gayi hai. Isko fix karne ke liye main aapko naya card add karne ka link bhej raha hoon. Aap mujhe bata dijiye ki aap kis date tak payment kar denge, main wahi note kar leta hoon. Thank you, aapka din achha rahe."
+      "script": "Namaste, main Razorpay ki recovery team se baat kar raha hoon. Aapka Rs.52,356 ka payment abhi complete nahi ho paaya. Bank ne transaction decline kiya; ek baar apne bank se confirm kar lijiye aur phir se try kijiye. Aap ek date bata dijiye toh main note kar leta hoon, phir dobara koshish karenge. Time dene ke liye dhanyavaad."
     },
     {
       "account_id": "acc_0002",
       "segment": "B2B",
       "reason": "insufficient_funds",
       "amount": 11132.52,
-      "language": "hi-IN",
+      "language": "hindi",
       "speaker": "priya",
-      "script": "Hello, main Razorpay se baat kar raha hoon. Aapka 11,133 rupees ka payment insufficient funds ki wajah se fail ho gaya hai. Jaise hi aapke account mein balance aa jaye, hum dobara try kar lenge, ya aap bas mujhe ek date bata dijiye jab aap payment clear kar payenge. Mujhe note karwa dijiye, hum uss din ke liye wait kar lenge. Dhanyawad."
+      "script": "Namaste, main Razorpay ki recovery team se baat kar raha hoon. Aapka Rs.11,133 ka payment abhi complete nahi ho paaya. Account mein balance aane par hum dobara try karenge, ya aap ek date bata dijiye jab payment ho sakta hai. Aap ek date bata dijiye toh main note kar leta hoon, phir dobara koshish karenge. Time dene ke liye dhanyavaad."
     },
     {
       "account_id": "acc_0004",
       "segment": "B2B",
-      "reason": "invoice_overdue",
+      "reason": "checkout_abandoned",
       "amount": 80377.82,
-      "language": "hi-IN",
+      "language": "english",
       "speaker": "priya",
-      "script": "Hello, main Razorpay se Rasiya bol rahi hoon. Aapka 80,378 rupees ka payment fail ho gaya hai kyunki aapka invoice overdue ho chuka hai. Isko fix karne ke liye, hum aapko ek naya payment link bhej rahe hain, toh please ise aaj hi complete kar dijiyega. Agar aap chahein toh aap mujhe ek date bata sakte hain jab aap payment kar denge, main note kar lungi. Thank you, aapka din achha rahe."
+      "script": "Hello, this is the Razorpay recovery team. Your payment of Rs.80,378 did not go through. To fix it: aapne cart mein items add kiye the par checkout complete nahi hua; ek click checkout link bhej rahe hain. If you can share a date you will pay, I'll note it and we'll try again. Thank you for your time."
     }
   ]
 }

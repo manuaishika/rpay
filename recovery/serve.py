@@ -262,30 +262,33 @@ class Handler(BaseHTTPRequestHandler):
         p = self._body()
         seed = int(p.get("seed", 20260903))
         aid = str(p.get("account_id", ""))
+        lang_choice = str(p.get("language", "match"))
         ledger = {a.account_id: a for a in core.build_ledger(seed)}
         acc = ledger.get(aid)
         if not acc:
             self._send(404, b'{"error":"unknown account"}')
             return
-        from .voice import build_messages, _fallback_script
+        from .voice import build_messages, _fallback_script, resolve_language, LANG
+        lang_key = resolve_language(acc, lang_choice)
+        tts_code, _ = LANG[lang_key]
         out = {"account_id": aid, "reason": acc.reason, "amount": round(acc.amount, 2),
-               "segment": acc.segment, "audio_b64": None}
+               "segment": acc.segment, "language": lang_key, "audio_b64": None}
         try:
             from .sarvam import Sarvam, available
             if available():
                 c = Sarvam(timeout=40)
-                out["script"] = c.chat(build_messages(acc))
+                out["script"] = c.chat(build_messages(acc, lang_choice))
                 try:
                     import base64
-                    wav = c.text_to_speech(out["script"], language_code="hi-IN")
+                    wav = c.text_to_speech(out["script"], language_code=tts_code)
                     out["audio_b64"] = base64.b64encode(wav).decode("ascii")
                 except Exception as e:                          # noqa: BLE001
                     out["tts_error"] = str(e)[:120]
             else:
-                out["script"] = _fallback_script(acc)
+                out["script"] = _fallback_script(acc, lang_choice)
                 out["note"] = "no Sarvam key -> template script, no audio"
         except Exception as e:                                  # noqa: BLE001
-            out["script"] = _fallback_script(acc)
+            out["script"] = _fallback_script(acc, lang_choice)
             out["error"] = str(e)[:120]
         self._send(200, json.dumps(out).encode("utf-8"))
 

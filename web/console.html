@@ -130,10 +130,24 @@
     <div class="ctl">
       <label for="sample">accounts to run live: <span class="rv mono" id="sampleV">16</span></label>
       <div class="rangerow"><input type="range" id="sample" min="5" max="40" value="16"></div>
+      <p style="font-size:.74rem;color:var(--dim);margin:6px 0 0;line-height:1.45">
+        Live runs are capped at 40 accounts &mdash; each is a real LLM call on a shared metered key.
+        The full 250-account batch runs offline via <span class="mono">python -m recovery.ladder</span>;
+        those are the headline numbers.</p>
     </div>
     <div class="ctl">
       <label for="budget">voice budget (&#8377;, whole run)</label>
       <input type="number" id="budget" value="1200" step="100" min="0">
+    </div>
+    <div class="ctl">
+      <label for="lang">call language</label>
+      <select id="lang" style="width:100%;font-family:'IBM Plex Mono',monospace;font-size:.86rem;
+        padding:7px 9px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:6px">
+        <option value="match">match account</option>
+        <option value="hinglish">hinglish</option>
+        <option value="hindi">hindi</option>
+        <option value="english">english</option>
+      </select>
     </div>
     <label class="toggle"><input type="checkbox" id="useLlm" checked>
       <span>LLM agent (sarvam&#8209;105b)<br><span style="color:var(--dim);font-size:.74rem">off = expected&#8209;value rule</span></span>
@@ -200,7 +214,7 @@ function acctRow(a){
     `<div class="row">
        <span class="aid">${a.account_id}</span>
        <span class="chip ${cls}">${a.segment}</span>
-       <span class="what">${a.reason.replace(/_/g," ")} ${rc} &middot; tenure ${a.tenure_months}m &middot; ${a.prior_failures} prior</span>
+       <span class="what">${a.reason.replace(/_/g," ")} ${rc} &middot; ${a.language} &middot; tenure ${a.tenure_months}m &middot; ${a.prior_failures} prior</span>
        <span class="amt">${inr(a.amount)}</span>
      </div>
      <div class="row2" style="padding:0 12px 8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center">
@@ -296,7 +310,9 @@ const handlers = {
     const detail = document.querySelector(`#a_${e.account_id} [data-detail]`);
     if (detail && [...detail.querySelectorAll(".k")].some(k => k.textContent === "voice_call")){
       const b = document.createElement("button");
-      b.className = "callbtn"; b.textContent = "hear the Hinglish call";
+      const lc = $("#lang").value;
+      const lbl = lc === "match" ? (rows[e.account_id] || {}).language || "match" : lc;
+      b.className = "callbtn"; b.textContent = "hear the call · " + lbl;
       b.onclick = () => renderCall(e.account_id, b);
       detail.appendChild(b);
     }
@@ -369,11 +385,12 @@ $("#run").onclick = run;
 async function renderCall(aid, btn){
   btn.disabled = true; btn.textContent = "rendering…";
   const r = await fetch("/api/render_call", {method:"POST", headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({seed: SEED, account_id: aid})});
+    body: JSON.stringify({seed: SEED, account_id: aid, language: $("#lang").value})});
   const d = await r.json();
   const box = document.createElement("div");
   box.className = "callout";
-  box.innerHTML = `<div class="script">&ldquo;${d.script || "(no script)"}&rdquo;</div>`
+  box.innerHTML = `<div style="font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--dim);margin-bottom:6px">language: ${d.language || "?"}</div>`
+    + `<div class="script">&ldquo;${d.script || "(no script)"}&rdquo;</div>`
     + (d.audio_b64 ? `<audio controls src="data:audio/wav;base64,${d.audio_b64}"></audio>`
        : `<div style="font-size:.76rem;color:var(--dim)">${d.note || d.tts_error || d.error || "no audio"}</div>`);
   btn.replaceWith(box);
