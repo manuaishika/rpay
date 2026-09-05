@@ -178,6 +178,17 @@ fetch("/api/book?seed=" + SEED + "&n=16").then(r => r.json()).then(d => {
   $("#book").innerHTML = `book: <b>${s.accounts}</b> failed payments &middot; <b>${inr(s.at_risk_rupees)}</b> at risk &middot; `
     + `<b>${s.b2b_accounts}</b> B2B (${Math.round(s.b2b_share_of_rupees*100)}% of &#8377;) &middot; <b>${s.dnc_accounts}</b> on DNC`;
   $("#budget").value = d.defaults.voice_budget;
+
+  // show the queued sample instead of an empty shell -- something real to
+  // look at before anyone presses Run
+  const feed = $("#feed");
+  feed.innerHTML = `<div class="empty" style="padding:0 0 14px;text-align:left">`
+    + `Queued and ready &mdash; hit <b>Run recovery</b> to work these live.</div>`;
+  d.sample.forEach(a => {
+    const row = acctRow(a);
+    row.querySelector("[data-status]").textContent = "queued";
+    feed.appendChild(row);
+  });
 });
 
 function acctRow(a){

@@ -20,7 +20,8 @@
   body{margin:0;background:var(--bg);color:var(--text);
     font-family:"Libre Franklin",system-ui,sans-serif;font-size:16px;line-height:1.6}
   .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
-  h1,h2{font-family:"Fraunces",Georgia,serif;font-weight:600;margin:0;letter-spacing:-.01em;text-wrap:balance}
+  h1,h2{font-family:"Fraunces",Georgia,serif;font-weight:600;margin:0;letter-spacing:-.01em;
+    text-wrap:balance;line-height:1.1}
   a{color:var(--accent)}
   .wrap{max-width:920px;margin:0 auto;padding:0 24px}
 
@@ -59,8 +60,9 @@
   .step h3{font-family:"Fraunces",serif;font-size:1.05rem;font-weight:600;margin:8px 0 6px}
   .step p{margin:0;font-size:.86rem;color:var(--dim)}
 
-  .rules{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1px;
+  .rules{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
     background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:22px}
+  @media (max-width:640px){.rules{grid-template-columns:1fr 1fr}}
   .rule{background:var(--surface);padding:13px 15px;font-size:.84rem}
   .rule .rn{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--accent)}
   .rule .rd{color:var(--dim);margin-top:2px}
@@ -82,7 +84,7 @@
 <div class="wrap">
   <header class="hero">
     <div class="eyebrow">Bounded revenue recovery</div>
-    <h1>Recovers what's worth<br>recovering. <span class="accent">Skips what isn't.</span></h1>
+    <h1>Recovers what's worth recovering. <span class="accent">Skips what isn't.</span></h1>
     <p class="lede">Revenue leaks at three points &mdash; a stalled checkout, a failed payment, an
       overdue invoice &mdash; and a Hinglish voice call costs <b>~&#8377;12</b>. Most of it isn't
       worth chasing that way. Vasool decides which ones are, spends only when the math clears, and
@@ -106,9 +108,8 @@
       each needs a different read before it needs an action.</p>
     <div class="steps">
       <div class="step"><div class="n">01</div><h3>Detect &amp; diagnose</h3>
-        <p>Every at-risk record is classified by where it leaked &mdash; checkout, payment, or
-          receivable &mdash; and why. Today that label comes from a signal feed standing in for a
-          real gateway/webhook classifier; the taxonomy is the contract either way.</p></div>
+        <p>Every record is classified by where it leaked &mdash; checkout, payment, receivable
+          &mdash; and why. Today that label comes from a stand-in feed, not a live classifier.</p></div>
       <div class="step"><div class="n">02</div><h3>Gate</h3>
         <p>A hard guardrail filters the menu first &mdash; contact hours, DNC, frequency caps, voice
           budget. Not a suggestion: the agent physically cannot choose a blocked action.</p></div>
