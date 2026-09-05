@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Recovery Console</title>
+<title>Vasool &middot; console</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,9 @@
 
   header{border-bottom:1px solid var(--border);padding:16px 22px;display:flex;
     gap:22px;align-items:baseline;flex-wrap:wrap}
-  header h1{font-size:1.3rem}
+  header h1{font-size:1.3rem;font-weight:600}
+  header .back{align-self:center;color:var(--dim);text-decoration:none;font-size:1.1rem;order:-1}
+  header .back:hover{color:var(--text)}
   header .tag{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.14em;
     text-transform:uppercase;color:var(--dim)}
   header .book{margin-left:auto;font-size:.82rem;color:var(--dim)}
@@ -117,8 +119,9 @@
 </head>
 <body>
 <header>
-  <h1>Recovery Console</h1>
-  <span class="tag">Razorpay Buildathon &middot; Track 03</span>
+  <a class="back" href="/" title="back to overview">&larr;</a>
+  <h1>Vasool</h1>
+  <span class="tag">console</span>
   <span class="book" id="book">loading book&hellip;</span>
 </header>
 

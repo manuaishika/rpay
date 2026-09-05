@@ -18,7 +18,8 @@ so a gate bug shows up as a counted violation instead of leaking.
 python -m recovery.serve      # then open http://127.0.0.1:8000
 ```
 
-Set the voice budget and how many accounts to run live, hit **Run recovery**,
+`/` is a short landing page (what it is, how it decides); `/console` is the
+tool itself. Set the voice budget and how many accounts to run live, hit **Run recovery**,
 and watch `sarvam-105b` work each failed payment — its pick, its reasoning,
 guardrail blocks, the budget draining, promises-to-pay logged — then a
 scorecard against the fixed playbooks (`agent` vs `standard_playbook` vs

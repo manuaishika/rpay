@@ -34,7 +34,9 @@ from .analysis import policy_metrics
 from .guardrails import DEFAULT_HUMAN_CAP, DEFAULT_VOICE_BUDGET, audit_executed
 from .ladder import run_policy_on
 
-WEB = Path(__file__).resolve().parent.parent / "web" / "console.html"
+WEB_DIR = Path(__file__).resolve().parent.parent / "web"
+LANDING = WEB_DIR / "landing.html"
+CONSOLE = WEB_DIR / "console.html"
 BENCHMARKS = ["standard_playbook", "retry_only"]
 MAX_SAMPLE = 40
 
@@ -115,15 +117,19 @@ class Handler(BaseHTTPRequestHandler):
         n = int(self.headers.get("Content-Length", 0))
         return json.loads(self.rfile.read(n) or b"{}")
 
+    def _serve_page(self, path: Path, label: str):
+        try:
+            self._send(200, path.read_bytes(), "text/html; charset=utf-8")
+        except OSError:
+            self._send(500, f"{label} not found next to the package".encode())
+
     # -- routes -------------------------------------------------------
     def do_GET(self):
         u = urlparse(self.path)
-        if u.path in ("/", "/index.html"):
-            try:
-                self._send(200, WEB.read_bytes(), "text/html; charset=utf-8")
-            except OSError:
-                self._send(500, b"console.html not found next to the package")
-            return
+        if u.path in ("/", "/index.html", "/landing.html"):
+            return self._serve_page(LANDING, "landing.html")
+        if u.path in ("/console", "/console.html", "/app"):
+            return self._serve_page(CONSOLE, "console.html")
         if u.path == "/api/book":
             q = parse_qs(u.query)
             seed = int(q.get("seed", ["20260903"])[0])
