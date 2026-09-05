@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from . import core
 from .guardrails import audit_executed
-from .ladder import POLICIES, run_policy
+from .ladder import POLICIES, estimate_noise, run_policy
 
 
 def count_rules(violations) -> dict:
@@ -62,15 +62,20 @@ def policy_metrics(name, episodes, events, violations, ledger) -> dict:
 
 
 def run_all(seed: int, stress: float, voice_budget: float, human_cap: int,
-            keep_events: bool = False) -> dict:
-    """Run every policy over one ledger. Returns metrics (+ raw events if asked)."""
+            keep_events: bool = False, sigma: float = 0.0) -> dict:
+    """Run every policy over one ledger. Returns metrics (+ raw events if asked).
+
+    `sigma` > 0 feeds the agent a noised probability estimate (seeded apart
+    from the outcome RNG) while the world still resolves on ground truth.
+    """
     ledger = core.build_ledger(seed)
-    out = {"ledger": core.ledger_summary(ledger), "policies": [], "events": {}}
-    for name in POLICIES:
-        episodes, events = run_policy(name, ledger, seed, stress, voice_budget, human_cap)
-        violations = audit_executed(events, ledger, voice_budget, human_cap)
-        out["policies"].append(policy_metrics(name, episodes, events, violations, ledger))
-        if keep_events:
-            out["events"][name] = events
+    out = {"ledger": core.ledger_summary(ledger), "policies": [], "events": {}, "sigma": sigma}
+    with estimate_noise(sigma, f"est:{seed}"):
+        for name in POLICIES:
+            episodes, events = run_policy(name, ledger, seed, stress, voice_budget, human_cap)
+            violations = audit_executed(events, ledger, voice_budget, human_cap)
+            out["policies"].append(policy_metrics(name, episodes, events, violations, ledger))
+            if keep_events:
+                out["events"][name] = events
     out["total_violations"] = sum(p["violations"] for p in out["policies"])
     return out

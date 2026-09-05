@@ -197,6 +197,29 @@ class Analysis(unittest.TestCase):
                 round(seg["B2C"]["recovered"] + seg["B2B"]["recovered"], 2),
                 p["recovered"], places=2)
 
+    def test_sigma_decouples_estimate_from_truth(self):
+        from recovery.analysis import run_all
+        from recovery import ladder
+        base = run_all(20260903, 1.0, 1200.0, 25, sigma=0.0)
+        noised = run_all(20260903, 1.0, 1200.0, 25, sigma=0.5)
+        b = {p["policy"]: p for p in base["policies"]}
+        n = {p["policy"]: p for p in noised["policies"]}
+        # fixed playbooks don't score -> unaffected by sigma
+        self.assertEqual(b["retry_only"]["net"], n["retry_only"]["net"])
+        self.assertEqual(b["standard_playbook"]["net"], n["standard_playbook"]["net"])
+        # the ladder's decisions do change, and the gate still holds
+        self.assertNotEqual(b["ladder"]["net"], n["ladder"]["net"])
+        self.assertEqual(noised["total_violations"], 0)
+        # the context manager restores cleanly
+        self.assertEqual(ladder._EST_SIGMA, 0.0)
+
+    def test_estimate_factor_is_mean_preserving(self):
+        from recovery import ladder
+        with ladder.estimate_noise(0.5, "t"):
+            fs = [ladder._estimate_factor(_acc(account_id=f"a{i}"), "voice_call")
+                  for i in range(4000)]
+        self.assertAlmostEqual(sum(fs) / len(fs), 1.0, delta=0.05)
+
     def test_voice_cost_override_restores(self):
         from recovery import core
         base = core.INTERVENTION_COST["voice_call"]
@@ -206,7 +229,7 @@ class Analysis(unittest.TestCase):
 
     def test_sweep_small_grid(self):
         from recovery.sweep import run_sweep
-        s = run_sweep(7, stress_grid=[0.6, 1.2], cost_grid=[8.0, 20.0])
+        s = run_sweep(7, stress_grid=[0.6, 1.2], cost_grid=[8.0, 20.0], include_misspec=False)
         self.assertEqual(len(s["cells"]), 4)
         self.assertEqual(sum(c["violations"] for c in s["cells"]), 0)
         self.assertIn("min_stress_ladder_wins_at_cost_12", s["crossover"])

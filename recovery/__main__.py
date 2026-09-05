@@ -57,6 +57,9 @@ def main(argv=None):
     ap.add_argument("--seed", type=int, default=20260903)
     ap.add_argument("--stress", type=float, default=1.0,
                     help="scale voice lift only (sensitivity knob); e.g. 0.5, 1.5")
+    ap.add_argument("--sigma", type=float, default=0.0,
+                    help="lognormal noise on the AGENT's probability estimate "
+                         "(world still resolves on truth); e.g. 0.35, 0.6")
     ap.add_argument("--voice-budget", type=float, default=DEFAULT_VOICE_BUDGET,
                     help="rupees of voice spend allowed across the whole run")
     ap.add_argument("--human-cap", type=int, default=DEFAULT_HUMAN_CAP,
@@ -74,10 +77,15 @@ def main(argv=None):
         print(assumptions_header())
         print(f"voice_call cost Rs.{core.INTERVENTION_COST['voice_call']:.2f} "
               f"(derived, recovery/costs.py)")
+        if args.sigma > 0:
+            print(f"estimate noise: sigma={args.sigma} "
+                  f"(agent scores on a noised p_hat; world resolves on p)")
+        else:
+            print("estimate noise: sigma=0 -- agent scores on the ground-truth model")
         print()
 
     result = run_all(args.seed, args.stress, args.voice_budget, args.human_cap,
-                     keep_events=True)
+                     keep_events=True, sigma=args.sigma)
     lsum = result["ledger"]
     rows = result["policies"]
 

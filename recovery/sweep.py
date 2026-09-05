@@ -93,8 +93,35 @@ def decision_boundary(stress: float = 1.0) -> list[dict]:
     return out
 
 
+MISSPEC_SEEDS = [20260903, 1, 42, 99, 7]
+MISSPEC_SIGMAS = [0.0, 0.35, 0.6]
+
+
+def misspecification(voice_budget=DEFAULT_VOICE_BUDGET, human_cap=DEFAULT_HUMAN_CAP) -> list[dict]:
+    """Does budget-aware triage still beat the fixed playbooks when the agent's
+    probability estimates are wrong? Agent scores on p_hat = p * mean-preserving
+    lognormal(sigma); the world resolves on p."""
+    out = []
+    for sigma in MISSPEC_SIGMAS:
+        margins, wins = [], 0
+        for seed in MISSPEC_SEEDS:
+            res = run_all(seed, 1.0, voice_budget, human_cap, sigma=sigma)
+            by = {p["policy"]: p["net"] for p in res["policies"]}
+            margin = by["ladder"] - by[BASELINE]
+            margins.append(margin)
+            wins += margin >= 0
+        out.append({
+            "sigma": sigma,
+            "seeds": len(MISSPEC_SEEDS),
+            "ladder_wins": wins,
+            "mean_margin": round(sum(margins) / len(margins), 0),
+            "min_margin": round(min(margins), 0),
+        })
+    return out
+
+
 def run_sweep(seed=20260903, voice_budget=DEFAULT_VOICE_BUDGET, human_cap=DEFAULT_HUMAN_CAP,
-              stress_grid=None, cost_grid=None) -> dict:
+              stress_grid=None, cost_grid=None, include_misspec=True) -> dict:
     stress_grid = stress_grid or STRESS_GRID
     cost_grid = cost_grid or COST_GRID
     cells = [_cell(seed, s, c, voice_budget, human_cap)
@@ -123,6 +150,7 @@ def run_sweep(seed=20260903, voice_budget=DEFAULT_VOICE_BUDGET, human_cap=DEFAUL
             "ladder_wins_everywhere": all(c["ladder_wins"] for c in cells),
         },
         "decision_boundary": decision_boundary(1.0),
+        "misspecification": misspecification(voice_budget, human_cap) if include_misspec else [],
     }
 
 
@@ -165,6 +193,14 @@ def _print(sweep: dict):
         pref = "yes" if b["prefers_voice_at_derived_cost"] else "no"
         print(f"  {b['reason']:<20}{('Rs.' + format(b['amount'], ',.0f')):>12}"
               f"{('Rs.' + format(b['best_nonvoice_net'], ',.0f')):>20}{pref:>12}{flip:>12}")
+
+    print("\nmisspecification -- does the ladder still beat the baseline when its"
+          " probability estimates are wrong?")
+    print(f"  {'sigma':>6}{'ladder wins':>14}{'mean margin':>16}{'min margin':>14}")
+    for m in sweep["misspecification"]:
+        print(f"  {m['sigma']:>6}{(str(m['ladder_wins']) + '/' + str(m['seeds'])):>14}"
+              f"{('Rs.' + format(m['mean_margin'], ',.0f')):>16}"
+              f"{('Rs.' + format(m['min_margin'], ',.0f')):>14}")
 
 
 def main(argv=None):

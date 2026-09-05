@@ -56,7 +56,8 @@ def _menu(account, ep: Episode, guard: Guardrails, now, stress: float):
         menu.append({
             "action": iv,
             "cost_rupees": core.INTERVENTION_COST[iv],
-            "believed_recovery_p": round(_channel_p(account.reason, iv, account, ep, stress), 3),
+            "believed_recovery_p": round(_channel_p(account.reason, iv, account, ep, stress,
+                                                    estimated=True), 3),
             "naive_expected_net_rupees": round(net, 2),
         })
     return menu, blocked

@@ -2,11 +2,14 @@
 
 **Razorpay Buildathon · Track 03, "AI Revenue Recovery"**
 
-> A Hinglish voice call costs **~₹5.44** — [derived](recovery/costs.py) from Sarvam's
-> published rates, not guessed. At that price plenty of failed payments *are* worth a
-> call, so the hard question isn't "call or not" — it's **which ones**, in what order,
-> against a fixed budget, and where a cheaper channel does the job instead. The agent
-> decides that; an auditor proves it stayed inside the rules doing it.
+> Merchants today either retry blindly or contact everyone. Neither *decides*. This
+> allocates a fixed contact budget across accounts under a compliance policy, and shows
+> what that's worth against both.
+>
+> Built entirely on free tiers — Sarvam's ₹100 credits cover the whole demo. At
+> production rates a connected voice call costs **~₹5.44**, [itemised](recovery/costs.py):
+> STT, TTS, LLM from Sarvam's published rates, telephony estimated. That's the number
+> the agent budgets against.
 
 `recovery/` is a stdlib-only Python package (no dependencies) that models
 revenue at risk across the three points the brief names — a stalled
@@ -67,7 +70,28 @@ python tests.py                    # stdlib self-checks
 | `sarvam.py` · `voice.py` | *optional.* Take the calls the `ladder` actually decided to make, generate a reason-specific Hinglish script (`sarvam-105b`), render it to a `.wav` (`bulbul` TTS). Degrades to script-only with no API key. Never places a real call |
 | `dashboard.py` · `build_dashboard.py` | assemble `audit/dashboard.json` from a real run and bake it into a standalone `dashboard.html` (the interactive scorecard linked above) |
 
-## The assumptions (read this)
+## What this measures — and what it does not
+
+**By default the agent is given the true outcome model.** `ladder.py` scores
+channels with `world.p_recover()`; the runner resolves outcomes with the same
+function. So the headline result measures whether **budget-aware triage
+allocates a fixed contact budget better than fixed playbooks** — not whether a
+learned model could estimate those probabilities from real data. The
+playbooks are blind to the recovery odds; the agent is not.
+
+`--sigma` decouples them (see [Misspecification](#misspecification)): the agent
+scores on `p̂ = p · lognormal(0, σ)` (mean-preserving, seeded apart from the
+outcome RNG) while the world still resolves on `p`. **The ranking survives** —
+the ladder still beats `standard_playbook` in 4 of 5 seeds at σ up to 0.6,
+mean margin holding around +₹300k. That's a stronger claim than "arithmetic
+beats no arithmetic": budget-aware triage wins even when the probabilities it
+triages on are wrong.
+
+The 58% recovery rate on a live console sample (41% over the full book)
+reads high for real dunning — because the ledger is **synthetic**, generated
+to be internally plausible, not sampled from a real book.
+
+## The assumptions register
 
 Most of the numbers this system depends on are estimates, not sourced data —
 every recovery probability in `world.py`, the pickup rate, the promise-to-pay
@@ -137,6 +161,23 @@ voice for a cheaper channel:
 `invoice_overdue` and `checkout_abandoned` never prefer a voice call at any
 realistic cost — a human touch or a link already beats it. Everything else
 does, and stays that way well past the derived cost.
+
+### Misspecification
+
+`python -m recovery --sigma 0.35` — the agent scores on a noised estimate,
+the world resolves on truth. Across 5 seeds:
+
+| σ | ladder still beats `standard_playbook` | mean net margin | worst seed |
+|---|---|---|---|
+| 0.0 (answer key) | 4 / 5 | +₹308k | −₹151k |
+| 0.35 | 4 / 5 | +₹388k | −₹96k |
+| 0.6 | 4 / 5 | +₹266k | −₹351k |
+
+The one seed the ladder loses, it loses at σ=0 too — noise doesn't create new
+losses, and the average lead is flat across noise levels. So the win is about
+*allocating a budget by rank*, not about having exact probabilities. The one
+seed it loses on is the honest caveat: on a book heavy with a few very large
+accounts, a conservative playbook that dials fewer times can come out ahead.
 
 ## Audit trail
 

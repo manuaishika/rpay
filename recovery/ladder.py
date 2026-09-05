@@ -23,7 +23,9 @@ Every policy emits the same JSONL event schema and is audited identically.
 """
 from __future__ import annotations
 
+import math
 import random
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import timedelta
 
@@ -31,6 +33,44 @@ from . import core, world
 from .guardrails import Guardrails
 
 MAX_STAGES = 5
+
+# --------------------------------------------------------------------------
+# Estimate misspecification (--sigma)
+#
+# By default the agent scores channels with world.p_recover() -- the SAME
+# function the runner resolves outcomes with, so the agent has the answer
+# key. With sigma > 0 the agent instead sees p_hat = p * lognormal(0, sigma),
+# seeded independently of the outcome RNG: it decides on p_hat, the world
+# still resolves on p. This tests whether budget-aware triage survives its
+# probability estimates being wrong, not just whether arithmetic beats none.
+# --------------------------------------------------------------------------
+_EST_SIGMA = 0.0
+_EST_SEED = "est"
+
+
+@contextmanager
+def estimate_noise(sigma: float, seed):
+    """Scope in which the agent scores on a noised estimate, not ground truth."""
+    global _EST_SIGMA, _EST_SEED
+    prev = (_EST_SIGMA, _EST_SEED)
+    _EST_SIGMA, _EST_SEED = float(sigma), seed
+    try:
+        yield
+    finally:
+        _EST_SIGMA, _EST_SEED = prev
+
+
+def _estimate_factor(account, iv: str) -> float:
+    """Multiplicative distortion the agent's belief carries for (account, channel).
+
+    Mean-preserving lognormal: E[factor] == 1, so this is *wrong* estimates,
+    not *optimistic* ones -- the agent misranks, it doesn't systematically
+    over- or under-call.
+    """
+    if _EST_SIGMA <= 0.0:
+        return 1.0
+    r = random.Random(f"{_EST_SEED}:{account.account_id}:{iv}")
+    return math.exp(r.gauss(0.0, _EST_SIGMA) - 0.5 * _EST_SIGMA * _EST_SIGMA)
 CHANNEL_FATIGUE = 0.72       # per repeat of the same channel within an episode
 EVIDENCE_DECAY = 0.88        # per attempt already failed within an episode
 CHRONIC_PENALTY = 0.92       # per lifetime prior failure (capped at 5)
@@ -55,8 +95,13 @@ class Episode:
 # shared probability / scoring model
 # --------------------------------------------------------------------------
 
-def _channel_p(reason: str, iv: str, account, ep: Episode, stress: float) -> float:
-    """Fatigue- and evidence-adjusted p. For voice this is convert|connect."""
+def _channel_p(reason: str, iv: str, account, ep: Episode, stress: float,
+               estimated: bool = False) -> float:
+    """Fatigue- and evidence-adjusted p. For voice this is convert|connect.
+
+    `estimated=True` is the agent's BELIEF -- distorted by --sigma. Left False
+    (the default, used by _simulate) it is the ground truth the world resolves on.
+    """
     p = world.p_recover(reason, iv, stress)
     if p <= 0.0:
         return 0.0
@@ -64,12 +109,14 @@ def _channel_p(reason: str, iv: str, account, ep: Episode, stress: float) -> flo
     p *= EVIDENCE_DECAY ** ep.total_attempts
     if iv != "voice_call":
         p *= CHRONIC_PENALTY ** min(account.prior_failures, 5)
+    if estimated:
+        p *= _estimate_factor(account, iv)
     return max(0.0, min(1.0, p))
 
 
 def _expected_net(reason: str, iv: str, account, ep: Episode, stress: float):
     cost = core.INTERVENTION_COST[iv]
-    p = _channel_p(reason, iv, account, ep, stress)
+    p = _channel_p(reason, iv, account, ep, stress, estimated=True)
     amt = account.amount
     if iv == "voice_call":
         pickup = world.VOICE_PICKUP_RATE

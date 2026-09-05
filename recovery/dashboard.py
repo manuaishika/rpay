@@ -116,7 +116,7 @@ def _sample_calls(calls_dir="audit/calls"):
 def build(seed=20260903, stress=1.0, voice_budget=DEFAULT_VOICE_BUDGET,
           human_cap=DEFAULT_HUMAN_CAP) -> dict:
     main = run_all(seed, stress, voice_budget, human_cap)
-    sweep = run_sweep(seed, voice_budget, human_cap)
+    sweep = run_sweep(seed, voice_budget, human_cap, include_misspec=True)
     return {
         "meta": {
             "seed": seed, "stress": stress, "voice_budget": voice_budget,

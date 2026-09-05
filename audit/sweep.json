@@ -1350,5 +1350,28 @@
       "prefers_voice_at_derived_cost": true,
       "voice_cost_where_it_flips": null
     }
+  ],
+  "misspecification": [
+    {
+      "sigma": 0.0,
+      "seeds": 5,
+      "ladder_wins": 4,
+      "mean_margin": 308217.0,
+      "min_margin": -150617.0
+    },
+    {
+      "sigma": 0.35,
+      "seeds": 5,
+      "ladder_wins": 4,
+      "mean_margin": 388390.0,
+      "min_margin": -96090.0
+    },
+    {
+      "sigma": 0.6,
+      "seeds": 5,
+      "ladder_wins": 4,
+      "mean_margin": 266101.0,
+      "min_margin": -350726.0
+    }
   ]
 }

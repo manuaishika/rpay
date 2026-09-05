@@ -175,7 +175,7 @@ $("#sample").oninput = e => $("#sampleV").textContent = e.target.value;
 fetch("/api/book?seed=" + SEED + "&n=16").then(r => r.json()).then(d => {
   SEED = d.seed;
   const s = d.summary;
-  $("#book").innerHTML = `book: <b>${s.accounts}</b> failed payments &middot; <b>${inr(s.at_risk_rupees)}</b> at risk &middot; `
+  $("#book").innerHTML = `synthetic book: <b>${s.accounts}</b> at-risk accounts &middot; <b>${inr(s.at_risk_rupees)}</b> at risk &middot; `
     + `<b>${s.b2b_accounts}</b> B2B (${Math.round(s.b2b_share_of_rupees*100)}% of &#8377;) &middot; <b>${s.dnc_accounts}</b> on DNC`;
   $("#budget").value = d.defaults.voice_budget;
 
